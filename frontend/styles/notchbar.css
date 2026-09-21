@@ -47,8 +47,8 @@
 .mk-notchbar .nn-brand-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .mk-notchbar .nn-brand-text { display: flex; flex-direction: column; line-height: 1; }
 .mk-notchbar .nn-brand-latin { font-family: var(--mk-display); font-size: 12.5px; letter-spacing: 0.18em; }
-.mk-notchbar .nn-brand-bn {
-  font-family: var(--mk-bengali); font-variation-settings: 'wght' 500;
+.mk-notchbar .nn-brand-hi {
+  font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
   font-size: 10px; line-height: 1.2; margin-top: 3px; color: var(--nn-muted);
 }
 

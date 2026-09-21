@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Medallion } from './kolka'
+import { Medallion } from './mithila'
 
 /* The title sequence's bloom — once, on load, and never again. Under reduced
    motion the CSS renders it fully bloomed at rest. design.md §11.3 */

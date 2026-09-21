@@ -63,24 +63,23 @@ test('auth screens are styled by the brand sheet, with no third-party widget', a
   const css = await readSource('styles/auth.css')
 
   assert.match(css, /\.mk-auth-card/)
-  assert.match(css, /\.mk-auth-error \{[^}]*var\(--mk-taxi\)/)
+  assert.match(css, /\.mk-auth-error \{[^}]*var\(--mk-genda\)/)
 })
 
-test('home plays the entry film as a 4:5 post on the door screen', async () => {
+test('home opens on a held title card, once a session', async () => {
   const page = await readSource('app/(main)/home/page.tsx')
   const entry = await readSource('components/brand/HomeEntry.tsx')
   const css = await readSource('styles/brand.css')
 
   assert.match(page, /<HomeEntry/)
-  assert.match(entry, /\/entry1\.mp4/)
+  assert.match(entry, /\/chhath\.jpg/)
   assert.match(entry, /sessionStorage/)
-  assert.match(entry, /video\.muted = false/)
-  assert.doesNotMatch(entry, /entry-splash/)
+  assert.doesNotMatch(entry, /<video|\.mp4/, 'a held still, not a film')
+  assert.match(entry, /<MedallionBloom/)
   assert.match(entry, /className="mk-entry-skip" onClick=\{dismiss\}/)
   assert.match(entry, /prefers-reduced-motion: reduce/)
-  assert.doesNotMatch(css, /entry-splash/)
-  assert.doesNotMatch(css, /\.mk-entry-video[^{]*\{[^}]*border-radius/)
-  assert.match(css, /object-fit: contain/)
+  assert.doesNotMatch(css, /entry-video|entry-splash/)
+  assert.doesNotMatch(css, /\.mk-entry-still[^{]*\{[^}]*border-radius/)
   assert.match(css, /mask-composite: intersect/)
   assert.match(css, /linear-gradient\(to right/)
   assert.match(css, /linear-gradient\(to bottom/)

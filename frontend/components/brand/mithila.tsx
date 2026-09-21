@@ -1,11 +1,15 @@
-/* ============================================================== the kolka == */
-/*  Built from design/kolka_design.png and kolka_design_2.png: solid filled
-    petals and dots radiating from a red disc, flanked by two spiral volutes
-    with hanging leaves and budded stems. Filled, not stroked — see design.md §5.
+/* ========================================================= the mithila sun == */
+/*  Built from design/madhubani.jpg and madhubani-artist.jpg: the Chhath sun as
+    a Madhubani painter draws it — a solid red disc with filled petal-rays and
+    dots opening around it, flanked by two of the curling vines that border a
+    kohbar, each carrying leaves and budded stems. Filled, not stroked — a
+    Mithila brush is a bamboo twig with cotton, and it lays paint flat. See
+    design.md §5.
 
     Two forms:
       Medallion — the full motif. Hero, mark stage, closing. One per viewport.
-      Sprig     — a filled teardrop over two dots. Headings, nav, bullets.
+      Sprig     — a filled teardrop over two dots (a paan leaf on its stem).
+                  Headings, nav, bullets.
 
     No hooks here, so both render from Server Components. The bloom is driven by
     the `open` prop; MedallionBloom (./MedallionBloom) opens it once on mount.   */
@@ -60,7 +64,7 @@ type MedallionProps = { open?: boolean; size?: number; className?: string }
 
 export function Medallion({ open = true, size = 160, className = '' }: MedallionProps) {
   return (
-    <svg className={`mk-kolka mk-medallion ${open ? 'is-open' : ''} ${className}`}
+    <svg className={`mk-mithila mk-medallion ${open ? 'is-open' : ''} ${className}`}
       viewBox="0 0 240 240" width={size} height={size} aria-hidden="true">
       <g className="k-pearl">
         {K_PETALS.map(([a, L, w], i) => (

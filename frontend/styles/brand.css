@@ -1,19 +1,19 @@
 /*
- * My Kolkata — the component layer.
+ * My Bihar — the component layer.
  * Spec: /design.md   Live reference: /brand-kit   Tokens: ./brand-tokens.css
  *
  * Every page is built from these. Latin hierarchy comes from size, tracking and
- * colour — never weight. One Crimson Silk moment per viewport; Taxi Yellow is a
+ * colour — never weight. One Crimson Silk moment per viewport; Genda Yellow is a
  * spark, not a surface. Radius encodes role: 8 controls, 12 cards, 20 panels,
  * 28 modals, 999 avatars.
  */
 
 @layer components {
-  /* ============================================================== kolka == */
-  .mk-kolka { overflow: visible; color: var(--mk-pearl); flex: none; }
+  /* ============================================================== mithila == */
+  .mk-mithila { overflow: visible; color: var(--mk-pearl); flex: none; }
   .mk-sprig { overflow: visible; flex: none; }
 
-  /* the disc lands first, then petals open outward — the order alpona is painted */
+  /* the disc lands first, then petals open outward — the order aripan is painted */
   .mk-medallion .k-disc {
     opacity: 0; transform: scale(0.2); transform-origin: 50% 50%; transform-box: fill-box;
     transition: opacity 300ms ease, transform 420ms var(--mk-ease-out);
@@ -41,7 +41,7 @@
   .mk-medallion.is-open .k-grow { opacity: 1; transform: scaleY(1); }
   .mk-medallion.is-open .k-pop { opacity: 1; transform: scale(1); }
 
-  /* ============================================================= alpona == */
+  /* ============================================================= aripan == */
   .mk-rule { width: 100%; height: 44px; display: block; }
   .mk-rule .mk-rule-line {
     stroke-dasharray: 100; stroke-dashoffset: 100; opacity: 0.4;
@@ -63,8 +63,8 @@
     100% { stroke-dashoffset: 0; opacity: 0; }
   }
 
-  .mk-laalpaar { width: 100%; line-height: 0; }
-  .mk-laalpaar-art { width: 100%; display: block; }
+  .mk-mithila-border { width: 100%; line-height: 0; }
+  .mk-mithila-border-art { width: 100%; display: block; }
 
   /* ========================================================== countdown == */
   .mk-count-scene {
@@ -72,8 +72,8 @@
     aspect-ratio: 21 / 9; min-height: 480px;
     border-top: 1px solid rgba(242, 241, 237, 0.07);
   }
-  /* Sky + field share a 16:9 cover box so the shader can stop at the horizon
-     instead of sitting under the grass (SVG slice and HTML pixels otherwise disagree). */
+  /* Sky + river share a 16:9 cover box so the shader can stop at the horizon
+     instead of sitting under the water (SVG slice and HTML pixels otherwise disagree). */
   .mk-sky-frame {
     position: absolute; inset: 0; overflow: hidden;
     container-type: size;
@@ -86,26 +86,24 @@
     height: max(100%, calc(100cqw * 9 / 16));
   }
   .mk-sky { position: absolute; inset: 0; width: 100%; height: 100%; }
-  /* 500 field + translate(0 80). Wrapper is the sky; CloudShader fills it. +1px kills the hairline. */
+  /* the horizon sits at 580/900. Wrapper is the sky; CloudShader fills it. +1px kills the hairline. */
   .mk-sky-shader {
     position: absolute; inset: 0 0 auto 0; overflow: hidden;
     width: 100%; height: calc(580 / 900 * 100% + 1px);
   }
-  .mk-sky-eyes {
-    position: absolute; top: 8%; right: 6%;
-    width: clamp(200px, 22vw, 340px); height: auto;
-    opacity: 0.94; pointer-events: none; z-index: 1;
+  /* the Chhath sun — the one yellow in the frame, so it may glow */
+  .mk-sky-sun {
     filter:
-      drop-shadow(0 0 10px rgba(242, 241, 237, 0.95))
-      drop-shadow(0 0 28px rgba(242, 241, 237, 0.7))
-      drop-shadow(0 0 56px rgba(242, 241, 237, 0.35));
+      drop-shadow(0 0 10px rgba(242, 179, 61, 0.9))
+      drop-shadow(0 0 28px rgba(242, 179, 61, 0.55))
+      drop-shadow(0 0 60px rgba(242, 179, 61, 0.3));
   }
-  .mk-sky-clouds, .mk-sky-kaash-back, .mk-sky-kaash-front {
+  .mk-sky-clouds, .mk-sky-reed-back, .mk-sky-reed-front {
     transform-box: fill-box; transform-origin: 50% 100%;
   }
   .mk-sky-clouds { animation: mk-dawn-drift 56s ease-in-out infinite alternate; }
-  .mk-sky-kaash-back { animation: mk-dawn-sway 14s ease-in-out infinite alternate; }
-  .mk-sky-kaash-front { animation: mk-dawn-sway 9s ease-in-out infinite alternate-reverse; }
+  .mk-sky-reed-back { animation: mk-dawn-sway 14s ease-in-out infinite alternate; }
+  .mk-sky-reed-front { animation: mk-dawn-sway 9s ease-in-out infinite alternate-reverse; }
   @keyframes mk-dawn-drift {
     from { transform: translateX(0); }
     to { transform: translateX(16px); }
@@ -121,8 +119,8 @@
       linear-gradient(0deg, rgba(10,13,14,0.42) 0%, rgba(10,13,14,0.12) 22%, rgba(10,13,14,0) 40%);
   }
   .mk-count-copy { position: absolute; left: 0; bottom: 0; padding: clamp(24px, 5vw, 64px); max-width: min(800px, 94%); }
-  .mk-count-bn {
-    font-family: var(--mk-bengali); font-variation-settings: 'wght' 500;
+  .mk-count-hi {
+    font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
     font-size: clamp(15px, 2.1vw, 20px); line-height: 1.5;
     color: var(--mk-blush); margin: 0 0 var(--mk-2);
   }
@@ -140,12 +138,12 @@
     font-variant-numeric: tabular-nums;
     text-shadow: 0 14px 34px rgba(0, 0, 0, 0.6);
   }
-  .mk-unit-label { font-size: 11px; letter-spacing: 0.14em; color: var(--mk-taxi); }
+  .mk-unit-label { font-size: 11px; letter-spacing: 0.14em; color: var(--mk-genda); }
   .mk-count-sub { max-width: 46ch; font-size: clamp(13px, 1.6vw, 15px); line-height: 1.6; color: var(--mk-ash); margin: var(--mk-4) 0 0; }
   .mk-count-days { display: flex; flex-wrap: wrap; gap: clamp(16px, 4vw, 52px); list-style: none; margin: 0; padding: 0; }
   .mk-count-day { display: flex; flex-direction: column; gap: 2px; }
-  .mk-count-day-bn {
-    font-family: var(--mk-bengali); font-variation-settings: 'wght' 600;
+  .mk-count-day-hi {
+    font-family: var(--mk-devanagari); font-variation-settings: 'wght' 600;
     font-size: 21px; line-height: 1.5; color: var(--mk-pearl);
   }
   .mk-count-day-en { font-size: 13px; letter-spacing: 0.04em; color: var(--mk-ash); }
@@ -181,9 +179,9 @@
   .mk-caption { font-size: 14px; line-height: 1.5; letter-spacing: 0.015em; color: var(--mk-ash); margin: 0; }
   .mk-meta { font-size: 13px; line-height: 1.4; letter-spacing: 0.02em; color: var(--mk-ash); margin: 0; }
   .mk-measure { max-width: 68ch; }
-  /* Bengali leads by weight, never by tracking. line-height 1.5 for the matra. */
-  .mk-bn {
-    font-family: var(--mk-bengali); font-variation-settings: 'wght' 500;
+  /* Devanagari leads by weight, never by tracking. line-height 1.5 for the matra. */
+  .mk-hi {
+    font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
     line-height: 1.5; letter-spacing: 0; color: var(--mk-ash);
   }
   .mk-tabular { font-variant-numeric: tabular-nums; }
@@ -238,8 +236,8 @@
     padding: calc(var(--mk-nav) + 48px) var(--mk-edge) clamp(40px, 6vw, 88px);
   }
   .mk-banner-copy { max-width: min(640px, 100%); }
-  .mk-banner-bn {
-    font-family: var(--mk-bengali); font-variation-settings: 'wght' 500;
+  .mk-banner-hi {
+    font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
     font-size: clamp(15px, 2vw, 19px); line-height: 1.5; color: var(--mk-blush); margin: var(--mk-3) 0 0;
   }
   .mk-banner-lede { max-width: 46ch; font-size: clamp(16px, 1.8vw, 19px); line-height: 1.6; color: var(--mk-pearl); margin: var(--mk-4) 0 0; }
@@ -335,7 +333,7 @@
     transition: border-color var(--mk-t-hover) var(--mk-ease-in-out), color var(--mk-t-hover) var(--mk-ease-in-out);
   }
   .mk-chip:hover { color: var(--mk-pearl); border-color: rgba(242,241,237,0.4); }
-  .mk-chip[aria-pressed="true"], .mk-chip.is-active { color: var(--mk-white); border-color: var(--mk-taxi); }
+  .mk-chip[aria-pressed="true"], .mk-chip.is-active { color: var(--mk-white); border-color: var(--mk-genda); }
   .mk-chip .mk-icon, .mk-chip .mk-ui-icon { width: 20px; height: 20px; }
 
   /* the segmented switch — a tonal Pearl state, like the navigation's pill */
@@ -380,7 +378,7 @@
   .mk-card-desc { font-size: 15px; line-height: 1.55; color: var(--mk-pearl); margin: var(--mk-2) 0 0; }
   .mk-card:hover .mk-card-img, .mk-card:focus-visible .mk-card-img { transform: scale(1.05); }
   .mk-card:hover .mk-card-media, .mk-card:focus-visible .mk-card-media { transform: translateY(-4px); box-shadow: 0 30px 58px -24px rgba(0, 0, 0, 1); }
-  .mk-card:hover .mk-card-sub, .mk-card:focus-visible .mk-card-sub { color: var(--mk-taxi); }
+  .mk-card:hover .mk-card-sub, .mk-card:focus-visible .mk-card-sub { color: var(--mk-genda); }
   .mk-card:hover .mk-card-scrim, .mk-card:focus-visible .mk-card-scrim { opacity: 1; }
   .mk-card:hover .mk-card-title { transform: translateY(-2px); }
 
@@ -416,7 +414,7 @@
     display: inline-flex; align-items: center; gap: var(--mk-1); padding: 3px 10px; border-radius: 999px;
     font-size: 12.5px; letter-spacing: 0.02em; line-height: 1.4; background: rgba(242,241,237,0.08); color: var(--mk-pearl); white-space: nowrap;
   }
-  .mk-tag--warn { background: rgba(242,179,61,0.16); color: var(--mk-taxi); }
+  .mk-tag--warn { background: rgba(242,179,61,0.16); color: var(--mk-genda); }
 
   /* empty and error states — left aligned, they invite and state the fix */
   .mk-empty { display: flex; flex-direction: column; align-items: flex-start; gap: var(--mk-3); padding: clamp(24px, 4vw, 40px); }
@@ -428,7 +426,7 @@
     background: rgba(10, 13, 14, 0.72); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   }
 
-  /* first /home visit — cinematic film dissolving into the dark */
+  /* first /home visit — a title card: the ghat still, the medallion, the wordmark */
   .mk-entry {
     position: fixed; inset: 0; z-index: 80;
     display: flex; align-items: center; justify-content: center;
@@ -437,27 +435,43 @@
   }
   .mk-entry.is-out { opacity: 0; pointer-events: none; }
   .mk-entry-stage { position: relative; line-height: 0; }
-  .mk-entry-stage:has(.mk-entry-play) { cursor: pointer; }
-  .mk-entry-video {
+  .mk-entry-still {
     display: block;
-    width: min(960px, calc(100vw - 2 * var(--mk-edge)), calc((100svh - 80px) * 4 / 3));
-    aspect-ratio: 1440 / 1080; height: auto; object-fit: contain;
-    background: transparent;
-    /* soft edge dissolve into Obsidian — no hard crop, no box */
+    width: min(960px, calc(100vw - 2 * var(--mk-edge)), calc((100svh - 80px) * 3 / 2));
+    aspect-ratio: 3 / 2; height: auto; object-fit: cover;
+    animation: mk-entry-drift 4s var(--mk-ease-out) both;
+    /* soft edge dissolve into Obsidian — no hard crop, no box. Only the
+       mask's alpha matters, so the opaque stops take the canvas colour. */
     -webkit-mask-image:
-      linear-gradient(to right, transparent 0%, #000 11%, #000 89%, transparent 100%),
-      linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+      linear-gradient(to right, transparent 0%, #0d1012 11%, #0d1012 89%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #0d1012 14%, #0d1012 86%, transparent 100%);
     -webkit-mask-composite: source-in;
     mask-image:
-      linear-gradient(to right, transparent 0%, #000 11%, #000 89%, transparent 100%),
-      linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+      linear-gradient(to right, transparent 0%, #0d1012 11%, #0d1012 89%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #0d1012 14%, #0d1012 86%, transparent 100%);
     mask-composite: intersect;
   }
-  .mk-entry-play {
-    position: absolute; inset: 50% auto auto 50%; z-index: 3; transform: translate(-50%, -50%);
-    padding: 12px 26px; border-radius: var(--mk-r-sm);
-    background: var(--mk-crimson); color: var(--mk-pearl);
-    font-family: var(--mk-text); font-size: 16px; letter-spacing: 0.01em;
+  @keyframes mk-entry-drift {
+    from { transform: scale(1.06); }
+    to { transform: scale(1); }
+  }
+  .mk-entry-scrim {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(0deg, rgba(10,13,14,0.7) 0%, rgba(38,10,14,0.22) 40%, transparent 70%);
+  }
+  .mk-entry-lockup {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    line-height: 1; text-align: center;
+  }
+  .mk-entry-latin {
+    margin: 12px 0 0; font-family: var(--mk-display); color: var(--mk-white);
+    font-size: clamp(22px, 3.4vw, 34px); letter-spacing: 0.22em;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  }
+  .mk-entry-hi {
+    margin: 0; font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
+    font-size: clamp(13px, 1.6vw, 15px); line-height: 1.5; color: var(--mk-ash);
   }
   /* quiet way out of the film — Ash on Obsidian, off the video, above the home indicator */
   .mk-entry-skip {
@@ -486,16 +500,12 @@
     }
     .mk-rule .mk-rule-line { stroke-dashoffset: 0 !important; transition: none !important; }
     .mk-loader-line { animation: none !important; stroke-dashoffset: 0 !important; opacity: 0.7 !important; }
-    .mk-banner-img { animation: none !important; transform: none !important; }
-    .mk-sky-clouds, .mk-sky-kaash-back, .mk-sky-kaash-front { animation: none !important; }
+    .mk-banner-img, .mk-entry-still { animation: none !important; transform: none !important; }
+    .mk-sky-clouds, .mk-sky-reed-back, .mk-sky-reed-front { animation: none !important; }
   }
 
   @media (max-width: 900px) {
     .mk-count-scene { aspect-ratio: 4 / 5; min-height: 0; }
-    .mk-sky-eyes {
-      top: 9%; right: auto; left: 50%; transform: translateX(-50%);
-      width: min(66vw, 270px);
-    }
     .mk-banner { min-height: min(760px, 125vw); }
     .mk-row { grid-auto-columns: 78%; }
   }

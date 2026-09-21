@@ -1,10 +1,12 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { MedallionBloom } from '@/components/brand/MedallionBloom'
 
-const KEY = 'mk-entry-film-9'
+const KEY = 'mk-entry-card-1'
+const HOLD_MS = 2600
 
-/* storage can be blocked (private mode, site data off) — the film never takes /home down with it */
+/* storage can be blocked (private mode, site data off) — the card never takes /home down with it */
 function hasSeen() {
   try {
     return sessionStorage.getItem(KEY) !== null
@@ -19,23 +21,16 @@ function markSeen() {
   } catch {}
 }
 
+/*  The title card. Once a session, on the way in: the medallion blooms over the
+    ghat photograph, the wordmark lands, and the card lets go by itself. There
+    is no film — a still, held, is the cinematic move here. design.md §9.8      */
 export function HomeEntry() {
-  const videoRef = useRef<HTMLVideoElement>(null)
   const [show, setShow] = useState(false)
   const [out, setOut] = useState(false)
-  const [needsTap, setNeedsTap] = useState(false)
 
   const dismiss = useCallback(() => {
     markSeen()
     setOut(true)
-  }, [])
-
-  const playWithSound = useCallback(() => {
-    const video = videoRef.current
-    if (!video) return
-    video.muted = false
-    video.volume = 1
-    video.play().then(() => setNeedsTap(false)).catch(() => setNeedsTap(true))
   }, [])
 
   useEffect(() => {
@@ -53,9 +48,12 @@ export function HomeEntry() {
       if (e.key === 'Escape') dismiss()
     }
     window.addEventListener('keydown', onKey)
-    playWithSound()
-    return () => window.removeEventListener('keydown', onKey)
-  }, [show, dismiss, playWithSound])
+    const t = setTimeout(dismiss, HOLD_MS)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      clearTimeout(t)
+    }
+  }, [show, dismiss])
 
   if (!show) return null
 
@@ -64,21 +62,20 @@ export function HomeEntry() {
       className={`mk-entry${out ? ' is-out' : ''}`}
       role="dialog"
       aria-modal="true"
-      aria-label="Welcome to My Kolkata"
+      aria-label="Welcome to My Bihar"
       onTransitionEnd={(e) => {
         if (e.target === e.currentTarget && out) setShow(false)
       }}
     >
-      <div className="mk-entry-stage" onClick={needsTap ? playWithSound : undefined}>
-        <video
-          ref={videoRef}
-          className="mk-entry-video"
-          src="/entry1.mp4"
-          playsInline
-          preload="auto"
-          onEnded={dismiss}
-        />
-        {needsTap ? <span className="mk-entry-play">Play</span> : null}
+      <div className="mk-entry-stage">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="mk-entry-still" src="/chhath.jpg" alt="" />
+        <div className="mk-entry-scrim" aria-hidden="true" />
+        <div className="mk-entry-lockup">
+          <MedallionBloom size={112} />
+          <p className="mk-entry-latin">MY BIHAR</p>
+          <p className="mk-entry-hi" lang="hi">हमार बिहार</p>
+        </div>
       </div>
       <button type="button" className="mk-entry-skip" onClick={dismiss}>
         Skip

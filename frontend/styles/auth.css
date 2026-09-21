@@ -25,9 +25,9 @@
   margin: 0; font-family: var(--mk-display); font-weight: 400; color: var(--mk-white);
   font-size: 26px; letter-spacing: 0.14em; line-height: 1.1;
 }
-/* the wordmark's Bengali — a whisper under the Latin, in Ash */
-.mk-auth-bn {
-  margin: 4px 0 0; font-family: var(--mk-bengali); font-variation-settings: 'wght' 500;
+/* the wordmark's Devanagari — a whisper under the Latin, in Ash */
+.mk-auth-hi {
+  margin: 4px 0 0; font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
   font-size: 14px; line-height: 1.5; color: var(--mk-ash);
 }
 .mk-auth-lede { margin: var(--mk-6) 0 var(--mk-6); max-width: 36ch; }
@@ -47,8 +47,8 @@
   box-shadow: 0 28px 64px -24px rgba(0, 0, 0, 0.9);
 }
 .mk-auth-google { display: inline-flex; align-items: center; justify-content: center; gap: var(--mk-3); }
-/* Taxi Yellow, not Crimson — error text is small (design.md §3.6) */
-.mk-auth-error { margin: 0; color: var(--mk-taxi); }
+/* Genda Yellow, not Crimson — error text is small (design.md §3.6) */
+.mk-auth-error { margin: 0; color: var(--mk-genda); }
 /* the credit line, pinned to the foot of the form half */
 .mk-auth-credit { position: absolute; left: 0; right: 0; bottom: var(--mk-5); text-align: center; }
 .mk-auth-foot { margin-top: var(--mk-5); display: flex; align-items: center; justify-content: center; gap: var(--mk-3); flex-wrap: wrap; }

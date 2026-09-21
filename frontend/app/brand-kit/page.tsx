@@ -2,12 +2,12 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback, useId } from 'react'
-import { Medallion, Sprig, NotchWing } from '@/components/brand/kolka'
+import { Medallion, Sprig, NotchWing } from '@/components/brand/mithila'
 import { EMBLEMS, EMBLEM_LIST } from '@/components/brand/emblems'
 import { ICONS, ICON_LIST } from '@/components/brand/icons'
 import { MOTIF_LIB, MOTIF_LIB_LIST } from '@/components/brand/motifs'
-import { AlponaRule, LaalPaar } from '@/components/brand/Alpona'
-import { CountdownScene, PujoDays } from '@/components/brand/Countdown'
+import { AripanRule, MithilaBorder } from '@/components/brand/Aripan'
+import { CountdownScene, ChhathDays } from '@/components/brand/Countdown'
 
 /* ------------------------------------------------------------------ data -- */
 
@@ -20,9 +20,9 @@ const CORE = [
   { token: '--mk-crimson-depth', name: 'Crimson Depth', hex: '#710014', role: 'Deep accent, dramatic grounds' },
   { token: '--mk-ruby', name: 'Ruby Red', hex: '#98111E', role: 'Secondary red, light-mode primary' },
   { token: '--mk-crimson', name: 'Crimson Silk', hex: '#D72638', role: 'The action colour — budgeted' },
-  { token: '--mk-taxi', name: 'Taxi Yellow', hex: '#F2B33D', role: 'The Kolkata accent — taxi, protima, diya' },
+  { token: '--mk-genda', name: 'Genda Yellow', hex: '#F2B33D', role: 'The Bihar accent — genda garland, thekua, diya' },
   { token: '--mk-ash', name: 'Ash', hex: '#AFA2A0', role: 'Muted text, metadata, captions' },
-  { token: '--mk-pearl', name: 'Soft Pearl', hex: '#F2F1ED', role: 'Body text, laal-paar white' },
+  { token: '--mk-pearl', name: 'Soft Pearl', hex: '#F2F1ED', role: 'Body text, mithila border white' },
   { token: '--mk-white', name: 'Pop White', hex: '#FCFBF8', role: 'Display, numerals, card titles' },
   { token: '--mk-blush', name: 'Soft Blush', hex: '#FBE4E3', role: 'Rare highlight' },
 ]
@@ -31,11 +31,11 @@ const CONTRAST = [
   { pair: 'Pop White on Obsidian', ratio: '18.5', grade: 'AAA', note: 'Display, numerals' },
   { pair: 'Soft Pearl on Obsidian', ratio: '16.9', grade: 'AAA', note: 'Body text' },
   { pair: 'Soft Pearl on Deep Bordeaux', ratio: '14.5', grade: 'AAA', note: 'Body on red surfaces' },
-  { pair: 'Taxi Yellow on Obsidian', ratio: '10.3', grade: 'AAA', note: 'The accent that may carry small text' },
-  { pair: 'Obsidian on Taxi Yellow', ratio: '10.3', grade: 'AAA', note: 'Yellow buttons, badges' },
+  { pair: 'Genda Yellow on Obsidian', ratio: '10.3', grade: 'AAA', note: 'The accent that may carry small text' },
+  { pair: 'Obsidian on Genda Yellow', ratio: '10.3', grade: 'AAA', note: 'Yellow buttons, badges' },
   { pair: 'Ash on Obsidian', ratio: '7.2', grade: 'AA', note: 'Captions, metadata' },
   { pair: 'Soft Pearl on Crimson Silk', ratio: '4.4', grade: 'AA', note: 'Button labels, 16px and up' },
-  { pair: 'Crimson Silk on Obsidian', ratio: '3.8', grade: 'Large only', note: 'Never body text — use Taxi instead' },
+  { pair: 'Crimson Silk on Obsidian', ratio: '3.8', grade: 'Large only', note: 'Never body text — use Genda instead' },
 ]
 
 const SCALE = [
@@ -49,7 +49,7 @@ const SCALE = [
 const CURVES = [
   { name: 'Reveal', css: 'cubic-bezier(0.16, 1, 0.3, 1)', ms: 700, use: 'Entrances, band reveals' },
   { name: 'Move', css: 'cubic-bezier(0.65, 0, 0.35, 1)', ms: 320, use: 'Transitions, opening' },
-  { name: 'Draw', css: 'cubic-bezier(0.32, 0.72, 0, 1)', ms: 900, use: 'The kolka, the alpona line' },
+  { name: 'Draw', css: 'cubic-bezier(0.32, 0.72, 0, 1)', ms: 900, use: 'The mithila, the aripan line' },
 ]
 
 const NAV = [
@@ -57,13 +57,13 @@ const NAV = [
   ['Motifs', 'motifs'], ['Emblems', 'emblems'], ['Icons', 'icons'], ['Components', 'components'],
 ]
 
-/*  Emblems, icons, the alpona library, the kolka, the notch wing, laal-paar
-    and the alpona rule live in components/brand — the app imports the same
+/*  Emblems, icons, the aripan library, the mithila, the notch wing, mithila border
+    and the aripan rule live in components/brand — the app imports the same
     code, so this page and the product cannot drift apart.                   */
 
 /* ------------------------------------------------------------------ band -- */
 
-function Band({ id, title, bengali, lede, children, tone = 'base' }) {
+function Band({ id, title, devanagari, lede, children, tone = 'base' }) {
   const ref = useRef(null)
   const [seen, setSeen] = useState(false)
   useEffect(() => {
@@ -80,9 +80,9 @@ function Band({ id, title, bengali, lede, children, tone = 'base' }) {
           <Sprig size={42} />
           <h2 className="band-title">
             {title}
-            {/* Bengali only where the English heading is a transliteration of a
-                Bengali word — never as a translation of an English one. */}
-            {bengali && <span className="band-bn" lang="bn">{bengali}</span>}
+            {/* Devanagari only where the English heading is a transliteration of a
+                Devanagari word — never as a translation of an English one. */}
+            {devanagari && <span className="band-bn" lang="hi">{devanagari}</span>}
           </h2>
         </header>
         {lede && <p className="band-lede">{lede}</p>}
@@ -178,14 +178,14 @@ export default function BrandKit() {
 
         {/* desktop — left: lockup */}
         <aside className="nn nn-logo" aria-label="Brand">
-          <a className="nn-brand" href="#top" aria-label="My Kolkata — back to top">
+          <a className="nn-brand" href="#top" aria-label="My Bihar — back to top">
             <span className="nn-brand-box">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/micon.png" alt="" width={28} height={28} />
             </span>
             <span className="nn-brand-text">
-              <span className="nn-brand-latin">MY KOLKATA</span>
-              <span className="nn-brand-bn" lang="bn">আমার কলকাতা</span>
+              <span className="nn-brand-latin">MY BIHAR</span>
+              <span className="nn-brand-hi" lang="hi">हमार बिहार</span>
             </span>
           </a>
           <NotchWing side="right" />
@@ -233,14 +233,14 @@ export default function BrandKit() {
           <NotchWing side="left" />
           <NotchWing side="right" />
           <div className="nn-island-row">
-            <a className="nn-brand" href="#top" aria-label="My Kolkata — back to top">
+            <a className="nn-brand" href="#top" aria-label="My Bihar — back to top">
               <span className="nn-brand-box">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/micon.png" alt="" width={28} height={28} />
             </span>
               <span className="nn-brand-text">
-                <span className="nn-brand-latin">MY KOLKATA</span>
-                <span className="nn-brand-bn" lang="bn">আমার কলকাতা</span>
+                <span className="nn-brand-latin">MY BIHAR</span>
+                <span className="nn-brand-hi" lang="hi">हमार बिहार</span>
               </span>
             </a>
             <button
@@ -290,8 +290,8 @@ export default function BrandKit() {
           <div className="letterbox letterbox--bottom" aria-hidden="true" />
           <div className="title-inner">
             <Medallion open={ready} size={168} className="title-mark" />
-            <h1 className="title-latin"><span>MY</span><span>KOLKATA</span></h1>
-            <p className="title-bn" lang="bn">আমার কলকাতা</p>
+            <h1 className="title-latin"><span>MY</span><span>PATNA</span></h1>
+            <p className="title-bn" lang="hi">हमार बिहार</p>
             <p className="title-sub">
               A city, shot like a film. Every colour, letterform, line and curve the product is
               built from — and the reasons behind each one.
@@ -307,10 +307,10 @@ export default function BrandKit() {
         <section className="count" id="countdown">
           <CountdownScene />
           <div className="count-after">
-            <PujoDays />
+            <ChhathDays />
             <p className="count-note">
               A ticking clock is information, not decoration — it and the title sequence are the only
-              motion nobody has to ask for. The sky is drawn, not photographed: swap a real kaash-phool
+              motion nobody has to ask for. The sky is drawn, not photographed: swap a real ghat-still
               frame in behind the scrim and nothing else has to change. Every date lives in one constant
               and moves each year with the panjika.
             </p>
@@ -321,8 +321,8 @@ export default function BrandKit() {
         <Band
           id="mark"
           title="The mark"
-          bengali="কলকা"
-          lede="A crimson disc with petals and dots opening around it, flanked by two spiral volutes — the alpona a Bengali household paints on its floor, drawn as a mark. It is filled rather than outlined, because that is how alpona is actually made."
+          devanagari="सूरज"
+          lede="A crimson disc with petal-rays and dots opening around it, flanked by two curling vines — the Chhath sun as a Madhubani painter lays it down, drawn as a mark. It is filled rather than outlined, because a Mithila brush is a bamboo twig with cotton, and it lays paint flat."
         >
           <div className="mark-grid">
             <button
@@ -334,7 +334,7 @@ export default function BrandKit() {
               onBlur={() => setMarkOpen(false)}
               onClick={() => setMarkOpen((v) => !v)}
               aria-pressed={markOpen}
-              aria-label="Unfurl the kolka mark"
+              aria-label="Unfurl the mithila mark"
             >
               <Medallion open={markOpen} size={320} />
               <span className="mark-hint">{markOpen ? 'Unfurled' : 'Hover to unfurl'}</span>
@@ -344,16 +344,16 @@ export default function BrandKit() {
               <div className="lockup">
                 <Medallion open size={76} />
                 <div>
-                  <p className="lockup-latin">MY KOLKATA</p>
-                  <p className="lockup-bn" lang="bn">আমার কলকাতা</p>
+                  <p className="lockup-latin">MY BIHAR</p>
+                  <p className="lockup-bn" lang="hi">हमार बिहार</p>
                 </div>
               </div>
 
               <dl className="spec">
-                <div><dt>Disc</dt><dd>Crimson, r25 on a 240 grid. It lands first — alpona is painted from the centre out.</dd></div>
+                <div><dt>Disc</dt><dd>Crimson, r25 on a 240 grid. It lands first — aripan is painted from the centre out.</dd></div>
                 <div><dt>Petals</dt><dd>Ten solid teardrops. The gaps at ±90° are where the volutes sit.</dd></div>
                 <div><dt>Volutes</dt><dd>Two spiral scrolls, each with three hanging leaves and a budded stem</dd></div>
-                <div><dt>Dots</dt><dd>Two above, two below, descending — the alpona signature</dd></div>
+                <div><dt>Dots</dt><dd>Two above, two below, descending — the aripan signature</dd></div>
                 <div><dt>Bloom</dt><dd>Disc, petals, volutes, leaves, buds, dots — 1.3s, in that order</dd></div>
                 <div><dt>Below 56px</dt><dd>It becomes the sprig: one teardrop over two dots</dd></div>
                 <div><dt>Never</dt><dd>Outlined, rotated, mirrored on the vertical, or set in gold</dd></div>
@@ -378,7 +378,7 @@ export default function BrandKit() {
           </div>
         </Band>
 
-        <AlponaRule />
+        <AripanRule />
 
         {/* -------------------------------------------------------------- colour -- */}
         <Band
@@ -448,21 +448,21 @@ export default function BrandKit() {
         <Band
           id="type"
           title="Type"
-          lede="Clear Sans ships Regular only — there is no bold. Latin hierarchy is built from size, tracking and colour, never weight. Bengali is the family with a live weight axis, so Bengali carries the emphasis Latin cannot."
+          lede="Clear Sans ships Regular only — there is no bold. Latin hierarchy is built from size, tracking and colour, never weight. Devanagari is the family with a live weight axis, so Devanagari carries the emphasis Latin cannot."
         >
           <div className="balance">
-            <h3 className="h3">Where Bengali is allowed</h3>
+            <h3 className="h3">Where Devanagari is allowed</h3>
             <div className="balance-grid">
               <ul className="rules">
-                <li>The wordmark — আমার কলকাতা, set at 38% of the Latin, wght 500, in Ash. A whisper under the title, never a second headline.</li>
-                <li>Words with no English equivalent: কলকা, আলপনা, ঢাক, ধুনুচি, কাশফুল, শিউলি, পুষ্পাঞ্জলি.</li>
-                <li>Real content — the five days, a greeting, a line someone would actually say.</li>
-                <li>Place and para names as people write them.</li>
+                <li>The wordmark — हमार बिहार, set at 38% of the Latin, wght 500, in Ash. A whisper under the title, never a second headline.</li>
+                <li>Words with no English equivalent: अरिपन, ठेकुआ, सूप, दउरा, ईख, लिट्टी, सत्तू, कोहबर.</li>
+                <li>Real content — the four days, a greeting, a line someone would actually say.</li>
+                <li>Place and mohalla names as people write them.</li>
               </ul>
               <ul className="rules is-dont">
-                <li>Never as a translation label under an English heading. This section is called Type; there is no অক্ষর beneath it.</li>
-                <li>Never to decorate a section that has no Bengali content.</li>
-                <li>Never letter-spaced — it breaks the মাত্রা.</li>
+                <li>Never as a translation label under an English heading. This section is called Type; there is no अक्षर beneath it.</li>
+                <li>Never to decorate a section that has no Devanagari content.</li>
+                <li>Never letter-spaced — it breaks the शिरोरेखा.</li>
                 <li>Never at the same size and weight as the Latin it sits beside. One of the two leads.</li>
               </ul>
             </div>
@@ -488,8 +488,8 @@ export default function BrandKit() {
               <h3 className="h3">Clear Sans Text</h3><span className="muted">Body and UI · 400 only</span>
             </div>
             <p className="measure body-lg">
-              The last week of Ashwin, the light changes. Kaash phool comes up along the tracks at
-              Bagbazar, the shiuli drops overnight, and the whole city starts counting backwards.
+              The week after Diwali, the light changes. Sugarcane comes into Patna by the truckload,
+              the ghats get swept and painted overnight, and the whole state starts counting backwards.
             </p>
             <p className="measure body">
               Body sets at 16px on a 1.65 line, tracked a touch open at 0.01em, and never runs past
@@ -501,10 +501,10 @@ export default function BrandKit() {
 
           <div className="specimen">
             <div className="specimen-head">
-              <h3 className="h3">Noto Sans Bengali</h3><span className="muted">Variable · wght 100–900 · wdth 62.5–100</span>
+              <h3 className="h3">Noto Sans Devanagari</h3><span className="muted">Variable · wght 100–900 · wdth 62.5–100</span>
             </div>
-            <p className="bengali-stage" lang="bn" style={{ fontVariationSettings: `'wght' ${wght}, 'wdth' ${wdth}` }}>
-              আশ্বিনের শারদপ্রাতে
+            <p className="devanagari-stage" lang="hi" style={{ fontVariationSettings: `'wght' ${wght}, 'wdth' ${wdth}` }}>
+              छठ में घरे आ रहल बाड़ऽ नू?
             </p>
             <div className="axes">
               <label className="axis">
@@ -518,13 +518,13 @@ export default function BrandKit() {
             </div>
             <ul className="rules">
               <li>Line-height 1.5 minimum, against 1.05 for Latin display.</li>
-              <li>Set Bengali about 8% larger when it shares a line with Latin at the same rank.</li>
+              <li>Set Devanagari about 8% larger when it shares a line with Latin at the same rank.</li>
               <li>Compress with the width axis to 85 for tight slots. Below 80 it distorts.</li>
             </ul>
           </div>
         </Band>
 
-        <AlponaRule />
+        <AripanRule />
 
         {/* -------------------------------------------------------------- motifs -- */}
         <Band
@@ -535,20 +535,20 @@ export default function BrandKit() {
         >
           <div className="motif-grid">
             <article className="motif">
-              <h3 className="h3">Alpona <span className="motif-bn" lang="bn">আলপনা</span></h3>
-              <p className="body">The rule between sections — a hairline that spends its last 90px becoming a curl and ends in a kolka. Draws once on entry.</p>
-              <AlponaRule />
+              <h3 className="h3">Aripan <span className="motif-bn" lang="hi">अरिपन</span></h3>
+              <p className="body">The rule between sections — a hairline that spends its last 90px becoming a curl, the vine at the edge of a rice-paste floor drawing. Draws once on entry.</p>
+              <AripanRule />
             </article>
 
             <article className="motif">
-              <h3 className="h3">Laal-paar</h3>
-              <p className="body">The red border of a white saree, reduced to a band edge. Used once or twice a page, never as a frame.</p>
-              <div className="motif-art"><LaalPaar height={30} /></div>
+              <h3 className="h3">Mithila border</h3>
+              <p className="body">The double-ruled border of a Madhubani painting, reduced to a band edge. Used once or twice a page, never as a frame.</p>
+              <div className="motif-art"><MithilaBorder height={30} /></div>
             </article>
 
             <article className="motif">
-              <h3 className="h3">Chalchitra</h3>
-              <p className="body">The painted arch behind the idol, kept as bare geometry. It shapes feature panels and pandal-style cards.</p>
+              <h3 className="h3">Torana</h3>
+              <p className="body">The stone gateway arch of a stupa — Sanchi-style, as at Vaishali — kept as bare geometry. It shapes feature panels and ghat-style cards.</p>
               <div className="motif-art">
                 <svg viewBox="0 0 200 110" fill="none" className="motif-svg" aria-hidden="true">
                   <path d="M14 106 V62 C14 26 50 6 100 6 C150 6 186 26 186 62 V106" stroke="var(--mk-pearl)" strokeWidth="1.6" opacity="0.7" />
@@ -579,10 +579,10 @@ export default function BrandKit() {
             </article>
           </div>
         
-          <h3 className="h3 sub">The alpona library</h3>
+          <h3 className="h3 sub">The aripan library</h3>
           <p className="body measure">
-            Six motifs read straight off a sheet of hand-drawn alpona: solid, symmetrical, built
-            from teardrops and descending dot runs. They are the vocabulary the kolka is made from,
+            Six motifs read straight off a sheet of hand-drawn aripan: solid, symmetrical, built
+            from teardrops and descending dot runs. They are the vocabulary the mithila is made from,
             available on their own where a full medallion would be too much.
           </p>
           <div className="lib-grid">
@@ -602,14 +602,14 @@ export default function BrandKit() {
         <Band
           id="emblems"
           title="Emblems"
-          lede="Filled, two-tone cultural marks in the alpona vocabulary — a Pearl body with one Crimson accent, exactly the way an alpona is painted around a red disc. These are not interface icons; they are the brand's cultural voice, used large and used rarely."
+          lede="Filled, two-tone cultural marks in the aripan vocabulary — a Pearl body with one Crimson accent, exactly the way an aripan is painted around a red disc. These are not interface icons; they are the brand's cultural voice, used large and used rarely."
         >
           <div className="emblem-grid">
             {EMBLEM_LIST.map(([id, name, bn, use]) => (
               <figure className="emblem" key={id}>
                 <svg viewBox="0 0 64 64" className="emblem-art" aria-hidden="true">{EMBLEMS[id]}</svg>
                 <figcaption>
-                  <span className="emblem-name">{name} <span className="emblem-bn" lang="bn">{bn}</span></span>
+                  <span className="emblem-name">{name} <span className="emblem-bn" lang="hi">{bn}</span></span>
                   <span className="emblem-use">{use}</span>
                 </figcaption>
               </figure>
@@ -617,7 +617,7 @@ export default function BrandKit() {
           </div>
           <p className="note">
             A Pearl body with one accent. That accent is Crimson, except where the object itself is
-            yellow — the diya's flame, the mukut's gems, the coconut's band — which is where Taxi
+            yellow — the diya's flame, the kalash's coconut band — which is where Genda
             Yellow lives. Never smaller than 40px, never outlined, never a third colour, and never
             used where a UI icon belongs. On paper the Pearl becomes Obsidian.
           </p>
@@ -631,7 +631,7 @@ export default function BrandKit() {
           <div className="icon-grid">
             {ICON_LIST.map(([id, name, use]) => (
               <figure className="icon-cell" key={id}>
-                <svg viewBox="0 0 32 32" className={`icon ${id === 'taxi' ? 'icon--taxi' : ''}`}
+                <svg viewBox="0 0 32 32" className={`icon ${id === 'auto' ? 'icon--auto' : ''}`}
                   fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
                   strokeLinejoin="round" aria-hidden="true">
                   {ICONS[id]}
@@ -678,7 +678,7 @@ export default function BrandKit() {
 
           <div className="duration-grid">
             {[['120ms', 'Focus rings, colour-only changes'], ['200ms', 'Hover — the standard'],
-              ['320ms', 'Expand, open, reveal'], ['900ms', 'The full kolka unfurl'],
+              ['320ms', 'Expand, open, reveal'], ['900ms', 'The full mithila unfurl'],
               ['700ms', 'Band entrance'], ['24s', 'Hero image zoom']].map(([d, u]) => (
               <div className="duration" key={d}><span className="duration-val">{d}</span><span className="duration-use">{u}</span></div>
             ))}
@@ -688,7 +688,7 @@ export default function BrandKit() {
             Banned outright: fade-and-slide-up on every section, hover transitions on every card in a
             grid, parallax on more than one element, particles, floating diyas, rotating chakras, and
             any looping ambient animation. Under <code className="inline-code">prefers-reduced-motion</code> the
-            kolka renders fully unfurled, the hero does not zoom, and the alpona is drawn complete.
+            mithila renders fully unfurled, the hero does not zoom, and the aripan is drawn complete.
           </p>
         </Band>
 
@@ -696,7 +696,7 @@ export default function BrandKit() {
         <Band
           id="components"
           title="Components"
-          lede="The banner takes its scrim discipline and bottom-left anchor from Netflix. The caption device comes straight off a photograph of kaash phool. Neither takes its colour from anyone."
+          lede="The banner takes its scrim discipline and bottom-left anchor from Netflix. The caption device comes straight off a photograph of the ghat at Sandhya Arghya. Neither takes its colour from anyone."
         >
           <h3 className="h3 sub">The banner</h3>
           <div className="banner">
@@ -704,11 +704,11 @@ export default function BrandKit() {
             <div className="banner-scrim" aria-hidden="true" />
             <div className="banner-content">
               <Sprig size={38} />
-              <h4 className="banner-title">DURGA PUJA</h4>
-              <p className="banner-bn" lang="bn">আশ্বিনের শারদপ্রাতে</p>
-              <p className="banner-lede">Five days. One city. Everyone comes home.</p>
+              <h4 className="banner-title">CHHATH PUJA</h4>
+              <p className="banner-bn" lang="hi">छठ आ रहल बा।</p>
+              <p className="banner-lede">Four days. One river. Everyone comes home.</p>
               <div className="banner-actions">
-                <button type="button" className="btn btn--primary">Explore the Pujo <span className="btn-arrow" aria-hidden="true">→</span></button>
+                <button type="button" className="btn btn--primary">Go to the ghat <span className="btn-arrow" aria-hidden="true">→</span></button>
                 <button type="button" className="btn btn--secondary">Watch the film</button>
               </div>
             </div>
@@ -752,16 +752,16 @@ export default function BrandKit() {
           <div className="btn-row">
             <button type="button" className="btn btn--primary">Save this place <span className="btn-arrow" aria-hidden="true">→</span></button>
             <button type="button" className="btn btn--secondary">Add to my list</button>
-            <button type="button" className="btn btn--text">See all pandals</button>
+            <button type="button" className="btn btn--text">See all ghats</button>
           </div>
           <p className="note">One primary per view. The button does not scale on hover — the arrow moves. Focus is a 2px Crimson Silk ring at 2px offset, on every control, always.</p>
 
           <h3 className="h3 sub">Cards</h3>
           <div className="cards">
             {[
-              { t: 'Kumortuli', s: 'North Kolkata', d: 'Where the goddess is built', img: '/street.jpg', icon: 'rickshaw' },
-              { t: 'Bagbazar', s: 'Sarbojanin, est. 1919', d: 'The oldest crowd in the city', img: '/dkt.jpg', icon: 'dhaak' },
-              { t: 'College Street', s: 'Boi Para', d: 'Coffee, and a mile of books', img: '/moc.jpg', icon: 'bhaar' },
+              { t: 'Patna City', s: 'Patna Sahib', d: 'Where the old city keeps its galis', img: '/patna-sahib.jpg', icon: 'rickshaw' },
+              { t: 'Gandhi Ghat', s: 'Sandhya Arghya, every year', d: 'The biggest crowd on the river', img: '/ganga-ghat.jpg', icon: 'boat' },
+              { t: 'Maurya Lok', s: 'Dak Bungalow Chowk', d: 'Litti, chaat, and a mile of stalls', img: '/litti.jpg', icon: 'litti' },
             ].map((c) => (
               <article className="pcard" key={c.t} tabIndex={0}>
                 <div className="pcard-media">
@@ -787,7 +787,7 @@ export default function BrandKit() {
           <div className="nav-spec">
             <dl className="spec">
               <div><dt>Bezel</dt><dd>8px Pearl frame, 16px inner radius. Notches are 40px (outer) and 44px (centre) with a 24px bottom radius.</dd></div>
-              <div><dt>Wordmark</dt><dd>Sprig in a 28px box, then 12.5px Display tracked 0.18em, Bengali beneath at 10px wght 500.</dd></div>
+              <div><dt>Wordmark</dt><dd>Sprig in a 28px box, then 12.5px Display tracked 0.18em, Devanagari beneath at 10px wght 500.</dd></div>
               <div><dt>Sections</dt><dd>Pill tabs, 36px tall, 14px. Muted ink at rest, Obsidian on hover and when current.</dd></div>
               <div><dt>Current</dt><dd>One tonal pill (<code className="inline-code">#e4e2dc</code>) slides between tabs as you scroll — there is no bold; the pill carries the state.</dd></div>
               <div><dt>Search</dt><dd>Icon, field, and a <code className="inline-code">/</code> hint in the right notch. Underline grows on focus.</dd></div>
@@ -809,23 +809,23 @@ export default function BrandKit() {
 
         {/* --------------------------------------------------------------- voice -- */}
         <Band id="voice" title="Voice"
-          lede="Observant, not promotional. Name the place, the para, the time and the price — specificity is the whole tone."
+          lede="Observant, not promotional. Name the place, the mohalla, the time and the price — specificity is the whole tone."
           tone="deep">
           <div className="voice-grid">
             <div>
               <h3 className="h3">Write this</h3>
               <ul className="voice-list is-do">
-                <li>Kumortuli, where the goddess is built</li>
+                <li>Patna City, where the old town keeps its galis</li>
                 <li>Save this place → Saved</li>
-                <li>Nothing saved yet. Start with a pandal near you.</li>
+                <li>Nothing saved yet. Start with a ghat near you.</li>
                 <li>That address didn't match. Try a landmark or a metro station.</li>
-                <li>Bagbazar Sarbojanin, since 1919. Free entry, busiest after 8pm.</li>
+                <li>Gandhi Ghat, under the NIT. Free entry, fullest an hour before sunset.</li>
               </ul>
             </div>
             <div>
               <h3 className="h3">Not this</h3>
               <ul className="voice-list is-dont">
-                <li>Discover the magic of Kolkata!</li>
+                <li>Discover the magic of Bihar!</li>
                 <li>Submit → Success</li>
                 <li>No items to display.</li>
                 <li>Something went wrong. Please try again later.</li>
@@ -833,20 +833,20 @@ export default function BrandKit() {
               </ul>
             </div>
           </div>
-          <p className="note">Never explain Bengali culture to Bengalis. Write for someone who already belongs, and let the visitor follow.</p>
+          <p className="note">Never explain Bihar to Biharis. Write for someone who already belongs, and let the visitor follow.</p>
         </Band>
 
-        <LaalPaar />
+        <MithilaBorder />
 
         {/* ------------------------------------------------------------- closing -- */}
         <section className="closing">
           <div className="closing-inner">
             <Medallion open size={150} />
-            <p className="closing-line">SAME CITY.</p>
+            <p className="closing-line">SAME BIHAR.</p>
             <p className="closing-line">NEW STORIES.</p>
-            <p className="closing-bn" lang="bn">পুজো আসছে।</p>
+            <p className="closing-bn" lang="hi">छठ आ रहल बा।</p>
             <p className="closing-note">
-              Everything in this system is quiet so that one thing can be loud — the kolka, the
+              Everything in this system is quiet so that one thing can be loud — the mithila, the
               photograph, or the single crimson button. If two things are shouting on a screen,
               remove one.
             </p>
@@ -893,12 +893,12 @@ export default function BrandKit() {
         .mk .emblem-art { width: 54px; height: 54px; flex: none; }
         .mk .emblem-name { display: block; font-size: 16px; }
         .mk .emblem-bn {
-          font-family: var(--mk-bengali); font-variation-settings: 'wght' 500;
+          font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
           font-size: 13px; color: var(--mk-ash); margin-left: var(--mk-1);
         }
         .mk .emblem-use { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.5; color: var(--mk-ash); }
 
-        /* --------------------------------------------------- alpona library -- */
+        /* --------------------------------------------------- aripan library -- */
         .mk .lib-grid {
           display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
           gap: var(--mk-4); margin-top: var(--mk-5);
@@ -940,10 +940,10 @@ export default function BrandKit() {
           font-size: clamp(44px, 11vw, 104px); line-height: 0.95; letter-spacing: -0.04em;
           margin: var(--mk-4) 0 0;
         }
-        /* the wordmark's Bengali sits at ~38% of the Latin — a whisper, not a headline */
+        /* the wordmark's Devanagari sits at ~38% of the Latin — a whisper, not a headline */
         .mk .title-bn {
-          font-family: var(--mk-bengali); font-variation-settings: 'wght' 500;
-          font-size: clamp(17px, 4.2vw, 40px); line-height: 1.5; color: var(--mk-taxi);
+          font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
+          font-size: clamp(17px, 4.2vw, 40px); line-height: 1.5; color: var(--mk-genda);
           margin: var(--mk-3) 0 0;
         }
         .mk .title-sub {
@@ -981,7 +981,7 @@ export default function BrandKit() {
           margin: 0; display: flex; align-items: baseline; gap: var(--mk-4); flex-wrap: wrap;
         }
         .mk .band-bn {
-          font-family: var(--mk-bengali); font-variation-settings: 'wght' 500;
+          font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
           font-size: 0.46em; line-height: 1.5; color: var(--mk-ash); letter-spacing: 0;
         }
         .mk .band-lede {
@@ -995,7 +995,7 @@ export default function BrandKit() {
         }
         .mk .h3.sub { margin-top: var(--mk-9); }
         .mk .motif-bn {
-          font-family: var(--mk-bengali); font-variation-settings: 'wght' 500;
+          font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
           font-size: 0.66em; color: var(--mk-ash); margin-left: var(--mk-2);
         }
         .mk .body { font-size: 16px; line-height: 1.65; letter-spacing: 0.01em; margin: 0 0 var(--mk-4); }
@@ -1017,7 +1017,7 @@ export default function BrandKit() {
           border-radius: var(--mk-r-sm); padding: var(--mk-4); overflow-x: auto; margin: var(--mk-4) 0 0;
         }
 
-        /* ------------------------------------------------------ alpona rule -- */
+        /* ------------------------------------------------------ aripan rule -- */
         .mk .mk-rule-wrap { max-width: 1440px; margin: 0 auto; padding: 0 var(--edge); }
 
         /* ------------------------------------------------------------- mark -- */
@@ -1034,7 +1034,7 @@ export default function BrandKit() {
         .mk .lockup { display: flex; align-items: center; gap: var(--mk-4); margin-bottom: var(--mk-7); }
         .mk .lockup-latin { font-family: var(--mk-display); font-size: 28px; letter-spacing: 0.14em; margin: 0; }
         .mk .lockup-bn {
-          font-family: var(--mk-bengali); font-variation-settings: 'wght' 500;
+          font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
           font-size: 14px; line-height: 1.5; color: var(--mk-ash); margin: 3px 0 0;
         }
         .mk .spec { margin: 0; display: grid; gap: var(--mk-3); }
@@ -1095,7 +1095,7 @@ export default function BrandKit() {
           display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px;
           background: rgba(242,241,237,0.08); color: var(--mk-pearl);
         }
-        .mk .grade-tag.is-warn { background: rgba(242,179,61,0.16); color: var(--mk-taxi); }
+        .mk .grade-tag.is-warn { background: rgba(242,179,61,0.16); color: var(--mk-genda); }
 
         /* ------------------------------------------------------------- type -- */
         .mk .balance { margin-bottom: var(--mk-9); }
@@ -1111,14 +1111,14 @@ export default function BrandKit() {
         .mk .row-spec { color: rgba(175,162,160,0.8); font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; }
         .mk .row-sample { margin: 0; }
         .mk .display { font-family: var(--mk-display); font-weight: 400; }
-        .mk .bengali-stage {
-          font-family: var(--mk-bengali); font-size: clamp(30px, 7vw, 68px); line-height: 1.5;
+        .mk .devanagari-stage {
+          font-family: var(--mk-devanagari); font-size: clamp(30px, 7vw, 68px); line-height: 1.5;
           margin: 0 0 var(--mk-6); color: var(--mk-pearl);
         }
         .mk .axes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--mk-6); max-width: 640px; }
         .mk .axis { display: block; }
         .mk .axis-name { display: flex; justify-content: space-between; font-size: 13px; letter-spacing: 0.02em; color: var(--mk-ash); margin-bottom: var(--mk-2); }
-        .mk .axis-val { font-family: ui-monospace, 'SF Mono', Menlo, monospace; color: var(--mk-taxi); }
+        .mk .axis-val { font-family: ui-monospace, 'SF Mono', Menlo, monospace; color: var(--mk-genda); }
         .mk .axis input[type='range'] { width: 100%; appearance: none; height: 2px; background: rgba(242,241,237,0.2); border-radius: 2px; }
         .mk .axis input[type='range']::-webkit-slider-thumb {
           appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--mk-crimson); cursor: pointer; border: 0;
@@ -1158,9 +1158,9 @@ export default function BrandKit() {
           transition: border-color var(--mk-t-hover) var(--mk-ease-in-out), color var(--mk-t-hover) var(--mk-ease-in-out);
           color: var(--mk-pearl);
         }
-        .mk .icon-cell:hover { border-color: rgba(242,179,61,0.4); color: var(--mk-taxi); }
+        .mk .icon-cell:hover { border-color: rgba(242,179,61,0.4); color: var(--mk-genda); }
         .mk .icon { width: 32px; height: 32px; flex: none; }
-        .mk .icon--taxi { color: var(--mk-taxi); }
+        .mk .icon--auto { color: var(--mk-genda); }
         .mk .icon-name { display: block; font-size: 15px; color: var(--mk-pearl); }
         .mk .icon-use { display: block; margin-top: 3px; font-size: 12px; line-height: 1.45; color: var(--mk-ash); }
 
@@ -1174,7 +1174,7 @@ export default function BrandKit() {
           transition: border-color var(--mk-t-hover) var(--mk-ease-in-out), color var(--mk-t-hover) var(--mk-ease-in-out);
         }
         .mk .curve-btn:hover { color: var(--mk-pearl); border-color: rgba(242,241,237,0.4); }
-        .mk .curve-btn.is-active { border-color: var(--mk-taxi); color: var(--mk-white); }
+        .mk .curve-btn.is-active { border-color: var(--mk-genda); color: var(--mk-white); }
         .mk .curve-name { font-size: 15px; }
         .mk .curve-ms { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; }
         .mk .track { position: relative; height: 2px; margin: var(--mk-8) 0 var(--mk-5); background: rgba(242,241,237,0.14); border-radius: 2px; }
@@ -1215,7 +1215,7 @@ export default function BrandKit() {
           line-height: 1.05; letter-spacing: -0.03em; margin: var(--mk-2) 0 0;
         }
         .mk .banner-bn {
-          font-family: var(--mk-bengali); font-variation-settings: 'wght' 500;
+          font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
           font-size: clamp(14px, 2vw, 19px); line-height: 1.5; color: var(--mk-blush); margin: var(--mk-2) 0 0;
         }
         .mk .banner-lede { font-size: clamp(14px, 1.8vw, 17px); line-height: 1.6; margin: var(--mk-4) 0 0; }
@@ -1233,8 +1233,8 @@ export default function BrandKit() {
           position: absolute; inset: 0; background-position: center; background-size: cover;
           filter: saturate(0.72) contrast(1.06) brightness(0.92);
         }
-        .mk .still--bridge .still-img { background-image: url('/hwh.jpg'); }
-        .mk .still--delta .still-img { background-image: url('/sundarban.jpg'); background-position: center 40%; }
+        .mk .still--bridge .still-img { background-image: url('/gandhi-setu.jpg'); }
+        .mk .still--delta .still-img { background-image: url('/valmiki.jpg'); background-position: center 40%; }
         .mk .still-scrim {
           position: absolute; inset: 0;
           background:
@@ -1260,7 +1260,7 @@ export default function BrandKit() {
         }
         .mk .capshot-img {
           position: absolute; inset: 0;
-          background: url('/maidan.jpg') center/cover no-repeat, var(--mk-bordeaux);
+          background: url('/chhath-ghat.jpg') center/cover no-repeat, var(--mk-bordeaux);
           filter: saturate(0.96) contrast(1.14);
         }
         .mk .capdev { position: absolute; left: 0; bottom: 0; display: flex; gap: var(--mk-3); padding: clamp(20px, 4vw, 44px); margin: 0; }
@@ -1319,7 +1319,7 @@ export default function BrandKit() {
         .mk .pcard:hover .pcard-media, .mk .pcard:focus-visible .pcard-media {
           transform: translateY(-4px); box-shadow: 0 30px 58px -24px rgba(0, 0, 0, 1);
         }
-        .mk .pcard:hover .pcard-sub, .mk .pcard:focus-visible .pcard-sub { color: var(--mk-taxi); }
+        .mk .pcard:hover .pcard-sub, .mk .pcard:focus-visible .pcard-sub { color: var(--mk-genda); }
         .mk .pcard:hover .pcard-scrim, .mk .pcard:focus-visible .pcard-scrim { opacity: 1; }
         .mk .pcard-body { display: flex; gap: var(--mk-2); align-items: flex-start; margin-top: var(--mk-4); }
         .mk .pcard-title {
@@ -1358,7 +1358,7 @@ export default function BrandKit() {
           line-height: 1.0; letter-spacing: -0.04em; margin: 0;
         }
         .mk .closing-bn {
-          font-family: var(--mk-bengali); font-variation-settings: 'wght' 500;
+          font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
           font-size: clamp(18px, 3vw, 32px); line-height: 1.5; color: var(--mk-blush); margin: var(--mk-5) 0 0;
         }
         .mk .closing-note { max-width: 56ch; font-size: 17px; line-height: 1.7; color: var(--mk-ash); margin: var(--mk-7) 0 0; }

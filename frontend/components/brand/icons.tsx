@@ -9,25 +9,26 @@ import type { ReactNode } from 'react'
     always sits beside a word, or carries an aria-label on an icon-only control. */
 
 export const ICONS = {
-  howrah: (
+  setu: (
     <>
-      <path d="M1 24h30" /><path d="M7 24V6M25 24V6" /><path d="M7 6h18" />
-      <path d="M7 6q9 8 18 0" /><path d="M7 14h18" />
-      <path d="M1 24 7 19M31 24 25 19" /><path d="M11 14v10M16 14v10M21 14v10" />
+      <path d="M1 11h30" /><path d="M4 8h24" /><path d="M4 8v3M28 8v3" />
+      <path d="M7 11v13M16 11v13M25 11v13" /><path d="M4 15h6M13 15h6M22 15h6" />
+      <path d="M1 28q3-2 6 0t6 0 6 0 6 0 6 0" />
     </>
   ),
-  tram: (
+  metro: (
     <>
-      <rect x="5" y="9" width="22" height="14" rx="2" /><path d="M5 14h22" />
-      <circle cx="10" cy="26" r="2.2" /><circle cx="22" cy="26" r="2.2" />
-      <path d="M16 9V5l5-2" /><path d="M9 18h4M19 18h4" />
+      <rect x="7" y="4" width="18" height="20" rx="4" /><path d="M7 16h18" />
+      <rect x="10" y="8" width="12" height="5" rx="1" />
+      <circle cx="12" cy="20" r="1.5" /><circle cx="20" cy="20" r="1.5" />
+      <path d="M10 24l-3 4M22 24l3 4" />
     </>
   ),
-  taxi: (
+  auto: (
     <>
-      <path d="M3 22v-3q0-3 3-3l2.5-5q.7-1.5 2.5-1.5h10q1.8 0 2.5 1.5L26 16q3 0 3 3v3Z" />
-      <path d="M8.5 16h15" /><circle cx="9" cy="22" r="2.4" /><circle cx="23" cy="22" r="2.4" />
-      <rect x="13" y="4" width="6" height="3.5" rx="1" />
+      <path d="M5 21v-6q0-3 3-3h4l3-5h9q2 0 2 2v12Z" /><path d="M12 12h14" />
+      <path d="M12 7h10" /><circle cx="8" cy="23" r="2.5" /><circle cx="22" cy="23" r="2.5" />
+      <path d="M10.5 23h9" />
     </>
   ),
   rickshaw: (
@@ -37,30 +38,17 @@ export const ICONS = {
       <path d="M20 11 30 6M18 16l10-4" />
     </>
   ),
-  victoria: (
+  golghar: (
     <>
-      <path d="M2 28h28" /><path d="M4 25v-7h24v7" />
-      <path d="M11 18q0-6 5-6t5 6" /><path d="M16 12V8" />
-      <path d="M5 18q0-3.5 3-3.5M27 18q0-3.5-3-3.5" /><path d="M11 25v-4M21 25v-4" />
+      <path d="M4 26C4 12 12 5 16 5c4 0 12 7 12 21Z" /><path d="M2 26h28" /><path d="M16 5V2" />
+      <path d="M8 10q8-3 16 0" /><path d="M5 15q11-4 22 0" /><path d="M6 20q10-4 20 0" />
     </>
   ),
-  bhaar: (
+  haveli: (
     <>
-      <path d="M10.5 13 12.5 25q.3 1.5 3.5 1.5t3.5-1.5L21.5 13Z" /><path d="M9 13h14" />
-      <path d="M13.5 9q1.5-2 0-4M18.5 9q1.5-2 0-4" />
-    </>
-  ),
-  phuchka: (
-    <>
-      <circle cx="16" cy="18" r="9" /><path d="M10 13q6-4 12 0" />
-      <path d="M13 9.5q3-2 6 0" /><circle cx="13" cy="20" r="1" /><circle cx="19" cy="21" r="1" />
-    </>
-  ),
-  lamp: (
-    <>
-      <path d="M16 29V13" /><path d="M11.5 29h9" />
-      <path d="M12 13l2-6h4l2 6Z" /><path d="M16 7V4" /><circle cx="16" cy="2.5" r="1.2" />
-      <path d="M12.5 15q-4 0-4 3M19.5 15q4 0 4 3" />
+      <path d="M5 28V10h22v18" /><path d="M3 10l13-7 13 7" />
+      <rect x="13" y="18" width="6" height="10" /><path d="M8 14h4v4H8zM20 14h4v4h-4z" />
+      <path d="M2 28h28" />
     </>
   ),
   boat: (
@@ -69,10 +57,16 @@ export const ICONS = {
       <path d="M2 29q3-2.5 6 0t6 0 6 0 6 0" />
     </>
   ),
-  balcony: (
+  kulhad: (
     <>
-      <path d="M7 3h18v17H7Z" /><path d="M7 9h18M7 14h18" /><path d="M3 20h26" />
-      <path d="M6 20v7M11 20v7M16 20v7M21 20v7M26 20v7" /><path d="M3 27h26" />
+      <path d="M10.5 13 12.5 25q.3 1.5 3.5 1.5t3.5-1.5L21.5 13Z" /><path d="M9 13h14" />
+      <path d="M13.5 9q1.5-2 0-4M18.5 9q1.5-2 0-4" />
+    </>
+  ),
+  litti: (
+    <>
+      <circle cx="12" cy="15" r="5" /><circle cx="21" cy="14" r="5" />
+      <path d="M4 22h24l-2 4H6Z" /><path d="M10 13q2-1 4 0M19 12q2-1 4 0" />
     </>
   ),
   book: (
@@ -87,22 +81,29 @@ export const ICONS = {
       <path d="M8 10h16M8 14.5h9" />
     </>
   ),
+  lamp: (
+    <>
+      <path d="M16 29V13" /><path d="M11.5 29h9" />
+      <path d="M12 13l2-6h4l2 6Z" /><path d="M16 7V4" /><circle cx="16" cy="2.5" r="1.2" />
+      <path d="M12.5 15q-4 0-4 3M19.5 15q4 0 4 3" />
+    </>
+  ),
 } satisfies Record<string, ReactNode>
 
 export type CityIconName = keyof typeof ICONS
 
 export const ICON_LIST: [CityIconName, string, string][] = [
-  ['howrah', 'Howrah Bridge', 'The city itself — map and location states'],
-  ['tram', 'Tram', 'Transport, routes, getting there'],
-  ['taxi', 'Ambassador taxi', 'Rides, directions, distance'],
-  ['rickshaw', 'Hand-pulled rickshaw', 'North Kolkata, heritage walks'],
-  ['victoria', 'Victoria Memorial', 'Landmarks, monuments, guided routes'],
-  ['balcony', 'North Kolkata balcony', 'Neighbourhoods, paras, old houses'],
-  ['boat', 'Hooghly boat', 'The river, the ghats, crossings'],
-  ['bhaar', 'Cha in a bhaar', 'Food and drink, adda, places to sit'],
-  ['phuchka', 'Phuchka', 'Street food, markets, Gariahat'],
-  ['book', 'College Street', 'Stories, long-form, the archive'],
-  ['signboard', 'Hand-painted signage', 'Listings, names, para clubs'],
+  ['setu', 'Mahatma Gandhi Setu', 'The state itself — map and location states'],
+  ['metro', 'Patna Metro', 'Transport, routes, getting there'],
+  ['auto', 'Shared auto', 'Rides, directions, distance'],
+  ['rickshaw', 'Cycle rickshaw', 'Patna City, heritage walks'],
+  ['golghar', 'Golghar', 'Landmarks, monuments, guided routes'],
+  ['haveli', 'Patna City haveli', 'Neighbourhoods, mohallas, old houses'],
+  ['boat', 'Ganga boat', 'The river, the ghats, crossings'],
+  ['kulhad', 'Chai in a kulhad', 'Food and drink, adda, places to sit'],
+  ['litti', 'Litti chokha', 'Street food, markets, Maurya Lok'],
+  ['book', 'Khuda Bakhsh Library', 'Stories, long-form, the archive'],
+  ['signboard', 'Hand-painted signage', 'Listings, names, mohalla clubs'],
   ['lamp', 'Street lamp', 'Night mode, after-dark listings'],
 ]
 

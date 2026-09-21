@@ -1,12 +1,12 @@
-# Durga Puja — Website Design System
+# Chhath Puja — Website Design System
 
 ## 1. Design Direction
 
 ### Core idea
 
-**Contemporary Durga Puja: cinematic, premium, cultural, and digital-first.**
+**Contemporary Chhath Puja: cinematic, premium, cultural, and digital-first.**
 
-The website should feel closer to a premium entertainment platform or modern music product than a conventional festival website. The visual language takes inspiration from the clarity, confidence, and immersive presentation of platforms such as Netflix and Spotify, while maintaining a distinctly Bengali and Durga Puja identity.
+The website should feel closer to a premium entertainment platform or modern music product than a conventional festival website. The visual language takes inspiration from the clarity, confidence, and immersive presentation of platforms such as Netflix and Spotify, while maintaining a distinctly Bihari and Chhath identity.
 
 **Keywords:**
 `Cinematic` · `Premium` · `Modern` · `Editorial` · `Cultural` · `Immersive` · `Confident` · `Minimal`
@@ -82,7 +82,7 @@ Quiet, powerful, respectful.
 
 ### Culture
 
-Rooted in Bengal and Durga Puja without feeling old-fashioned.
+Rooted in Bihar and Chhath Puja without feeling old-fashioned.
 
 ### Community
 
@@ -127,7 +127,7 @@ Recommended:
 Example:
 
 ```text
-DURGA
+CHHATH
 PUJA
 ```
 
@@ -274,7 +274,7 @@ Menu / Profile
 Example:
 
 ```text
-DURGA PUJA     Home   Discover   Events   Gallery   Stories
+CHHATH PUJA    Home   Discover   Events   Gallery   Stories
                                            ─────
 ```
 
@@ -292,12 +292,12 @@ Full-screen cinematic image or video.
 
 Use:
 
-- Durga idol close-up
-- Red silk
-- Dhunuchi smoke
-- Sindoor
-- Dramatic architectural lighting
-- Bengali cultural details
+- Vratis at the water's edge, soop raised to the sun
+- Bhagalpuri silk
+- Sugarcane and diyas on the ghat steps
+- Sindoor from nose to parting
+- Dramatic lighting on the Setu and the ghats
+- Madhubani and Mithila details
 
 Overlay a subtle black/burgundy gradient.
 
@@ -306,7 +306,7 @@ Overlay a subtle black/burgundy gradient.
 Example:
 
 ```text
-DURGA PUJA
+CHHATH PUJA
 
 Faith. Culture. Community.
 
@@ -335,8 +335,8 @@ Cards should feel closer to streaming-platform content cards than traditional fe
 ```text
 [ IMAGE ]
 
-NORTH KOLKATA
-Pujo Walk
+NORTH PATNA
+Chhath Walk
 
 28 SEPTEMBER
 7:00 PM
@@ -432,33 +432,33 @@ Photography is one of the strongest brand assets.
 
 **Atmosphere**
 
-- Dhunuchi smoke
-- Dhak
-- Candlelight
+- Diyas on the water
+- Chhath geet on a loudspeaker
+- Sugarcane arches
 - Incense
-- Night streets
+- Ghat steps before dawn
 - Warm lights
 - Rain
 - Crowd movement
 
 **Architecture**
 
-- Kolkata heritage buildings
-- Puja pandals
-- Temple-inspired structures
+- Bihar heritage buildings — Golghar, the Patna Sahib takht, Nalanda brick
+- Chhath ghats
+- Stupa-inspired structures
 - Architectural details
 
 **Objects**
 
-- Dhak
-- Conch
+- Soop
+- Daura
 - Diya
 - Lotus
 - Trishul
 - Kalash
 - Red flowers
 - Silk
-- Alpona
+- Aripan
 
 ---
 
@@ -495,11 +495,11 @@ Core icon set:
 
 ```text
 Lotus       → Purity
-Dhak        → Rhythm
-Conch       → Awakening
-Trishul     → Strength
+Surya       → The sun, the vow
+Soop        → Offering
+Machhli     → Plenty
 Diya        → Hope
-Alpona      → Heritage
+Aripan      → Heritage
 Kalash      → Prosperity
 ```
 
@@ -520,7 +520,7 @@ Avoid cartoon-like illustrations.
 
 Use cultural motifs as subtle visual systems.
 
-### Alpona
+### Aripan
 
 Use simplified line patterns rather than complex traditional artwork.
 
@@ -533,7 +533,7 @@ Applications:
 
 ### Architectural motifs
 
-Use simplified arches and pandal-inspired geometry.
+Use simplified arches and ghat-inspired geometry.
 
 ### Lotus
 
@@ -592,14 +592,14 @@ Recommended homepage structure:
 
 ### 01 — Hero
 
-Immersive Durga Puja introduction.
+Immersive Chhath Puja introduction.
 
 ### 02 — Discover
 
 Featured events and experiences.
 
 ```text
-Discover Durga Puja
+Discover Chhath Puja
 ```
 
 Large editorial cards.
@@ -616,7 +616,7 @@ Filterable event discovery.
 
 ```text
 All
-Pandals
+Ghats
 Food
 Music
 Culture
@@ -651,7 +651,7 @@ NEW STORIES.
 
 Come celebrate with us.
 
-[ Explore Durga Puja → ]
+[ Explore Chhath Puja → ]
 ```
 
 ---
@@ -775,7 +775,7 @@ The visual identity can be summarized as:
 ```text
 MODERN DIGITAL DESIGN
         +
-BENGALI CULTURAL DNA
+BIHARI CULTURAL DNA
         +
 CINEMATIC PHOTOGRAPHY
         +
@@ -783,13 +783,13 @@ RICH CRIMSON PALETTE
         +
 MINIMAL UI
         =
-PREMIUM DURGA PUJA
+PREMIUM CHHATH PUJA
 ```
 
 ### Final feeling
 
 The website should make someone think:
 
-> “This feels like Durga Puja — but I've never seen it presented like this before.”
+> “This feels like Chhath Puja — but I've never seen it presented like this before.”
 
-It should feel premium enough for a global digital brand, emotionally authentic enough for someone who grew up with Puja, and modern enough to belong on today's web.
+It should feel premium enough for a global digital brand, emotionally authentic enough for someone who grew up going to the ghat, and modern enough to belong on today's web.

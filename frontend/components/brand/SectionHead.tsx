@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react'
-import { Sprig } from './kolka'
+import { Sprig } from './mithila'
 
 type SectionHeadProps = {
   title: ReactNode
   id?: string
-  /* Bengali only where the English heading is a transliteration of it. §4.3 */
-  bengali?: string
+  /* Devanagari only where the English heading is a transliteration of it. §4.3 */
+  devanagari?: string
   lede?: ReactNode
   action?: ReactNode
   level?: 1 | 2
@@ -13,7 +13,7 @@ type SectionHeadProps = {
 }
 
 /* The sprig does the job an eyebrow label would — there are no ALL-CAPS kickers. */
-export function SectionHead({ title, id, bengali, lede, action, level = 2, className = '' }: SectionHeadProps) {
+export function SectionHead({ title, id, devanagari, lede, action, level = 2, className = '' }: SectionHeadProps) {
   const Heading = level === 1 ? 'h1' : 'h2'
   return (
     <header className={className}>
@@ -22,7 +22,7 @@ export function SectionHead({ title, id, bengali, lede, action, level = 2, class
           <Sprig size={level === 1 ? 46 : 38} />
           <Heading id={id} className="mk-h1">
             {title}
-            {bengali && <span className="mk-bn" lang="bn" style={{ fontSize: '0.46em', marginLeft: 16 }}>{bengali}</span>}
+            {devanagari && <span className="mk-hi" lang="hi" style={{ fontSize: '0.46em', marginLeft: 16 }}>{devanagari}</span>}
           </Heading>
         </div>
         {action}

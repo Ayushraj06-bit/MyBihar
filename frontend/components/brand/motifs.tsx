@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
 import { EP } from './emblems'
 
-/* ========================================================= alpona library == */
-/*  Six motifs read straight off design/kolka_design.png. Solid, symmetrical,
+/* ========================================================= aripan library == */
+/*  Six motifs read straight off design/madhubani.jpg. Solid, symmetrical,
     built from teardrops and dot runs. 64 x 112 grid.                          */
 
 const P = 'var(--mk-pearl)'
@@ -82,7 +82,7 @@ export type MotifName = keyof typeof MOTIF_LIB
 export const MOTIF_LIB_LIST: [MotifName, string, string][] = [
   ['finial', 'Finial', 'Section openers and the top of a feature panel'],
   ['flame', 'Flame', 'Celebration moments — a completed contribution, a milestone'],
-  ['rosette', 'Rosette', 'Avatars, para badges, category markers'],
+  ['rosette', 'Rosette', 'Avatars, mohalla badges, category markers'],
   ['star', 'Star flower', 'Ratings, highlights, editor picks'],
   ['beadrun', 'Bead run', 'Vertical dividers and timeline nodes'],
   ['curl', 'Curl', 'Quote marks, pull-quotes, end-of-article marks'],

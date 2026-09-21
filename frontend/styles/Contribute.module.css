@@ -17,12 +17,12 @@
 .communityName { font-family: var(--mk-display); font-size: 22px; line-height: 1.2; letter-spacing: -0.01em; color: var(--mk-white); }
 .communityDesc { font-size: 15px; line-height: 1.55; color: var(--mk-pearl); }
 .communityPlatform { margin-top: var(--mk-3); font-size: 13px; letter-spacing: 0.02em; color: var(--mk-ash); transition: color var(--mk-t-hover) var(--mk-ease-in-out); }
-.community:hover .communityPlatform, .community:focus-visible .communityPlatform { color: var(--mk-taxi); }
+.community:hover .communityPlatform, .community:focus-visible .communityPlatform { color: var(--mk-genda); }
 
 .storiesHead { display: flex; align-items: center; justify-content: space-between; gap: var(--mk-4); flex-wrap: wrap; }
 .form { margin-top: var(--mk-6); max-width: 720px; display: grid; gap: var(--mk-5); }
 .empty { margin-top: var(--mk-6); max-width: 720px; }
-.formError { margin: 0; color: var(--mk-taxi); }
+.formError { margin: 0; color: var(--mk-genda); }
 
 /* The story wall — a day of stories, newest first. */
 .stories { list-style: none; margin: var(--mk-6) 0 0; padding: 0; display: grid; gap: var(--mk-4); max-width: 720px; }
@@ -47,4 +47,4 @@
   font-size: 14px; letter-spacing: 0.015em; color: var(--mk-pearl); text-underline-offset: 3px;
   transition: color var(--mk-t-hover) var(--mk-ease-in-out);
 }
-.mediaLink:hover, .mediaLink:focus-visible { color: var(--mk-taxi); }
+.mediaLink:hover, .mediaLink:focus-visible { color: var(--mk-genda); }

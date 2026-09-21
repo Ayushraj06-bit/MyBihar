@@ -1,15 +1,18 @@
-# My Kolkata — Design System
+# My Bihar — Design System
 
-> **আমার কলকাতা**
-> A city, shot like a film.
+> **हमार बिहार**
+> A state, shot like a film.
 
-This is the design bible for My Kolkata. It supersedes the previous visual language entirely.
+This is the design bible for My Bihar. It began life as the My Kolkata design system by Paramarsh
+Labs, and keeps that system's bones — the cinematic bands, the Regular-only Latin, the crimson
+budget — while replacing every cultural reference with Bihar's own: Chhath instead of Durga Puja,
+Madhubani instead of alpona, Devanagari instead of Bengali, the ghat instead of the pandal.
 It absorbs `design/self.md`, takes cinematic structure from `design/netflix.md`, surface
-discipline from `design/spotify.md`, and its atmosphere from the four moodboard images in `design/`.
+discipline from `design/spotify.md`, and its atmosphere from the moodboard photographs in `design/`.
 
 **Live reference:** [`/brand-kit`](src/pages/brand-kit.jsx) — every token, motif, icon and motion
-curve in this document is rendered and interactive there: the medallion blooms, the Bengali weight and
-width axes are draggable, the easing curves play, and the Pujo countdown runs. When the two
+curve in this document is rendered and interactive there: the medallion blooms, the Devanagari weight and
+width axes are draggable, the easing curves play, and the Chhath countdown runs. When the two
 disagree, the brand kit is right.
 
 **Version 1.4** — the flat black replaced with a cool three-step surface scale (§3.1); **Taxi
@@ -20,41 +23,41 @@ the countdown's tiles removed (§9.7).
 **Version 1.3** — the countdown rebuilt as a homecoming scene with a drawn autumn dusk (§9.7);
 a hard crimson budget written and enforced after red had crept onto every label and bullet (§3.6).
 
-**Version 1.2** — the mark rebuilt as a filled alpona medallion from the kolka references (§5);
-a six-motif alpona library added (§6); iconography split into filled cultural **emblems** and line
+**Version 1.2** — the mark rebuilt as a filled aripan medallion from the mithila references (§5);
+a six-motif aripan library added (§6); iconography split into filled cultural **emblems** and line
 **utility icons** (§7).
 
 **Version 1.1** — Warm Sand retired from the interface in favour of Ash (§3.1); the mark rebuilt as
-a kolka (§5); motifs, iconography and the countdown added (§6, §7, §9.7); navigation and
-inputs rebuilt as lines rather than boxes (§9.4, §9.5); and a hard rule written for where Bengali is
+a mithila (§5); motifs, iconography and the countdown added (§6, §7, §9.7); navigation and
+inputs rebuilt as lines rather than boxes (§9.4, §9.5); and a hard rule written for where Devanagari is
 allowed to appear (§4.3).
 
 ---
 
 ## 1. The idea
 
-**My Kolkata is not a festival website. It is a title sequence for a city.**
+**My Bihar is not a festival website. It is a title sequence for a state.**
 
-Two of the four moodboards are literally three-panel film strips — kaash phool under a monsoon
-sky, the Setu through rain-flecked glass. The city is already being seen letterboxed. So the
-product is built the same way: **cinematic bands, stacked, each one a shot.**
+The moodboards are already film stills — the JP Setu at blue hour from Gandhi Ghat, vratis waist-deep
+in the water with soop baskets held to the setting sun, Golghar going gold. Bihar is already being
+seen letterboxed. So the product is built the same way: **cinematic bands, stacked, each one a shot.**
 
-Durga Puja is the emotional centre, not the decoration. The Puja is *when* the city is most
-itself; the site is about the city all year.
+Chhath is the emotional centre, not the decoration. Chhath is *when* Bihar is most itself — the
+week every train into Patna is full — and the site is about the state all year.
 
 **Keywords:** `Cinematic` · `Premium` · `Editorial` · `Rooted` · `Restrained` · `Warm`
 
 ### The ratio
 
 - **70%** modern digital product
-- **30%** Bengali cultural expression
+- **30%** Bihari cultural expression
 
-Tradition arrives through photography, Bengali type, the alpona line, and timing — never
+Tradition arrives through photography, Devanagari type, the Madhubani line, and timing — never
 through clip-art, never through gold gradients, never through a border made of diyas.
 
 ### The one-line test
 
-> "This feels like Kolkata — and I have never seen it presented like this before."
+> "This feels like Bihar — and I have never seen it presented like this before."
 
 ---
 
@@ -64,13 +67,15 @@ Recording this so future decisions can be traced back to evidence rather than ta
 
 | Image | What it contributes |
 |---|---|
-| **Red Inferno pantone board** | Red is a *material*, not a hue — silk, hibiscus, pomegranate, sandstone, lac bangles. Every red in the UI should feel like it has a surface. |
-| **Kaash phool / idol / shiuli / pandal street** | The film-strip stack. The thin crimson tick before a caption. The cool-blue dusk of pre-Puja Kolkata against warm pandal light. |
+| **Chhath at the ghat** (`design/chhath.jpg`) | Red is a *material*, not a hue — the sindoor from nose to parting, the maroon sari, the apples in the soop. Every red in the UI should feel like it has a surface. The genda garland is the only yellow that matters. |
+| **Gandhi Ghat at blue hour** (`design/hero-bg.jpg`) | The film-strip stack. The thin crimson tick before a caption. The cool-blue dusk of the Ganga against warm lamp light on the Setu. |
 | **"The Art of Noticing"** | Type as image. A quiet, lowercase caption doing more work than a loud one. The product's voice: observant, not promotional. |
-| **Monsoon Setu / Anandamela** | The colour grade. Teal-cold shadows, warm skin and crimson highlights. Nostalgia rendered as *contrast*, not sepia. |
+| **Madhubani** (`design/madhubani.jpg`, `madhubani-artist.jpg`) | Filled shapes, double-ruled borders, a fish and a sun and a peacock built from the same teardrop. The mark, the emblems and the motif library all come from here. |
+| **The ghat walk** (`design/ganga-ghat.jpg`) | The colour grade. Teal-cold shadows, warm stone and crimson highlights. Nostalgia rendered as *contrast*, not sepia. |
 
 Two things in that list are not in `self.md` and are deliberate additions: the **film-strip band**
-as a layout primitive, and **Monsoon Teal** as a shadow grade (§3.2).
+as a layout primitive, and **Monsoon Teal** as a shadow grade (§3.2) — the colour of the Ganga at
+Patna an hour after the sun has gone.
 
 ---
 
@@ -93,9 +98,9 @@ and it comes in three steps so surfaces can actually sit on top of one another.
 | `--mk-crimson-depth` | Crimson Depth | `#710014` | Deep accent, dramatic grounds |
 | `--mk-ruby` | Ruby Red | `#98111E` | Secondary red, light-mode primary |
 | `--mk-crimson` | Crimson Silk | `#D72638` | **The action colour.** Budgeted — §3.5 |
-| `--mk-taxi` | Taxi Yellow | `#F2B33D` | **The Kolkata accent.** Budgeted — §3.7 |
+| `--mk-genda` | Genda Yellow | `#F2B33D` | **The Bihar accent.** Budgeted — §3.7 |
 | `--mk-ash` | Ash | `#AFA2A0` | Muted text, metadata, captions |
-| `--mk-pearl` | Soft Pearl | `#F2F1ED` | Body text, laal-paar white |
+| `--mk-pearl` | Soft Pearl | `#F2F1ED` | Body text, mithila border white |
 | `--mk-white` | Pop White | `#FCFBF8` | Display, numerals, card titles |
 | `--mk-blush` | Soft Blush | `#FBE4E3` | Rare highlight |
 | `--mk-sand` | Warm Sand | `#B38F6F` | **Retired from the interface.** Photography and illustration only |
@@ -106,13 +111,14 @@ and it comes in three steps so surfaces can actually sit on top of one another.
 caption down with it. Muted text became **Ash**. But retiring it left the palette with no warm
 accent at all, which is what made the whole thing feel like red-on-black and nothing else.
 
-**Taxi Yellow `#F2B33D` is the replacement** — and it is not a "festival gold". It is the specific
-yellow of a Kolkata Ambassador taxi and of Durga's protima. It earns its place twice over:
+**Genda Yellow `#F2B33D` is the replacement** — and it is not a "festival gold". It is the specific
+yellow of a genda (marigold) garland on a daura at the ghat, and of a thekua fresh out of the ghee.
+It earns its place twice over:
 
 - It is the only accent in the palette that **passes AAA on the canvas** (10.3:1), so it can carry
   small text and fine detail where Crimson Silk (3.8:1) legally cannot.
-- Black, white, red and a little yellow is the actual colour of the city — a yellow cab against
-  red brick under a dark sky.
+- Black, white, red and a little yellow is the actual colour of a Chhath evening — a genda garland
+  against a maroon sari, against dark water.
 
 ### 3.2 The grade (addition)
 
@@ -122,7 +128,7 @@ yellow of a Kolkata Ambassador taxi and of Durga's protima. It earns its place t
 
 Monsoon Teal exists because a red-on-black interface goes flat fast. Real cinema puts a cold
 tone in the shadows so the warm tones have something to be warm *against* — which is exactly
-what the Setu image does. It appears only inside gradients and shadows, at low opacity:
+what the Gandhi Ghat image does. It appears only inside gradients and shadows, at low opacity:
 
 ```css
 /* the house shadow — cold, not grey */
@@ -194,7 +200,7 @@ flattened the whole palette into one loud note.
 **Crimson Silk `#D72638` is permitted on exactly these things, and nothing else:**
 
 - Primary buttons
-- The active navigation item, and the nav's laal-paar edge
+- The active navigation item, and the nav's mithila border edge
 - Focus rings
 - The medallion disc and the sprig
 - The caption tick
@@ -222,8 +228,8 @@ Measured against Obsidian `#0D1012` unless stated.
 | Pop White `#FCFBF8` on Obsidian | 18.5:1 | AAA — display, numerals |
 | Soft Pearl `#F2F1ED` on Obsidian | 16.9:1 | AAA — body text |
 | Soft Pearl on Deep Bordeaux `#3F0D12` | 14.5:1 | AAA — body on red surfaces |
-| **Taxi Yellow `#F2B33D` on Obsidian** | **10.3:1** | **AAA — the accent that may carry small text** |
-| Obsidian on Taxi Yellow | 10.3:1 | AAA — yellow badges, yellow buttons |
+| **Genda Yellow `#F2B33D` on Obsidian** | **10.3:1** | **AAA — the accent that may carry small text** |
+| Obsidian on Genda Yellow | 10.3:1 | AAA — yellow badges, yellow buttons |
 | Ash `#AFA2A0` on Obsidian | 7.2:1 | AA — captions, metadata ✓ |
 | Soft Pearl on Crimson Silk `#D72638` | 4.4:1 | AA — button labels, ≥16px |
 | Crimson Silk on Obsidian | 3.8:1 | **Large text ≥24px, icons and rules only** |
@@ -233,18 +239,18 @@ coloured thing to be read, it is yellow, not red.**
 
 ### 3.7 The yellow budget
 
-Taxi Yellow gets a budget for the same reason Crimson does — an accent used everywhere is not an
+Genda Yellow gets a budget for the same reason Crimson does — an accent used everywhere is not an
 accent. Roughly **one or two yellow elements per viewport**.
 
 **Permitted:**
 
 - Countdown unit labels, and other small data labels that need to lift off the ground
 - Live values a person is changing — a variable-font axis readout, a slider's current number
-- The Ambassador taxi icon, which is literally that yellow
-- Emblem accents where the object itself is yellow: the **diya flame**, the **mukut** gems,
-  the **kalash** coconut band
+- The shared-auto icon, which is literally that yellow on a Patna auto's roof
+- Emblem accents where the object itself is yellow: the **diya flame**, the **kalash** coconut
+  band
 - Caution and "large text only" badges
-- The moon in the countdown sky
+- The sun in the countdown sky — the one thing the whole ghat is facing
 - One hover accent per component
 
 **Not permitted:**
@@ -262,7 +268,7 @@ accent. Roughly **one or two yellow elements per viewport**.
 |---|---|---|
 | **Clear Sans Display** | `/fonts/clear-sans-display.woff2` | Latin headlines, display, numerals |
 | **Clear Sans Text** | `/fonts/clear-sans-text.woff2` | Latin body, UI, captions |
-| **Noto Sans Bengali** | `/fonts/noto-sans-bengali-variable.woff2` | All Bengali. Variable: `wght` 100–900, `wdth` 62.5–100 |
+| **Noto Sans Devanagari** | `/fonts/noto-sans-devanagari-variable.woff2` | All Hindi, Bhojpuri, Maithili and Magahi. Variable: `wght` 100–900, `wdth` 62.5–100 |
 
 ### 4.2 The constraint that shapes everything
 
@@ -284,46 +290,48 @@ Consequences, all enforced:
 If bold Latin is ever required, the correct fix is to add the real Clear Sans Bold and Medium
 files — never `font-weight: 700` on the Regular.
 
-### 4.3 The balance between Bengali and Latin
+### 4.3 The balance between Devanagari and Latin
 
-Bengali is the only family with a live weight axis, so **Bengali is where the type gets loud.**
-This inversion is the point: Bengali is the emphatic voice, Latin the quiet one.
+Devanagari is the only family with a live weight axis, so **Devanagari is where the type gets loud.**
+This inversion is the point: Devanagari is the emphatic voice, Latin the quiet one.
 
-But an emphatic voice used constantly stops being emphasis. Bengali appears in **four places, and
+But an emphatic voice used constantly stops being emphasis. Devanagari appears in **four places, and
 nowhere else**:
 
-1. **The wordmark** — আমার কলকাতা, set at **38% of the Latin size**, `wght 500`, in Ash. A whisper
+1. **The wordmark** — हमार बिहार, set at **38% of the Latin size**, `wght 500`, in Ash. A whisper
    under the title, never a second headline.
-2. **Words with no English equivalent** — কলকা, আলপনা, ঢাক, ধুনুচি, কাশফুল, শিউলি, পুষ্পাঞ্জলি.
-   A section heading may carry its Bengali *only when the English heading is a transliteration of
-   that Bengali word*.
-3. **Real content** — the five days, a greeting, a line someone would actually say.
-4. **Place and para names** as people write them.
+2. **Words with no English equivalent** — अरिपन, ठेकुआ, सूप, दउरा, ईख, लिट्टी, सत्तू, कोहबर.
+   A section heading may carry its Devanagari *only when the English heading is a transliteration of
+   that Devanagari word*.
+3. **Real content** — the four days, a greeting, a line someone would actually say. Bhojpuri where
+   Bhojpuri is what would be said (छठ में घरे आ रहल बाड़ऽ नू?), Hindi where the whole state is
+   being addressed.
+4. **Place and mohalla names** as people write them.
 
 **Never:**
 
-- As a translation label under an English heading. The section called Type has no অক্ষর beneath it;
-  Colour has no রঙ; Motion has no গতি. That is decoration, and decoration is exactly what this
+- As a translation label under an English heading. The section called Type has no अक्षर beneath it;
+  Colour has no रंग; Motion has no गति. That is decoration, and decoration is exactly what this
   system spends its restraint avoiding.
-- To fill a section that has no Bengali content.
-- Letter-spaced — it breaks the মাত্রা.
+- To fill a section that has no Devanagari content.
+- Letter-spaced — it breaks the शिरोरेखा, the headline every Devanagari word hangs from.
 - At the same size *and* weight as the Latin beside it. One of the two leads; the other follows.
 
-### Setting Bengali
+### Setting Devanagari
 
 ```css
-.mk-bengali-display {
-  font-family: 'Noto Sans Bengali', sans-serif;
+.mk-devanagari-display {
+  font-family: 'Noto Sans Devanagari', sans-serif;
   font-variation-settings: 'wght' 600, 'wdth' 100;
   line-height: 1.5;              /* headroom for the matra */
-  letter-spacing: 0;             /* never track Bengali */
+  letter-spacing: 0;             /* never track Devanagari */
 }
 ```
 
-- Line-height minimum `1.5`, against `1.05` for Latin display — Bengali has tall ascenders and deep
-  descenders and will collide otherwise.
-- Bengali reads smaller than Latin at the same px. When the two sit on one line **at the same rank**,
-  set Bengali ~8% larger. When Bengali is subordinate, size it well below and let it recede.
+- Line-height minimum `1.5`, against `1.05` for Latin display — Devanagari has the शिरोरेखा above and
+  stacked conjuncts and matras below, and will collide otherwise.
+- Devanagari reads smaller than Latin at the same px. When the two sit on one line **at the same rank**,
+  set Devanagari ~8% larger. When Devanagari is subordinate, size it well below and let it recede.
 - Compress with `wdth` to 85 for tight slots. Below 80 it distorts.
 
 ### 4.4 Scale
@@ -338,8 +346,8 @@ Desktop. Every size is Clear Sans unless noted.
 | H2 | 38px | 1.1 | −0.02em | Display | Pearl |
 | H3 | 26px | 1.2 | −0.01em | Display | Pearl |
 | Statement | 30px | 1.4 | 0 | Display | Pearl / Blush |
-| Bengali display | 44px | 1.5 | 0 | Bengali `wght 700` | Crimson / Pearl |
-| Bengali body | 19px | 1.75 | 0 | Bengali `wght 400` | Pearl |
+| Devanagari display | 44px | 1.5 | 0 | Devanagari `wght 700` | Crimson / Pearl |
+| Devanagari body | 19px | 1.75 | 0 | Devanagari `wght 400` | Pearl |
 | Body large | 19px | 1.65 | 0.005em | Text | Pearl |
 | Body | 16px | 1.65 | 0.01em | Text | Pearl |
 | Caption | 14px | 1.5 | 0.015em | Text | Ash |
@@ -352,7 +360,7 @@ Tracking relaxes by roughly `0.01em` as sizes drop — tight tracking only works
 ### 4.5 Measure
 
 - Latin body: **62–72 characters.** Hard cap 78.
-- Bengali body: **50–58 characters** — Bengali conjuncts are wider and tire the eye sooner.
+- Devanagari body: **50–58 characters** — Devanagari conjuncts are wider and tire the eye sooner.
 - Captions: 40–50.
 
 ### 4.6 Banned typographic moves
@@ -361,7 +369,7 @@ These are house rules, and they are absolute:
 
 - **No ALL-CAPS eyebrow labels** above headings. The tick (§5) does that job.
 - **No `01 / 02 / 03` markers** unless the content is genuinely a sequence.
-- **No middle-dot meta strings** (`Kolkata · 7pm · Free`). Use spacing or the tick.
+- **No middle-dot meta strings** (`Patna · 7pm · Free`). Use spacing or the tick.
 - **No accenting one word** of a headline in a different colour or italic.
 - **No monospace** for labels or metadata. Monospace is permitted for exactly one thing:
   hex values in the brand kit, where it is real data.
@@ -371,23 +379,25 @@ These are house rules, and they are absolute:
 
 ---
 
-## 5. The mark — কলকা
+## 5. The mark — सूरज
 
 **This is the brand's signature. Everything else stays quiet so this one thing can be intricate.**
 
-Built from `design/kolka_design.png` and `design/kolka_design_2.png`: a solid red disc with petals
-and dots opening around it, flanked by two spiral volutes carrying leaves and budded stems. It is
-the alpona a Bengali household paints on its floor, drawn as a mark.
+Built from `design/madhubani.jpg` and `design/madhubani-artist.jpg`: a solid red disc with petal-rays
+and dots opening around it, flanked by two curling vines carrying leaves and budded stems. It is the
+Chhath sun as a Madhubani painter lays it down — and the vine is the one that borders every kohbar —
+drawn as a mark.
 
-**It is filled, not outlined.** That is the single most important thing about it — alpona is made
-with a fingertip and rice paste, not a pen. An outlined version of this mark is wrong.
+**It is filled, not outlined.** That is the single most important thing about it — a Mithila brush is
+a bamboo twig with a wisp of cotton, and it lays paint flat; an aripan is rice paste from a fingertip.
+An outlined version of this mark is wrong.
 
 ### Two forms
 
 | Form | Size | Where |
 |---|---|---|
 | **Medallion** | 96px and up | Hero, mark stage, closing, logo lockup. One per viewport. |
-| **Sprig** | below 56px | Section headings, nav, card bullets, list markers. A teardrop over two dots. |
+| **Sprig** | below 56px | Section headings, nav, card bullets, list markers. A teardrop over two dots — a paan leaf on its stem. |
 
 There is no third form. Below ~20px the sprig stops being legible; use nothing rather than a smudge.
 
@@ -401,12 +411,12 @@ On a `240 × 240` grid, centre `(120, 116)`, disc radius `25`:
 | Petals | Ten solid teardrops at 0, ±34, ±66, ±110, ±143, 180 degrees. Lengths 30–58. |
 | The ±90° gap | Deliberately empty — it is where the volutes attach |
 | Volutes | Two mirrored spiral scrolls, 4.5px stroke, each with three hanging leaves and a budded stem |
-| Dots | Two above, two below on the vertical axis, descending in size — the alpona signature |
+| Dots | Two above, two below on the vertical axis, descending in size — the aripan signature |
 | Colour | Soft Pearl body, Crimson Silk disc. On paper: Obsidian body, Ruby Red disc. |
 
 ### The bloom
 
-The mark animates in the order alpona is actually painted — **centre first, then outward**:
+The mark animates in the order aripan is actually painted — **centre first, then outward**:
 
 ```
 disc  →  petals  →  volutes  →  leaves  →  buds  →  dots
@@ -425,11 +435,11 @@ Total 1.3s. It is one of only two unrequested animations on a page (§11.3).
 ### Logo lockup
 
 ```
-(medallion) MY KOLKATA
-            আমার কলকাতা
+(medallion) MY BIHAR
+            हमार बिहार
 ```
 
-Medallion at 76px, then Latin at 28px tracked `0.14em`, then Bengali at 14px `wght 500` in Ash.
+Medallion at 76px, then Latin at 28px tracked `0.14em`, then Devanagari at 14px `wght 500` in Ash.
 Clear space on all sides equals the cap-height of the Latin.
 
 ## 6. Motifs
@@ -437,43 +447,45 @@ Clear space on all sides equals the cap-height of the Latin.
 Four structural devices, plus a library of six drawn motifs. The four shape sections and edges;
 the six are ornament you place deliberately.
 
-### Alpona — আলপনা
+### Aripan — अरिपन
 
-A single continuous line, used three ways and no others:
+The rice-paste floor drawing of a Mithila courtyard, reduced to a single continuous line, used
+three ways and no others:
 
-1. **The rule.** A hairline in Ash at 40% opacity that spends its last 90px becoming a curl and
-   terminates in a kolka. Draws itself once when it enters the viewport.
-2. **The ground.** A large alpona figure at **3–5% opacity** in Crimson Depth behind a full-bleed
+1. **The rule.** A hairline in Ash at 40% opacity that spends its last 90px becoming a curl — the
+   vine at the edge of the drawing. Draws itself once when it enters the viewport.
+2. **The ground.** A large aripan figure at **3–5% opacity** in Crimson Depth behind a full-bleed
    band. If a viewer can describe it, it is too strong.
 3. **The load state.** The line drawing itself is the loading indicator. There are no spinners.
 
-### Laal-paar
+### Mithila border
 
-The red border of a white saree, reduced to a band edge: a Pearl ground, two Ruby rules, and a row
-of small arches. **22px tall, tiled at a fixed size** — build it with an SVG `<pattern>` in px
+The double-ruled border of a Madhubani painting, reduced to a band edge: a Pearl ground, two Ruby
+rules, and a row of small arches. **22px tall, tiled at a fixed size** — build it with an SVG `<pattern>` in px
 units, never a stretched `viewBox`. Once or twice a page, as an edge. Never as a frame.
 
-### Chalchitra
+### Torana
 
-The painted arch behind the idol, kept as bare geometry — two concentric arcs with radiating
-spokes. It shapes feature panels and pandal-style cards. A silhouette, not a painting.
+The stone gateway arch of a stupa — the Sanchi form, as at Vaishali and Kesaria — kept as bare
+geometry: two concentric arcs with radiating spokes. It shapes feature panels and ghat-style cards.
+A silhouette, not a carving.
 
 ### Shola
 
-White pith filigree from the crown: an eight-petal rosette in Pearl. **The only white-on-red
+The white sikki-grass filigree of Mithila: an eight-petal rosette in Pearl. **The only white-on-red
 ornament in the system, and the only one allowed to be delicate.** Reserve it for ceremony.
 
-### The alpona library
+### The aripan library
 
-Six motifs read straight off a sheet of hand-drawn alpona — solid, symmetrical, built from
-teardrops and descending dot runs. They are the vocabulary the medallion is made from, available
+Six motifs read straight off a Madhubani border — solid, symmetrical, built from teardrops and
+descending dot runs. They are the vocabulary the medallion is made from, available
 on their own where a full medallion would be too much.
 
 | Motif | Job |
 |---|---|
 | Finial | Section openers, the top of a feature panel |
 | Flame | Celebration — a completed contribution, a milestone |
-| Rosette | Avatars, para badges, category markers |
+| Rosette | Avatars, mohalla badges, category markers |
 | Star flower | Ratings, highlights, editor picks |
 | Bead run | Vertical dividers, timeline nodes |
 | Curl | Quote marks, pull-quotes, end-of-article marks |
@@ -491,34 +503,34 @@ Two sets, deliberately opposite, so they can never be confused.
 
 ### 7A. Emblems — filled, cultural
 
-Two-tone marks in the alpona vocabulary: **a Pearl body with one Crimson accent**, exactly the way
-an alpona is painted around a red disc. Drawn on a 64px grid. These are the brand's cultural voice —
-used large, used rarely.
+Two-tone marks in the Madhubani vocabulary: **a Pearl body with one Crimson accent**, the way a
+Mithila artist fills a shape and then dots it. Drawn on a 64px grid. These are the brand's cultural
+voice — used large, used rarely.
 
-| Emblem | Bengali | Job |
+| Emblem | Devanagari | Job |
 |---|---|---|
-| Durga's eyes | চোখ | The most recognisable mark in Bengal. Brand moments, splash, empty states. |
-| Mukut | মুকুট | The crown. Premium, featured and awarded states. |
-| Dhaak | ঢাক | Rhythm and arrival. Live and now-playing. |
-| Dhunuchi | ধুনুচি | Smoke and evening aarti. Atmosphere, evening listings. |
-| Shankha | শাঁখ | The call. Announcements, notifications. |
-| Lotus | পদ্ম | Purity. The recurring secondary symbol beneath the kolka. |
-| Diya | প্রদীপ | Hope, a light left on. Saved items, favourites. |
-| Kalash | কলস | Prosperity. Contribution, community funds. |
-| Trishul | ত্রিশূল | Strength and protection. Account security, verified paras. |
-| Kash phool | কাশফুল | The season turning. Dates, countdowns. |
-| Shiuli | শিউলি | Morning, the first day. New, unseen, just added. |
+| Surya | सूरज | The most recognisable mark in Bihar: the Chhath sun. Brand moments, splash, empty states. |
+| Soop | सूप | The winnowing basket held up at arghya. Offerings, giving, the moment itself. |
+| Thekua | ठेकुआ | The prasad. Rewards, favourites, something sweet at the end. |
+| Daura | दउरा | The bamboo basket carried to the ghat on the head. Collections, saved items. |
+| Ikh | ईख | Sugarcane at the ghat. The season turning — dates, countdowns. |
+| Lotus | कमल | Purity. The recurring secondary symbol beneath the sun — Nalanda and Madhubani both. |
+| Diya | दीया | Hope, a light left on. Saved items, favourites. |
+| Kalash | कलश | Prosperity. Contribution, community funds. |
+| Machhli | माछ | The Mithila fish — fortune and plenty. Community, the marketplace. |
+| Mor | मोर | The Madhubani peacock. Premium, featured and awarded states. |
+| Bodhi leaf | पीपल | Bodh Gaya. Calm, stories, long-form, the archive. |
 
 **Emblem rules**
 
 - Never smaller than **40px** — the fills collapse below that.
 - A Pearl body with **one** accent. That accent is Crimson Silk, except where the object itself is
-  yellow — the diya's flame, the mukut's gems, the kalash's coconut band — which is where Taxi
-  Yellow lives (§3.7). Never a third colour in one emblem.
+  yellow — the diya's flame, the kalash's coconut band — which is where Genda Yellow lives (§3.7).
+  Never a third colour in one emblem.
 - Never outlined.
 - On paper the Pearl becomes Obsidian and the Crimson becomes Ruby Red.
 - Never used where a UI icon belongs. An emblem is a statement, not a control.
-- The idol's face is never an emblem. The eyes are as close as the system goes.
+- Chhathi Maiya is never drawn. The sun is as close as the system goes.
 
 ### 7B. Icons — line, utility
 
@@ -526,17 +538,17 @@ The deliberate opposite: **32px grid, 1.5px stroke, no fills, rounded joins.** U
 
 | Icon | Job |
 |---|---|
-| Howrah Bridge | The city itself — map and location states |
-| Tram | Transport, routes, getting there |
-| Ambassador taxi | Rides, directions, distance |
-| Hand-pulled rickshaw | North Kolkata, heritage walks |
-| Victoria Memorial | Landmarks, monuments, guided routes |
-| North Kolkata balcony | Neighbourhoods, paras, old houses |
-| Hooghly boat | The river, the ghats, crossings |
-| Cha in a bhaar | Food and drink, adda, places to sit |
-| Phuchka | Street food, markets, Gariahat |
-| College Street | Stories, long-form, the archive |
-| Hand-painted signage | Listings, names, para clubs |
+| Mahatma Gandhi Setu | The state itself — map and location states |
+| Patna Metro | Transport, routes, getting there |
+| Shared auto | Rides, directions, distance |
+| Cycle rickshaw | Patna City, heritage walks |
+| Golghar | Landmarks, monuments, guided routes |
+| Patna City haveli | Neighbourhoods, mohallas, old houses |
+| Ganga boat | The river, the ghats, crossings |
+| Chai in a kulhad | Food and drink, adda, places to sit |
+| Litti chokha | Street food, markets, Maurya Lok |
+| Khuda Bakhsh Library | Stories, long-form, the archive |
+| Hand-painted signage | Listings, names, mohalla clubs |
 | Street lamp | Night mode, after-dark listings |
 
 **Icon rules**
@@ -561,8 +573,8 @@ neighbours by black — the letterbox.
 │   full-bleed image, 2.39:1                   │
 │   gradient scrim from bottom-left             │
 │                                              │
-│  │ Kumortuli                                 │
-│    Where the goddess is built                │
+│  │ Patna City                                │
+│    Where the old town keeps its galis        │
 │                                              │
 ├──────────────────────────────────────────────┤
 │▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓│
@@ -639,12 +651,12 @@ content sits bottom-left, columns 1–6
 ```
 
 ```
-│ DURGA PUJA
-  আশ্বিনের শারদপ্রাতে
+│ CHHATH PUJA
+  छठ आ रहल बा।
 
-  Five days. One city. Everyone comes home.
+  Four days. One river. Everyone comes home.
 
-  [ Explore the Pujo → ]   [ Watch the film ]
+  [ Go to the ghat → ]   [ Watch the film ]
 ```
 
 Netflix's contribution is the **scrim discipline and the bottom-left anchor** — content never
@@ -661,9 +673,9 @@ underneath them is a real surface scale (§3.1).
 │                    │   image 16:10, radius 14px, card shadow
 │                    │
 └────────────────────┘
-(sprig) Kumortuli        ← sprig + title in Pop White, Display 22px
-        North Kolkata    ← Ash 13px, goes Taxi Yellow on hover
-        Where the goddess is built
+(sprig) Patna City       ← sprig + title in Pop White, Display 22px
+        Patna Sahib      ← Ash 13px, goes Genda Yellow on hover
+        Where the old town keeps its galis
 ```
 
 | Part | Spec |
@@ -674,7 +686,7 @@ underneath them is a real surface scale (§3.1).
 | Title | Pop White, so it lifts off the ground |
 
 **Hover:** the media lifts `4px`, its shadow deepens, the image scales `1.05`, the title lifts
-`2px`, and the sub-line goes Taxi Yellow. 220ms. The sprig does **not** animate — a grid of
+`2px`, and the sub-line goes Genda Yellow. 220ms. The sprig does **not** animate — a grid of
 blooming marks is the wallpaper §5 forbids.
 
 Earlier versions desaturated card images to `0.82` and gave them no shadow. That is why they sat
@@ -708,10 +720,10 @@ After 80px of scroll the fill deepens and the border brightens. That is the whol
 | Part | Spec |
 |---|---|
 | Wordmark Latin | 13px Display, tracked `0.18em`, Pop White |
-| Wordmark Bengali | 11px, `wght 500`, Ash — beneath the Latin, never beside it |
+| Wordmark Devanagari | 11px, `wght 500`, Ash — beneath the Latin, never beside it |
 | Links | 14.5px Ash → Pop White on hover, 120ms |
 | Hover / active | A 14px Crimson bar under the link, scaling from the centre |
-| Search underline | Goes **Taxi Yellow** on focus, growing from the left |
+| Search underline | Goes **Genda Yellow** on focus, growing from the left |
 | Below 900px | Links collapse; wordmark and search remain |
 
 Never: pill backgrounds behind links, a bordered box around the search, or an opaque bar.
@@ -723,7 +735,7 @@ Never: pill backgrounds behind links, a bordered box around the search, or an op
 Placeholder in Ash. Used for search, filters, and anything inline.
 
 ```
-(o) Search a para, a pandal, a street
+(o) Search a mohalla, a ghat, a street
 ─────────────────────────────────────
 ```
 
@@ -734,7 +746,7 @@ profile. `rgba(242,241,237,0.05)` fill, 1px `rgba(242,241,237,0.14)` border, rad
 
 ### 9.6 The caption
 
-Straight off the kaash-phool photograph: two lines, a tick, nothing else.
+Straight off the ghat-still photograph: two lines, a tick, nothing else.
 
 ```
 | Happiness is
@@ -751,34 +763,37 @@ Sits bottom-left over a photograph, inside the same scrim discipline as the bann
 
 ### 9.7 The countdown
 
-Durga Puja is the emotional centre of the product, so the wait for it is the product's warmest
-moment — not a widget. It is a **homecoming**, and it says so.
+Chhath is the emotional centre of the product, so the wait for it is the product's warmest
+moment — not a widget. It is a **homecoming**, and it says so: every Bihari who can, goes home for
+Chhath, and the count is to Nahay Khay, the day the trains are full.
 
 ```
 ┌───────────────────────────────────────────────────────┐
-│  autumn dusk, kaash phool, a low moon                 │
-│                                                       │
-│                                                       │
-│  পুজোয় বাড়ি ফিরছ তো?                                  │
+│  Sandhya Arghya: the sun low over the Ganga, its      │
+│  road of light on the water, ghat steps with diyas,   │
+│  sugarcane leaning in from both edges                 │
+│  छठ में घरे आ रहल बाड़ऽ नू?                              │
 │  Welcome home.                                        │
 │  ┌────┐ ┌────┐ ┌────┐ ┌────┐                          │
-│  │ 29 │ │ 21 │ │ 08 │ │ 05 │                          │
+│  │ 52 │ │ 21 │ │ 08 │ │ 05 │                          │
 │  │days│ │hrs │ │mins│ │secs│                          │
 │  └────┘ └────┘ └────┘ └────┘                          │
-│  till Mahalaya, 11 October.                           │
+│  till Nahay Khay, 13 November.                        │
 └───────────────────────────────────────────────────────┘
 ```
 
-**The scene.** A 21:9 band (4:5 on mobile) holding an autumn dusk: Monsoon Teal at the top of the
-sky grading through Bordeaux to a **Warm Sand horizon glow**, a low pale moon, soft cloud bands, and
-a field of kaash phool. It is drawn rather than photographed — deliberately, because it lets the sky
-use the two most neglected colours in the palette instead of adding more red.
+**The scene.** A 21:9 band (4:5 on mobile) holding the evening arghya: a dusky violet grading down
+through saffron to the horizon, the sun sitting just above the far bank in **Genda Yellow** (the one
+yellow in the frame, so it may glow), its reflection breaking into a road of light down the river,
+then the stone steps of a Patna ghat with diyas along every edge, and sugarcane (ईख) leaning in from
+both sides. It is drawn rather than photographed — deliberately, because it lets the sky use the two
+most neglected colours in the palette instead of adding more red.
 
-A kaash plume is a **dense soft spike**: a stem with roughly eighteen short barbs angled steeply
-upward over a faint ellipse of mass. Long, widely spaced barbs turn it into a fern frond.
+A sugarcane stalk is a **leaning stem with nodes** and three or four long blades at the top. Short
+blades turn it into grass; a plume turns it into kaash, which is the wrong festival.
 
 Everything is generated from a **fixed seed**. Never `Math.random()` in the component — the server
-and the client must draw the same grass or hydration desynchronises.
+and the client must draw the same stalks or hydration desynchronises.
 
 To swap in a photograph, put it behind the scrim and delete the drawn sky. Nothing else changes.
 
@@ -791,18 +806,18 @@ weight, which is more elegant and reads better over an image.
 | Numeral | Display up to 84px, `line-height 0.86`, `-0.05em`, Pop White |
 | Weight | `text-shadow: 0 14px 34px rgba(0,0,0,0.6)` — the numerals sit *on* the sky |
 | Numerals | **`font-variant-numeric: tabular-nums`**, always |
-| Label | 11px **Taxi Yellow**, tracked `0.14em`, lowercase |
+| Label | 11px **Genda Yellow**, tracked `0.14em`, lowercase |
 | Gap | `clamp(16px, 3.2vw, 44px)` — all four units stay on one line to 1440px |
 
-**Copy.** Bengali leads, because the greeting *is* Bengali — case 3 of §4.3, not decoration.
-পুজোয় বাড়ি ফিরছ তো? then *Welcome home.* then the count, then the date. Warm, second person,
+**Copy.** Bhojpuri leads, because the greeting *is* Bhojpuri — case 3 of §4.3, not decoration.
+छठ में घरे आ रहल बाड़ऽ नू? then *Welcome home.* then the count, then the date. Warm, second person,
 and never "Don't miss out".
 
 **Rules**
 
 - Tabular numerals are mandatory; without them the seconds column jitters every tick.
 - Render `--` until the client has mounted, or SSR produces a hydration mismatch and a visible flash.
-- **Every date lives in one constant** and moves each year with the panjika. Confirm before each season.
+- **Every date lives in one constant** (`lib/chhath.ts`) and moves each year with the panchang. Confirm before each season.
 - The clock is information, so it keeps ticking under `prefers-reduced-motion` (§11.3).
 - No crimson in this band at all. The warmth comes from the horizon, not the accent.
 
@@ -810,7 +825,7 @@ and never "Don't miss out".
 
 The strongest asset the brand has. Everything above exists to get out of its way.
 
-**Grade** — this is the Setu image, specified:
+**Grade** — this is the Gandhi Ghat image, specified:
 
 - Shadows lifted slightly and pushed **cold** toward Monsoon Teal
 - Highlights warm — lamp light, skin, brass
@@ -819,9 +834,9 @@ The strongest asset the brand has. Everything above exists to get out of its way
 - Subtle grain
 - Soft vignette
 
-**Subjects** — hands, sindoor, silk, dhak, kumortuli clay, shiuli on wet grass, kaash phool
-against grey sky, tram wires, pandal light tunnels, rain on glass, crowds at night, North
-Kolkata balconies, para life.
+**Subjects** — hands, sindoor, Bhagalpuri silk, a soop full of fruit, thekua on a brass thali,
+sugarcane against a saffron sky, the Setu's piers in the water, ghat steps at dawn, Madhubani on a
+courtyard wall, litti on the coals, crowds at night, Patna City havelis, mohalla life.
 
 **Rules**
 
@@ -843,7 +858,7 @@ Motion is cinematic: **slow to start, decisive to finish.** Nothing bounces. Not
 ```css
 --mk-ease-out:   cubic-bezier(0.16, 1, 0.3, 1);      /* reveals, entrances */
 --mk-ease-in-out:cubic-bezier(0.65, 0, 0.35, 1);     /* moves, transitions */
---mk-ease-draw:  cubic-bezier(0.32, 0.72, 0, 1);     /* the alpona line */
+--mk-ease-draw:  cubic-bezier(0.32, 0.72, 0, 1);     /* the aripan line */
 ```
 
 ### 11.2 Durations
@@ -863,7 +878,7 @@ Motion is cinematic: **slow to start, decisive to finish.** Nothing bounces. Not
 
 The countdown (§9.7) is the single sanctioned exception: a ticking clock is *information*, not
 decoration, and it keeps ticking under `prefers-reduced-motion`.
- On My Kolkata, that is the
+ On My Bihar, that is the
 title sequence: the letterbox bars retract from the top and bottom, the title fades up 12px, and
 the medallion blooms. Once, on load, and never again.
 
@@ -887,7 +902,7 @@ rotating chakras, counters that tick up, and any looping ambient animation.
 ```
 
 Under reduced motion the medallion renders **fully bloomed** at rest, the hero image does not zoom,
-and the alpona rule is drawn complete. Nothing is lost — only the timing.
+and the aripan rule is drawn complete. Nothing is lost — only the timing.
 
 ---
 
@@ -898,11 +913,11 @@ Observant, not promotional. The "Art of Noticing" register.
 **Do**
 
 - Short sentences. Plain verbs. Sentence case.
-- Say the specific thing: "Kumortuli, where the goddess is built" — not "Explore our heritage."
-- Name places, paras, times, prices. Specificity is the tone.
-- Bengali where Bengali is what someone would actually say — আড্ডা, পুজো, ঠাকুর দেখা.
+- Say the specific thing: "Patna City, where the old town keeps its galis" — not "Explore our heritage."
+- Name places, mohallas, times, prices. Specificity is the tone.
+- Devanagari where Devanagari is what someone would actually say — अड्डा, छठ, घाट पर चलीं.
 - Buttons name their outcome: "Save this place," then a toast that says "Saved."
-- Empty states invite: "Nothing saved yet. Start with a pandal near you."
+- Empty states invite: "Nothing saved yet. Start with a ghat near you."
 - Errors state the fix: "That address didn't match. Try a landmark or a metro station."
 
 **Don't**
@@ -910,19 +925,19 @@ Observant, not promotional. The "Art of Noticing" register.
 - No "Discover the magic of…", no "Immerse yourself in…", no "vibrant tapestry."
 - No exclamation marks.
 - No "Submit." No "Learn more."
-- Never explain Bengali culture *to* Bengalis. Write for someone who already belongs, and let
-  the visitor follow.
+- Never explain Bihar *to* Biharis. Write for someone who already belongs, and let the visitor
+  follow.
 - No emoji in product copy.
 
 **Sample closing statement**
 
 ```
-│ SAME CITY.
+│ SAME BIHAR.
   NEW STORIES.
 
-  পুজো আসছে।
+  छठ आ रहल बा।
 
-  [ Explore the Pujo → ]
+  [ Go to the ghat → ]
 ```
 
 ---
@@ -948,7 +963,7 @@ Implemented in [`src/styles/brand-tokens.css`](src/styles/brand-tokens.css).
   /* type */
   --mk-display: 'Clear Sans Display', system-ui, sans-serif;
   --mk-text:    'Clear Sans Text', system-ui, sans-serif;
-  --mk-bengali: 'Noto Sans Bengali', system-ui, sans-serif;
+  --mk-devanagari: 'Noto Sans Devanagari', system-ui, sans-serif;
 
   /* space */
   --mk-1: 4px;   --mk-2: 8px;   --mk-3: 12px;  --mk-4: 16px;
@@ -986,7 +1001,7 @@ Non-negotiable on every screen shipped:
 - `prefers-reduced-motion` respected.
 - Touch targets ≥ 44×44px.
 - Images have real alt text describing the moment, not the file.
-- Bengali is marked `lang="bn"` so screen readers pronounce it.
+- Devanagari is marked `lang="hi"` so screen readers pronounce it.
 - Fonts are self-hosted, `font-display: swap`, preloaded for the two Latin faces.
 - Colour is never the only carrier of meaning.
 
@@ -997,7 +1012,7 @@ Non-negotiable on every screen shipped:
 ```
 CINEMATIC BANDS
       +
-BENGALI TYPE THAT CARRIES THE WEIGHT
+DEVANAGARI TYPE THAT CARRIES THE WEIGHT
       +
 ONE CRIMSON MARK
       +
@@ -1005,7 +1020,7 @@ PHOTOGRAPHY, COLD SHADOW / WARM LIGHT
       +
 SILENCE AROUND ALL OF IT
       =
-MY KOLKATA
+MY BIHAR
 ```
 
 Everything in this system is quiet so that one thing can be loud: the tick, the photograph, or

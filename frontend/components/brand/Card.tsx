@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
-import { Sprig } from './kolka'
+import { Sprig } from './mithila'
 import { CityIcon, type CityIconName } from './icons'
 
 type CardProps = {
@@ -22,7 +22,7 @@ type CardProps = {
 }
 
 /*  The content card. design.md §9.3 — image 16:10 at 14px, a sprig, a Pop
-    White title, an Ash sub-line that goes Taxi Yellow on hover.             */
+    White title, an Ash sub-line that goes Genda Yellow on hover.             */
 export function Card({
   title, href, external, image, imageAlt = '', sub, desc, icon, fallbackLabel, ariaLabel,
   onClick, className = '', headingLevel = 'h3',

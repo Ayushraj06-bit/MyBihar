@@ -70,15 +70,15 @@ test('no exclamation marks in product copy', () => {
   assert.deepEqual(offenders(product, />[^<>{}]*[A-Za-z][^<>{}]*!\s*</), [])
 })
 
-test('Bengali in product markup is marked lang="bn"', () => {
+test('Devanagari in product markup is marked lang="hi"', () => {
   const unmarked = product.filter(({ text }) => text.split('\n').some((line) =>
-    /[ঀ-৿]/.test(line) && /<[a-z]/.test(line) && !/lang="bn"/.test(line)))
+    /[ঀ-৿]/.test(line) && /<[a-z]/.test(line) && !/lang="hi"/.test(line)))
   assert.deepEqual(unmarked.map(({ file }) => file), [])
 })
 
-test('every Pujo date lives in one constant', async () => {
+test('every Chhath date lives in one constant', async () => {
   const all = await sources(['app/', 'components/', 'lib/'], ['.ts', '.tsx'])
-  assert.deepEqual(offenders(all.filter(({ file }) => file !== 'lib/pujo.ts'), /2026-10-\d\d/), [])
+  assert.deepEqual(offenders(all.filter(({ file }) => file !== 'lib/chhath.ts'), /2026-10-\d\d/), [])
 })
 
 test('the Tailwind theme is the brand and nothing else', async () => {
@@ -96,10 +96,10 @@ test('fonts are self-hosted and the two Latin faces are preloaded', async () => 
   assert.match(layout, /preload\('\/fonts\/clear-sans-display\.woff2'/)
 })
 
-test('the brand kit and the product share one kolka, one set of icons and one notch bar', async () => {
+test('the brand kit and the product share one mithila, one set of icons and one notch bar', async () => {
   const kit = await readFile(new URL('app/brand-kit/page.tsx', root), 'utf8')
-  assert.match(kit, /from '@\/components\/brand\/kolka'/)
+  assert.match(kit, /from '@\/components\/brand\/mithila'/)
   assert.match(kit, /from '@\/components\/brand\/icons'/)
   assert.match(kit, /className="mk-notchbar"/)
-  assert.doesNotMatch(kit, /function Medallion|const ICONS = |const EMBLEMS = |const MAHALAYA/)
+  assert.doesNotMatch(kit, /function Medallion|const ICONS = |const EMBLEMS = |const NAHAY_KHAY/)
 })

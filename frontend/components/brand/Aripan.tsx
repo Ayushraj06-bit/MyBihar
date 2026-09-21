@@ -2,11 +2,12 @@
 
 import { useEffect, useId, useRef, useState } from 'react'
 
-/* ------------------------------------------------------------ alpona rule -- */
-/*  A hairline in Ash that spends its last stretch becoming a curl. Draws itself
-    once when it enters the viewport. design.md §6                              */
+/* ------------------------------------------------------------ aripan rule -- */
+/*  A hairline in Ash that spends its last stretch becoming a curl — the vine
+    that runs along the edge of an aripan, the rice-paste floor drawing of a
+    Mithila courtyard. Draws itself once when it enters the viewport. design.md §6 */
 
-export function AlponaRule({ className = '' }: { className?: string }) {
+export function AripanRule({ className = '' }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const [seen, setSeen] = useState(false)
   useEffect(() => {
@@ -29,7 +30,7 @@ export function AlponaRule({ className = '' }: { className?: string }) {
 /* ----------------------------------------------------------- load state -- */
 /*  The line drawing itself is the loading indicator. There are no spinners.   */
 
-export function AlponaLoader({ label, className = '' }: { label: string; className?: string }) {
+export function AripanLoader({ label, className = '' }: { label: string; className?: string }) {
   return (
     <div className={`mk-loader ${className}`} role="status">
       <svg className="mk-loader-art" viewBox="0 0 160 44" fill="none" aria-hidden="true">
@@ -41,17 +42,18 @@ export function AlponaLoader({ label, className = '' }: { label: string; classNa
   )
 }
 
-/* ------------------------------------------------------------ laal-paar -- */
-/*  The red border of a white saree, reduced to a band edge. Once or twice a
+/* ---------------------------------------------------------- mithila border -- */
+/*  The double-ruled border of a Madhubani painting — two red lines with a run
+    of small arches between them — reduced to a band edge. Once or twice a
     page, as an edge. Never as a frame.                                        */
 
-export function LaalPaar({ height = 22 }: { height?: number }) {
+export function MithilaBorder({ height = 22 }: { height?: number }) {
   const pid = useId().replace(/:/g, '')           /* unique per instance */
   const mid = height / 2
   return (
-    <div className="mk-laalpaar" aria-hidden="true">
+    <div className="mk-mithila-border" aria-hidden="true">
       {/* No viewBox: units are px, so the arches tile at a fixed size at any width. */}
-      <svg className="mk-laalpaar-art" width="100%" height={height} preserveAspectRatio="none">
+      <svg className="mk-mithila-border-art" width="100%" height={height} preserveAspectRatio="none">
         <defs>
           <pattern id={pid} width="18" height={height} patternUnits="userSpaceOnUse">
             <path d={`M4 ${mid + 4} q0 -7 5 -7 t5 7`} fill="none" stroke="var(--mk-ruby)" strokeWidth="1.2" />

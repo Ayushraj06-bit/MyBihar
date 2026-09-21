@@ -54,7 +54,7 @@
   border-radius: 999px; color: var(--mk-pearl); text-decoration: none;
 }
 .mapBack:hover, .deckIcon:hover:not(:disabled) { background: rgba(242, 241, 237, 0.08); }
-.deckIcon[aria-expanded="true"], .deckIcon[aria-pressed="true"] { color: var(--mk-taxi); }
+.deckIcon[aria-expanded="true"], .deckIcon[aria-pressed="true"] { color: var(--mk-genda); }
 .mapDeck .searchBox { min-height: 40px; padding: 0 4px 0 8px; gap: var(--mk-2); border-bottom-color: transparent; }
 .mapDeck .searchBox::after { left: 8px; right: 8px; }
 .mapDeck .searchBox input { min-height: 38px; font-size: 16px; }
@@ -68,7 +68,7 @@
 .filterButton { gap: var(--mk-2); }
 .filterCount {
   min-width: 22px; height: 22px; padding: 0 6px; display: inline-grid; place-items: center; border-radius: 999px;
-  background: var(--mk-taxi); color: var(--mk-obsidian); font-size: 12px; font-variant-numeric: tabular-nums;
+  background: var(--mk-genda); color: var(--mk-obsidian); font-size: 12px; font-variant-numeric: tabular-nums;
 }
 .viewToggle { background: rgba(13, 16, 18, 0.4); }
 .locateIcon { background: rgba(13, 16, 18, 0.4); }
@@ -142,7 +142,7 @@
 .railText { min-width: 0; display: grid; gap: 2px; }
 .railTitle { overflow: hidden; font-family: var(--mk-display); font-size: 16px; line-height: 1.25; color: var(--mk-white); text-overflow: ellipsis; white-space: nowrap; }
 .railMeta { overflow: hidden; font-size: 12px; letter-spacing: 0.02em; color: var(--mk-ash); text-overflow: ellipsis; white-space: nowrap; }
-.railItem:hover .railMeta { color: var(--mk-taxi); }
+.railItem:hover .railMeta { color: var(--mk-genda); }
 .mapStatusTitle { margin: 0; font-family: var(--mk-display); font-size: 22px; line-height: 1.2; color: var(--mk-white); }
 .emptyState button, .mapStatus button { margin-top: var(--mk-2); }
 
@@ -175,7 +175,7 @@
 }
 .legendRow:hover { background: rgba(242, 241, 237, 0.06); }
 .legendRow[aria-pressed="true"] { background: rgba(242, 241, 237, 0.1); color: var(--mk-white); }
-.legendRow[aria-pressed="true"]::after { content: ''; width: 6px; height: 6px; margin-left: auto; border-radius: 50%; background: var(--mk-taxi); }
+.legendRow[aria-pressed="true"]::after { content: ''; width: 6px; height: 6px; margin-left: auto; border-radius: 50%; background: var(--mk-genda); }
 .legendSwatch {
   width: 26px; height: 26px; flex: none; display: grid; place-items: center; border: 2px solid var(--mk-pearl); border-radius: 50%;
   font-family: var(--mk-display); font-size: 12px; line-height: 1; color: var(--mk-pearl);
@@ -186,7 +186,7 @@
 /* your location — the one yellow thing on the map, like a taxi in the rain */
 .userMarker {
   width: 18px; height: 18px; display: block; border: 3px solid var(--mk-obsidian); border-radius: 50%;
-  background: var(--mk-taxi); box-shadow: 0 0 0 7px rgba(242, 179, 61, 0.24), 0 8px 18px rgba(0, 0, 0, 0.5);
+  background: var(--mk-genda); box-shadow: 0 0 0 7px rgba(242, 179, 61, 0.24), 0 8px 18px rgba(0, 0, 0, 0.5);
 }
 
 /* ------------------------------------------------------------ the sheet -- */
@@ -226,7 +226,7 @@
 .detailsActions { display: flex; flex-wrap: wrap; gap: 0 var(--mk-5); }
 .cardActions { margin-left: auto; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0 var(--mk-5); }
 .detailsMeta .distance { font-size: 13px; }
-.distance { font-size: 13px; letter-spacing: 0.02em; color: var(--mk-taxi); font-variant-numeric: tabular-nums; }
+.distance { font-size: 13px; letter-spacing: 0.02em; color: var(--mk-genda); font-variant-numeric: tabular-nums; }
 
 /* -------------------------------------------------------------- results -- */
 .resultsMode { min-height: 100svh; padding: calc(var(--mk-nav) + clamp(32px, 5vw, 64px)) 0 clamp(64px, 10vw, 128px); }
