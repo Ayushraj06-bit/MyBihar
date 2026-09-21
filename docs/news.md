@@ -37,7 +37,7 @@ It represents:
 "Prabhat Khabar today"
 
 
-CARD 2 — PATNA / CITY NEWS
+CARD 2 — BIHAR / CITY NEWS
 --------------------------------
 This must become a dynamic current Bihar news card.
 
@@ -62,7 +62,7 @@ Do NOT hardcode one particular story.
 The story should naturally change as new important Bihar news appears.
 
 
-CARD 3 — PATNA SPORTS
+CARD 3 — BIHAR SPORTS
 --------------------------------
 This must become a dynamic Bihar sports news card.
 
@@ -222,7 +222,7 @@ sourceUrl
 
 
 ==================================================
-PATNA RELEVANCE
+BIHAR RELEVANCE
 ==================================================
 
 A story should actually be relevant to Bihar.

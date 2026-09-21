@@ -335,7 +335,7 @@ Cards should feel closer to streaming-platform content cards than traditional fe
 ```text
 [ IMAGE ]
 
-NORTH PATNA
+PATNA CITY
 Chhath Walk
 
 28 SEPTEMBER

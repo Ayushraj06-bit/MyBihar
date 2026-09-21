@@ -290,10 +290,10 @@ export default function BrandKit() {
           <div className="letterbox letterbox--bottom" aria-hidden="true" />
           <div className="title-inner">
             <Medallion open={ready} size={168} className="title-mark" />
-            <h1 className="title-latin"><span>MY</span><span>PATNA</span></h1>
+            <h1 className="title-latin"><span>MY</span><span>BIHAR</span></h1>
             <p className="title-bn" lang="hi">हमार बिहार</p>
             <p className="title-sub">
-              A city, shot like a film. Every colour, letterform, line and curve the product is
+              A state, shot like a film. Every colour, letterform, line and curve the product is
               built from — and the reasons behind each one.
             </p>
           </div>
