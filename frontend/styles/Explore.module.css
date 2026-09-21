@@ -1,0 +1,76 @@
+/*
+ * Explore — /places. Page-specific layout only; buttons, chips, cards, type and
+ * the banner come from styles/brand.css. Spec: /design.md
+ */
+
+.root { padding-bottom: clamp(64px, 10vw, 128px); }
+
+/* ------------------------------------------------------------------ hero -- */
+.heroCopy { max-width: min(760px, 100%); }
+.heroActions {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: var(--mk-5);
+  margin-top: var(--mk-6); max-width: 720px;
+}
+.searchForm { min-width: 0; }
+.heroShortcuts { margin-top: var(--mk-5); }
+
+/* ------------------------------------------------------------- sections -- */
+.section { padding-top: clamp(64px, 9vw, 128px); }
+.categorySection { padding-top: clamp(48px, 7vw, 96px); }
+.categorySectionActive { padding-bottom: 0; }
+.resultsSection { padding-top: clamp(40px, 6vw, 72px); }
+.categorySectionActive + .resultsSection { padding-top: var(--mk-7); }
+.rowOffset { margin-top: var(--mk-6); }
+.loader { margin: var(--mk-6) 0 var(--mk-5); }
+.state { margin-top: var(--mk-6); max-width: 640px; }
+
+.categoryGrid {
+  display: flex; gap: var(--mk-3); margin-top: var(--mk-6);
+  overflow-x: auto; padding: 2px 2px var(--mk-2); scrollbar-width: thin; scrollbar-color: rgba(242,241,237,0.2) transparent;
+}
+.categoryButton { flex: 1 0 auto; min-height: 60px; padding: 0 var(--mk-5); font-size: 16px; }
+
+/* ------------------------------------------------------------ live rows -- */
+/*  One row per kind of place, closest first — each a live list, not a pick. */
+.locationNote { margin-top: var(--mk-5); max-width: 640px; }
+.rowSection { padding-top: clamp(40px, 5vw, 64px); }
+.rowSection + .rowSection { border-top: 1px solid rgba(242,241,237,0.08); margin-top: clamp(24px, 3vw, 40px); }
+.rowHead { display: flex; align-items: center; justify-content: space-between; gap: var(--mk-4); }
+.rowTitle {
+  margin: 0; display: inline-flex; align-items: center; gap: var(--mk-3);
+  font-family: var(--mk-display); font-weight: 400; font-size: clamp(22px, 2.2vw, 28px); line-height: 1.2; letter-spacing: -0.01em; color: var(--mk-white);
+}
+.rowNote { margin-top: var(--mk-4); display: flex; flex-wrap: wrap; align-items: center; gap: var(--mk-3); }
+.anchorLink { margin-top: var(--mk-6); }
+
+/* --------------------------------------------------------------- results -- */
+.resultGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--mk-7) var(--mk-5); margin-top: var(--mk-6); }
+.resultActions { margin-top: var(--mk-7); display: flex; align-items: center; gap: var(--mk-6); flex-wrap: wrap; }
+.resultSkeleton { display: grid; gap: var(--mk-3); min-width: 0; }
+.skeletonMedia { aspect-ratio: 16 / 10; }
+.skeletonTitle { width: 64%; height: 18px; margin-top: var(--mk-2); }
+.skeletonSub { width: 40%; }
+
+/* ------------------------------------------------------------ responsive -- */
+@media (max-width: 1100px) {
+  .resultGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .heroActions { grid-template-columns: 1fr; align-items: stretch; }
+  .heroShortcuts { display: none; }
+  .resultGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .categoryGrid { margin-inline: calc(-1 * var(--mk-edge)); padding-inline: var(--mk-edge); }
+  .categoryButton { flex: 0 0 auto; }
+  .rowOffset { margin-inline: calc(-1 * var(--mk-edge)); padding-inline: var(--mk-edge); scroll-padding-inline: var(--mk-edge); }
+  .resultGrid { grid-template-columns: 1fr 1fr; gap: var(--mk-6) var(--mk-4); }
+  .resultActions { flex-direction: column; align-items: stretch; gap: var(--mk-3); }
+}
+
+@media (max-width: 420px) {
+  .resultGrid { grid-template-columns: 1fr; }
+}
+
