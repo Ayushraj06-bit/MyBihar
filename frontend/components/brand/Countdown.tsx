@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { MAHALAYA, PUJO_DAYS, formatPujoDate } from '@/lib/pujo'
-import { KaashPhoolScene } from '@/components/brand/KaashPhool'
+import { NAHAY_KHAY, CHHATH_DAYS, formatChhathDate } from '@/lib/chhath'
+import { GhatScene } from '@/components/brand/Ghat'
 
 type Left = { d: number; h: number; m: number; s: number; done: boolean }
 
@@ -29,7 +29,7 @@ export function useCountdown(iso: string) {
 }
 
 export function CountdownScene() {
-  const left = useCountdown(MAHALAYA)
+  const left = useCountdown(NAHAY_KHAY)
   const pad = (n: number) => String(n).padStart(2, '0')
   const units = left
     ? [[String(left.d), 'days'], [pad(left.h), 'hours'], [pad(left.m), 'minutes'], [pad(left.s), 'seconds']]
@@ -37,10 +37,10 @@ export function CountdownScene() {
 
   return (
     <div className="mk-count-scene">
-      <KaashPhoolScene />
+      <GhatScene />
       <div className="mk-count-scrim" aria-hidden="true" />
       <div className="mk-count-copy">
-        <p className="mk-count-bn" lang="bn">পুজোয় বাড়ি ফিরছ তো?</p>
+        <p className="mk-count-hi" lang="hi">छठ में घरे आ रहल बाड़ऽ नू?</p>
         <p className="mk-count-home">Welcome home.</p>
         <div className="mk-count-clock" role="timer" aria-live="off">
           {units.map(([v, label]) => (
@@ -52,22 +52,22 @@ export function CountdownScene() {
         </div>
         <p className="mk-count-sub">
           {left?.done
-            ? 'Mahalaya has come. The city is ready.'
-            : 'till Mahalaya, 11 October. The city has already started getting ready.'}
+            ? 'Nahay Khay has come. The ghats are ready.'
+            : 'till Nahay Khay, 13 November. The ghats have already started getting ready.'}
         </p>
       </div>
     </div>
   )
 }
 
-export function PujoDays({ className = '' }: { className?: string }) {
+export function ChhathDays({ className = '' }: { className?: string }) {
   return (
     <ol className={`mk-count-days ${className}`}>
-      {PUJO_DAYS.map((d) => (
+      {CHHATH_DAYS.map((d) => (
         <li className="mk-count-day" key={d.en}>
-          <span className="mk-count-day-bn" lang="bn">{d.bn}</span>
+          <span className="mk-count-day-hi" lang="hi">{d.hi}</span>
           <span className="mk-count-day-en">{d.en}</span>
-          <span className="mk-count-day-date">{formatPujoDate(d.iso)}</span>
+          <span className="mk-count-day-date">{formatChhathDate(d.iso)}</span>
         </li>
       ))}
     </ol>

@@ -1,4 +1,4 @@
--- MyKolkata schema for a fresh Supabase Postgres database.
+-- MyBihar schema for a fresh Supabase Postgres database.
 -- Run in the SQL Editor, then: npm run db:push && npm run db:seed
 -- Prisma still owns runtime queries via DATABASE_URL / DIRECT_URL.
 
@@ -210,7 +210,7 @@ CREATE TABLE "explore_searches" (
 );
 CREATE INDEX "explore_searches_normalizedQuery_createdAt_idx" ON "explore_searches"("normalizedQuery", "createdAt" DESC);
 
-CREATE TABLE "pandals" (
+CREATE TABLE "ghats" (
   "id" TEXT NOT NULL,
   "name" TEXT NOT NULL,
   "location" TEXT,
@@ -220,9 +220,9 @@ CREATE TABLE "pandals" (
   "rating" DOUBLE PRECISION,
   "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "updatedAt" TIMESTAMP(3) NOT NULL,
-  CONSTRAINT "pandals_pkey" PRIMARY KEY ("id")
+  CONSTRAINT "ghats_pkey" PRIMARY KEY ("id")
 );
-CREATE INDEX "pandals_createdAt_idx" ON "pandals"("createdAt" DESC);
+CREATE INDEX "ghats_createdAt_idx" ON "ghats"("createdAt" DESC);
 
 CREATE TABLE "regions" (
   "id" TEXT NOT NULL,
@@ -311,7 +311,7 @@ ALTER TABLE "collection_items" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "experiences" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "place_interactions" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "explore_searches" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "pandals" ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "ghats" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "regions" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "transport" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "communities" ENABLE ROW LEVEL SECURITY;

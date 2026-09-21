@@ -1,4 +1,4 @@
-/* Pujo — the countdown, the five days, and where to go. */
+/* Chhath — the countdown, the five days, and where to go. */
 
 .scene { padding-top: var(--mk-nav); }
 .scene :global(.mk-count-scene) { border-top: 0; }
@@ -24,7 +24,7 @@
 .nearItem:last-child { border-bottom: 1px solid rgba(242, 241, 237, 0.08); }
 .nearName { font-family: var(--mk-display); font-size: 22px; line-height: 1.2; letter-spacing: -0.01em; color: var(--mk-white); }
 .nearDistance { display: inline-flex; align-items: center; gap: var(--mk-2); font-size: 14px; letter-spacing: 0.02em; color: var(--mk-ash); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.nearDistance svg { color: var(--mk-taxi); }
+.nearDistance svg { color: var(--mk-genda); }
 
 .mapFrame {
   position: relative; overflow: hidden; aspect-ratio: 4 / 3; min-height: 280px;

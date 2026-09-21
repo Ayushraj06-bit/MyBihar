@@ -267,7 +267,7 @@ model ExploreSearch {
   @@map("explore_searches")
 }
 
-model Pandal {
+model Ghat {
   id          String   @id @default(cuid())
   name        String
   location    String?
@@ -279,7 +279,7 @@ model Pandal {
   updatedAt   DateTime @updatedAt
 
   @@index([createdAt(sort: Desc)])
-  @@map("pandals")
+  @@map("ghats")
 }
 
 model Region {

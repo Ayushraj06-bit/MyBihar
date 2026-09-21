@@ -7,8 +7,8 @@ import { getHomeNews, homeNewsCards } from '@/lib/news/home'
 import { newsRepository } from '@/lib/news/server'
 import { Card } from '@/components/brand/Card'
 import { SectionHead } from '@/components/brand/SectionHead'
-import { Medallion, Sprig } from '@/components/brand/kolka'
-import { LaalPaar } from '@/components/brand/Alpona'
+import { Medallion, Sprig } from '@/components/brand/mithila'
+import { MithilaBorder } from '@/components/brand/Aripan'
 import { HomeEntry } from '@/components/brand/HomeEntry'
 
 export const dynamic = 'force-dynamic'
@@ -50,24 +50,24 @@ export default async function HomePage() {
         <img
           className="mk-banner-img"
           src="/hero-bg.jpg"
-          alt="A yellow bus passing under the steel spans of the Howrah Bridge at sunset"
-          style={{ objectPosition: '50% 64%' }}
+          alt="The Ganga at blue hour from Gandhi Ghat, the spans of the JP Setu running out across the water"
+          style={{ objectPosition: '50% 58%' }}
         />
         <div className="mk-banner-scrim" aria-hidden="true" />
         <div className="mk-banner-content">
           <div className="mk-banner-copy">
             <Sprig size={38} />
-            <h1 id="home-title" className="mk-display" style={{ marginTop: 8 }}>The city, this week.</h1>
-            <p className="mk-banner-bn" lang="bn">চলো, একটু ঘুরে আসি।</p>
+            <h1 id="home-title" className="mk-display" style={{ marginTop: 8 }}>The state, this week.</h1>
+            <p className="mk-banner-hi" lang="hi">चलीं, तनी घूम आईं।</p>
             <p className="mk-banner-lede">
-              What the paras are talking about, what is for sale down the lane, and every place
-              worth the walk.
+              What the mohallas are talking about, what is for sale down the gali, and every place
+              worth the walk — from the ghats of Patna to the ruins of Nalanda.
             </p>
             <div className="mk-banner-actions">
               <Link href="/places" className="mk-btn mk-btn--primary">
-                Explore the city <span className="mk-btn-arrow" aria-hidden="true">→</span>
+                Explore Bihar <span className="mk-btn-arrow" aria-hidden="true">→</span>
               </Link>
-              <Link href="/pujo" className="mk-btn mk-btn--secondary">Count down to Pujo</Link>
+              <Link href="/chhath" className="mk-btn mk-btn--secondary">Count down to Chhath</Link>
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@ export default async function HomePage() {
 
       <section className="mk-band" aria-labelledby="news-title">
         <div className="mk-wrap">
-          <SectionHead id="news-title" title="In the news" lede="Papers, fairs and fixtures the city is following." />
+          <SectionHead id="news-title" title="In the news" lede="Papers, melas and fixtures the state is following." />
           <div className="mk-row" style={{ marginTop: 48 }}>
             {news.length ? news.map((item) => (
               <Card
@@ -108,7 +108,7 @@ export default async function HomePage() {
         <>
           <section className="mk-band" aria-labelledby="market-title" style={{ paddingTop: 0 }}>
             <div className="mk-wrap">
-              <SectionHead id="market-title" title="Marketplace" lede="Sarees, sweets and small-batch things, and where to find them." />
+              <SectionHead id="market-title" title="Marketplace" lede="Bhagalpuri silk, Silao khaja, Madhubani on paper — and where to find them." />
               {marketplace.length ? (
                 <div className="mk-grid" style={{ marginTop: 48 }}>
                   {marketplace.map((item) => (
@@ -133,19 +133,19 @@ export default async function HomePage() {
         </>
       )}
 
-      <LaalPaar />
+      <MithilaBorder />
 
       <section className="mk-band mk-band--closing" aria-labelledby="closing-title">
         <div className="mk-wrap">
           <Medallion size={132} />
           <h2 id="closing-title" className="mk-display" style={{ marginTop: 24 }}>
-            <span className="block">SAME CITY.</span>
+            <span className="block">SAME BIHAR.</span>
             <span className="block">NEW STORIES.</span>
           </h2>
-          <p className="mk-banner-bn" lang="bn" style={{ fontSize: 'clamp(18px, 3vw, 32px)' }}>পুজো আসছে।</p>
+          <p className="mk-banner-hi" lang="hi" style={{ fontSize: 'clamp(18px, 3vw, 32px)' }}>छठ आ रहल बा।</p>
           <div className="mk-banner-actions">
-            <Link href="/pujo" className="mk-btn mk-btn--primary">
-              Explore the Pujo <span className="mk-btn-arrow" aria-hidden="true">→</span>
+            <Link href="/chhath" className="mk-btn mk-btn--primary">
+              Go to the ghat <span className="mk-btn-arrow" aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

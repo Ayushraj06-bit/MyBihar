@@ -3,72 +3,72 @@
 
 import React, { useState, useEffect } from 'react'
 import { Card } from '@/components/brand/Card'
-import { AlponaLoader } from '@/components/brand/Alpona'
+import { AripanLoader } from '@/components/brand/Aripan'
 import { UiIcon } from '@/components/brand/icons'
 
 function Explore() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [pandals, setPandals] = useState([])
+  const [ghats, setGhats] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    async function fetchPandals() {
+    async function fetchGhats() {
       try {
         setLoading(true)
-        const res = await fetch('/api/pandals')
-        if (!res.ok) throw new Error('Failed to fetch pandals')
+        const res = await fetch('/api/ghats')
+        if (!res.ok) throw new Error('Failed to fetch ghats')
         const data = await res.json()
-        setPandals(data)
+        setGhats(data)
       } catch (err) {
         setError(err.message)
       } finally {
         setLoading(false)
       }
     }
-    fetchPandals()
+    fetchGhats()
   }, [])
 
-  if (loading) return <div className="mk-page mk-page-top mk-wrap"><AlponaLoader label="Finding pandals" /></div>
+  if (loading) return <div className="mk-page mk-page-top mk-wrap"><AripanLoader label="Finding ghats" /></div>
   if (error) {
     return (
       <div className="mk-page mk-page-top mk-wrap">
         <div className="mk-panel mk-empty" role="status" style={{ maxWidth: 640 }}>
-          <h2 className="mk-h3">The pandals didn&apos;t load.</h2>
+          <h2 className="mk-h3">The ghats didn&apos;t load.</h2>
           <p className="mk-body">Check your connection, then refresh the page.</p>
         </div>
       </div>
     )
   }
 
-  const filteredPandals = pandals.filter(pandal =>
-    pandal.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (pandal.location && pandal.location.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredGhats = ghats.filter(ghat =>
+    ghat.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (ghat.location && ghat.location.toLowerCase().includes(searchTerm.toLowerCase()))
   )
 
   return (
     <div className="mk-page mk-page-top mk-wrap">
       <label className="mk-line" style={{ maxWidth: 640 }}>
-        <span className="sr-only">Search pandals</span>
+        <span className="sr-only">Search ghats</span>
         <UiIcon name="search" size={20} />
         <input
           type="search"
-          placeholder="Search a pandal or a para"
+          placeholder="Search a ghat or a mohalla"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </label>
 
       <div className="mk-grid" style={{ marginTop: 48 }}>
-        {filteredPandals.map(pandal => (
+        {filteredGhats.map(ghat => (
           <Card
-            key={pandal._id}
-            image={pandal.image}
+            key={ghat._id}
+            image={ghat.image}
             imageAlt=""
-            icon="balcony"
-            title={pandal.name}
-            sub={[pandal.location, pandal.distance].filter(Boolean).join(', ')}
-            desc={pandal.rating ? `Rated ${pandal.rating}. ${pandal.description ?? ''}` : pandal.description}
+            icon="haveli"
+            title={ghat.name}
+            sub={[ghat.location, ghat.distance].filter(Boolean).join(', ')}
+            desc={ghat.rating ? `Rated ${ghat.rating}. ${ghat.description ?? ''}` : ghat.description}
           />
         ))}
       </div>

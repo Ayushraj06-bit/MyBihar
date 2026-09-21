@@ -4,17 +4,19 @@
 import React, { useEffect, useState } from 'react'
 import { Card } from '@/components/brand/Card'
 import { SectionHead } from '@/components/brand/SectionHead'
-import { CountdownScene, PujoDays } from '@/components/brand/Countdown'
-import { AlponaLoader, AlponaRule } from '@/components/brand/Alpona'
+import { CountdownScene, ChhathDays } from '@/components/brand/Countdown'
+import { AripanLoader, AripanRule } from '@/components/brand/Aripan'
 import { CityIcon } from '@/components/brand/icons'
-import styles from '@/styles/Pujo.module.css'
+import styles from '@/styles/Chhath.module.css'
 
-const NEARBY_PANDALS = [
-  { name: 'Bagbazar Sarbojanin', distance: '1.2 km' },
-  { name: 'College Square', distance: '2.5 km' },
+/* the big Patna ghats, measured from Gandhi Maidan */
+const NEARBY_GHATS = [
+  { name: 'Gandhi Ghat', distance: '1.4 km' },
+  { name: 'Collectorate Ghat', distance: '1.9 km' },
+  { name: 'Digha Ghat', distance: '7.5 km' },
 ]
 
-const REGION_ORDER = ['North Kolkata', 'South Kolkata', 'Central Kolkata', 'New Kolkata']
+const REGION_ORDER = ['Magadh', 'Mithila', 'Bhojpur', 'Anga']
 
 function orderRegions(regions) {
   return REGION_ORDER
@@ -22,7 +24,7 @@ function orderRegions(regions) {
     .filter(Boolean)
 }
 
-function Pujo() {
+function Chhath() {
   const [regions, setRegions] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -50,28 +52,28 @@ function Pujo() {
   return (
     <main className="mk-page">
       {/* the homecoming — no crimson anywhere in this band. design.md §9.7 */}
-      <section className={styles.scene} aria-labelledby="pujo-title">
-        <h1 id="pujo-title" className="sr-only">Durga Pujo</h1>
+      <section className={styles.scene} aria-labelledby="chhath-title">
+        <h1 id="chhath-title" className="sr-only">Chhath Puja</h1>
         <CountdownScene />
         <div className="mk-wrap">
-          <PujoDays className={styles.days} />
+          <ChhathDays className={styles.days} />
         </div>
       </section>
 
-      <AlponaRule className="mk-wrap" />
+      <AripanRule className="mk-wrap" />
 
       <section className="mk-band" aria-labelledby="regions-title">
         <div className="mk-wrap">
           <SectionHead
             id="regions-title"
             title="Where to go"
-            lede="North keeps the old rituals, the south builds the art, and the centre goes big. Pick a side of the city."
+            lede="Magadh keeps the Ganga ghats, Mithila paints its courtyards, Bhojpur sings the loudest, and Anga has the river at its widest. Pick a side of the state."
           />
           {loading ? (
-            <AlponaLoader label="Finding the paras" className={styles.state} />
+            <AripanLoader label="Finding the regions" className={styles.state} />
           ) : error ? (
             <div className={`mk-panel mk-empty ${styles.state}`} role="status">
-              <h3 className="mk-h3">The paras didn&apos;t load.</h3>
+              <h3 className="mk-h3">The regions didn&apos;t load.</h3>
               <p className="mk-body">Check your connection, then refresh the page.</p>
             </div>
           ) : regions.length ? (
@@ -81,16 +83,16 @@ function Pujo() {
                   key={region._id}
                   href={`/near-you?${new URLSearchParams({ view: 'grid', q: region.name })}`}
                   ariaLabel={`Explore ${region.name}`}
-                  image={region.name === 'South Kolkata' ? '/southkol.png' : region.image}
-                  icon="balcony"
+                  image={region.image}
+                  icon="haveli"
                   title={region.name}
-                  sub="Explore the para"
+                  sub="Explore the region"
                   desc={region.description}
                 />
               ))}
             </div>
           ) : (
-            <p className={`mk-caption ${styles.state}`}>No regions listed yet. The pandals are still going up.</p>
+            <p className={`mk-caption ${styles.state}`}>No regions listed yet. The ghats are still being swept.</p>
           )}
         </div>
       </section>
@@ -99,14 +101,14 @@ function Pujo() {
         <div className="mk-wrap">
           <div className={styles.nearGrid}>
             <div>
-              <SectionHead id="near-title" title="Pandals near you" lede="The closest ones first. Go after 8pm, when the lights come on." />
+              <SectionHead id="near-title" title="Ghats near you" lede="The closest ones first. Be there before sunset on Sandhya Arghya, and before four in the morning for Usha." />
               <ul className={styles.nearList}>
-                {NEARBY_PANDALS.map((pandal) => (
-                  <li key={pandal.name} className={styles.nearItem}>
-                    <span className={styles.nearName}>{pandal.name}</span>
+                {NEARBY_GHATS.map((ghat) => (
+                  <li key={ghat.name} className={styles.nearItem}>
+                    <span className={styles.nearName}>{ghat.name}</span>
                     <span className={styles.nearDistance}>
-                      <CityIcon name="taxi" size={20} />
-                      {pandal.distance}
+                      <CityIcon name="auto" size={20} />
+                      {ghat.distance}
                     </span>
                   </li>
                 ))}
@@ -114,8 +116,8 @@ function Pujo() {
             </div>
             <div className={styles.mapFrame}>
               <iframe
-                title="Map of Kolkata"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117925.35231272197!2d88.26495595!3d22.5354273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f882db4908f667%3A0x43e330e68f6c2cbc!2sKolkata%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1659822244751!5m2!1sen!2sin"
+                title="Map of Patna"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d115128.2!2d85.0797!3d25.6093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -131,4 +133,4 @@ function Pujo() {
   )
 }
 
-export default Pujo
+export default Chhath
