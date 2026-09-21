@@ -6,7 +6,7 @@ const SCRAPE_URL = 'https://api.anakin.io/v1/url-scraper/scrape'
 const DIRECTORY_HOSTS = /(^|\.)(facebook|instagram|x|twitter|zomato|swiggy|tripadvisor|justdial|yelp|google)\./i
 
 function tokens(value) {
-  return new Set(normalizeText(value).split(' ').filter((word) => word.length > 2 && word !== 'kolkata'))
+  return new Set(normalizeText(value).split(' ').filter((word) => word.length > 2 && word !== 'bihar' && word !== 'patna'))
 }
 
 export function nameSimilarity(name, value) {
@@ -145,7 +145,7 @@ export class AnakinImageProvider {
 
   async findOfficialWebsite(place) {
     const results = await this.search(
-      `Official website for ${place.name}, ${place.address || place.area || 'Kolkata, India'}`,
+      `Official website for ${place.name}, ${place.address || place.area || 'Bihar, India'}`,
       { limit: 8 },
     )
     const candidates = results.map((result) => {

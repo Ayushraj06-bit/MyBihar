@@ -42,7 +42,7 @@ function mapPlace(row) {
     imageAttribution: primaryPhoto?.attribution ?? null,
     imageLicense: primaryPhoto?.license ?? null,
     imageConfidence: primaryPhoto?.confidence ?? null,
-    provider: source?.provider ?? 'mykolkata',
+    provider: source?.provider ?? 'mybihar',
     providerPlaceId: source?.externalId ?? row.id,
     attribution: primaryPhoto?.attribution ?? source?.attribution ?? null,
     sourceConfidence: row.sourceConfidence ?? 1,

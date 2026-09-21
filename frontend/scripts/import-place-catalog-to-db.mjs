@@ -68,8 +68,8 @@ try {
       const common = {
         name: place.name,
         address: place.address || null,
-        location: place.area || 'Kolkata',
-        area: place.area || 'Kolkata',
+        location: place.area || 'Bihar',
+        area: place.area || 'Bihar',
         type: categoryNames[place.category] || 'Places',
         tags: [place.primaryType].filter(Boolean),
         latitude: place.latitude,

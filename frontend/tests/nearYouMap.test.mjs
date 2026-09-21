@@ -30,9 +30,9 @@ test('Ola map places use real photos or category markers, each shown on its own'
   assert.doesNotMatch(mapSource, /cluster: true|clusterMaxZoom|clusterRadius|getClusterExpansionZoom/)
   assert.match(mapSource, /image\.src = source/)
   assert.match(mapSource, /CATEGORY_MARKERS/)
-  assert.match(mapSource, /mykolkata-category-/)
+  assert.match(mapSource, /mybihar-category-/)
   assert.match(mapSource, /map\.addImage\(imageId, imageData\)/)
-  assert.doesNotMatch(mapSource, /PLACE_RING_LAYER_ID|mykolkata-place-rings/)
+  assert.doesNotMatch(mapSource, /PLACE_RING_LAYER_ID|mybihar-place-rings/)
   assert.match(mapSource, /context\.arc\(32, 32, 29/)
   assert.doesNotMatch(mapSource, /index \+ 1/)
   assert.doesNotMatch(mapSource, /leaflet|OpenStreetMap/i)
@@ -81,7 +81,7 @@ test('map markers use brand surfaces and letters, not a rainbow', () => {
   assert.match(mapSource, /cafes: \{ color: '#3f0d12', label: 'C' \}/)
   assert.match(mapSource, /places: \{ color: '#1c2225', label: 'P' \}/)
   assert.doesNotMatch(mapSource, /#3157e5|#7946a8|#24765f|#f5c344|Manrope/)
-  assert.match(stylesSource, /\.userMarker\s*\{[^}]*background: var\(--mk-taxi\)/s)
+  assert.match(stylesSource, /\.userMarker\s*\{[^}]*background: var\(--mk-genda\)/s)
 })
 
 test('map mode fills the viewport and floats its controls under the notch bar', () => {
@@ -135,10 +135,10 @@ test('Near You never labels generic category artwork as a venue photo', () => {
 test('Near You uses truthful loading skeletons instead of demo-place fallbacks', () => {
   assert.match(pageSource, /function PlaceResultsSkeleton\(\{ layout \}\)/)
   assert.match(pageSource, /dataStatus === 'loading' \? \(\s*<PlaceResultsSkeleton layout=\{view\}/s)
-  assert.match(pageSource, /<AlponaLoader label="Loading Kolkata places"/)
+  assert.match(pageSource, /<AripanLoader label="Loading Bihar places"/)
   assert.match(pageSource, /dataStatus === 'success' && !visiblePlaces\.length/)
   assert.doesNotMatch(pageSource, /setDataPlaces\(nearbyPlaces/)
-  assert.doesNotMatch(pageSource, /Showing saved Kolkata picks/)
+  assert.doesNotMatch(pageSource, /Showing saved Bihar picks/)
   assert.match(stylesSource, /\.placeSkeleton/)
   assert.doesNotMatch(stylesSource, /@keyframes/)
 })
@@ -146,7 +146,7 @@ test('Near You uses truthful loading skeletons instead of demo-place fallbacks',
 test('Near You only measures distance from somewhere meaningful', () => {
   assert.match(pageSource, /if \(origin\.source === 'user'\) return `\$\{place\.distance\} away`/)
   assert.match(pageSource, /return `\$\{place\.distance\} from \$\{origin\.label\}`/)
-  assert.match(pageSource, /locationKnown \? 'Near you' : 'Kolkata map'/)
+  assert.match(pageSource, /locationKnown \? 'Near you' : 'Bihar map'/)
   assert.match(pageSource, /origin\.source === 'user'\s*\? 'Near you'/s)
   assert.match(pageSource, /routeLocate === '1'/)
   assert.match(pageSource, /locate && !label/)
@@ -157,7 +157,7 @@ test('Near You only measures distance from somewhere meaningful', () => {
 test('Near You never shows an empty answer for a request that is still on its way', () => {
   assert.match(pageSource, /const requestKey = requestUrl \? `\$\{requestUrl\}#\$\{retryVersion\}` : ''/)
   assert.match(pageSource, /holdForLocation \|\| typing \|\| result\.key !== requestKey \? 'loading' : result\.status/)
-  assert.doesNotMatch(pageSource, /No Kolkata stops match that search/)
+  assert.doesNotMatch(pageSource, /No Bihar stops match that search/)
   assert.doesNotMatch(pageSource, /exploreData|findExploreGuide|searchNearbyPlaces/)
 })
 

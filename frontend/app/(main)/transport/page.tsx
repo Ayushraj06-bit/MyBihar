@@ -6,10 +6,10 @@ import { requireUser } from '@/lib/auth'
 export const metadata: Metadata = { title: 'Transport' }
 
 const MODES = [
-  { icon: 'tram', name: 'Metro and trams', note: 'Next trains on the Blue and Green lines' },
-  { icon: 'howrah', name: 'Local trains', note: 'Howrah, Sealdah, Santragachi and Shalimar' },
-  { icon: 'taxi', name: 'Taxis and autos', note: 'Stands near you, and the walk to each' },
-  { icon: 'boat', name: 'Ferries', note: 'Crossings on the Hooghly, ghat to ghat' },
+  { icon: 'metro', name: 'Patna Metro', note: 'Next trains between Bhootnath and Patliputra Bus Terminal' },
+  { icon: 'setu', name: 'Trains', note: 'Patna Junction, Rajendra Nagar, Danapur and Patliputra' },
+  { icon: 'auto', name: 'Autos and cabs', note: 'Shared-auto stands near you, and the walk to each' },
+  { icon: 'boat', name: 'Ferries', note: 'Crossings on the Ganga, Patna to Sonepur and Digha to Pahleja' },
 ] as const
 
 async function Transport() {
@@ -21,7 +21,7 @@ async function Transport() {
         <SectionHead
           level={1}
           title="Transport"
-          lede="Live metro, train, bus, auto and taxi times for Kolkata. On its way — check back soon."
+          lede="Live metro, train, bus, auto and cab times across Bihar. On its way — check back soon."
           action={<span className="mk-tag mk-tag--warn">Coming soon</span>}
         />
         <ul className="mk-transport-modes">
@@ -82,12 +82,12 @@ export default Transport
 //   const busStands = transport.filter(t => t.category === 'bus');
 //   const taxiStands = transport.filter(t => t.category === 'taxi');
 //   const metroNearest = transport.filter(t => t.category === 'metro' && t.name);
-//   const metroNorthLine = transport.filter(t => t.category === 'metro' && t.from && t.to && t.time && t.from === 'Kavi Subhash');
-//   const metroDakshineswarLine = transport.filter(t => t.category === 'metro' && t.from && t.to && t.time && t.from === 'Dakshineswar');
-//   const trainHowrah = transport.filter(t => t.category === 'train' && ['Bandel Local','Burdwan Express','Katwa Local'].includes(t.name));
-//   const trainSealdah = transport.filter(t => t.category === 'train' && ['Barrackpore Local','Naihati Local','Krishnanagar Express'].includes(t.name));
-//   const trainSantragachi = transport.filter(t => t.category === 'train' && ['Kharagpur Local','Midnapore Express','Haldia Local'].includes(t.name));
-//   const trainShalimar = transport.filter(t => t.category === 'train' && ['Puri Express','Digha Local','Kharagpur Fast'].includes(t.name));
+//   const metroNorthLine = transport.filter(t => t.category === 'metro' && t.from && t.to && t.time && t.from === 'Bhootnath');
+//   const metroPatliputra Bus TerminalLine = transport.filter(t => t.category === 'metro' && t.from && t.to && t.time && t.from === 'Patliputra Bus Terminal');
+//   const trainPatnaJn = transport.filter(t => t.category === 'train' && ['Vikramshila Express','Magadh Express','Patna Gaya Passenger'].includes(t.name));
+//   const trainRajendraNagar = transport.filter(t => t.category === 'train' && ['Sampoorna Kranti Express','Shramjeevi Express','Danapur Buxar MEMU'].includes(t.name));
+//   const trainDanapur = transport.filter(t => t.category === 'train' && ['Patna Rajdhani','Bihar Sampark Kranti','Mokama MEMU'].includes(t.name));
+//   const trainPatliputra = transport.filter(t => t.category === 'train' && ['Kosi Express','Ganga Damodar Express','Patliputra Passenger'].includes(t.name));
 //
 //   return (
 //     <div className="min-h-screen p-4 pt-20">
@@ -205,11 +205,11 @@ export default Transport
 //             ))}
 //           </div>
 //         </div>
-//         {/* Dakshineswar Line */}
+//         {/* Patliputra Bus Terminal Line */}
 //         <div className="mb-6">
-//           <h3 className="text-lg font-semibold mb-3">Dakshineswar Line Schedule</h3>
+//           <h3 className="text-lg font-semibold mb-3">Patliputra Bus Terminal Line Schedule</h3>
 //           <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
-//             {metroDakshineswarLine.map((train, index) => (
+//             {metroPatliputra Bus TerminalLine.map((train, index) => (
 //               <div key={train._id || index} className="card flex-shrink-0" style={{ width: '250px' }}>
 //                 <div className="flex justify-between items-center">
 //                   <div>
@@ -228,10 +228,10 @@ export default Transport
 //           <div className="bg-purple-100 p-3 rounded-lg">
 //             <FaTrain className="text-purple-600" size={24} />
 //           </div>
-//           <h2 className="text-xl font-bold">Howrah Station</h2>
+//           <h2 className="text-xl font-bold">Patna Junction</h2>
 //         </div>
 //         <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
-//           {trainHowrah.map((train, index) => (
+//           {trainPatnaJn.map((train, index) => (
 //             <div key={train._id || index} className="card flex-shrink-0" style={{ width: '250px' }}>
 //               <div className="flex justify-between items-center">
 //                 <div>
@@ -249,10 +249,10 @@ export default Transport
 //           <div className="bg-purple-100 p-3 rounded-lg">
 //             <FaTrain className="text-purple-600" size={24} />
 //           </div>
-//           <h2 className="text-xl font-bold">Sealdah Station</h2>
+//           <h2 className="text-xl font-bold">Rajendra Nagar Terminal</h2>
 //         </div>
 //         <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
-//           {trainSealdah.map((train, index) => (
+//           {trainRajendraNagar.map((train, index) => (
 //             <div key={train._id || index} className="card flex-shrink-0" style={{ width: '250px' }}>
 //               <div className="flex justify-between items-center">
 //                 <div>
@@ -270,10 +270,10 @@ export default Transport
 //           <div className="bg-purple-100 p-3 rounded-lg">
 //             <FaTrain className="text-purple-600" size={24} />
 //           </div>
-//           <h2 className="text-xl font-bold">Santragachi Station</h2>
+//           <h2 className="text-xl font-bold">Danapur Station</h2>
 //         </div>
 //         <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
-//           {trainSantragachi.map((train, index) => (
+//           {trainDanapur.map((train, index) => (
 //             <div key={train._id || index} className="card flex-shrink-0" style={{ width: '250px' }}>
 //               <div className="flex justify-between items-center">
 //                 <div>
@@ -291,10 +291,10 @@ export default Transport
 //           <div className="bg-purple-100 p-3 rounded-lg">
 //             <FaTrain className="text-purple-600" size={24} />
 //           </div>
-//           <h2 className="text-xl font-bold">Shalimar Station</h2>
+//           <h2 className="text-xl font-bold">Patliputra Junction</h2>
 //         </div>
 //         <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
-//           {trainShalimar.map((train, index) => (
+//           {trainPatliputra.map((train, index) => (
 //             <div key={train._id || index} className="card flex-shrink-0" style={{ width: '250px' }}>
 //               <div className="flex justify-between items-center">
 //                 <div>

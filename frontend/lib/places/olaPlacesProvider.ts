@@ -9,12 +9,16 @@ const PROVIDER_CACHE_MS = 5 * 60 * 1000
 /* Ola caps a nearby page at 50 */
 const NEARBY_PAGE_LIMIT = 50
 
-export const KOLKATA_CENTRE = Object.freeze({ lat: 22.5726, lng: 88.3639 })
-/* the metro area: Howrah, Salt Lake, New Town, Dakshineswar, Garia, Behala */
-export const KOLKATA_RADIUS_KM = 40
+export const PATNA_CENTRE = Object.freeze({ lat: 25.5941, lng: 85.1376 })
+/* the whole state, not just the capital: Patna to Bodh Gaya is 110 km, to
+   Darbhanga 140, to Bhagalpur 220, to Kishanganj 330. Ola is queried around
+   the visitor (or Patna) and the result is kept if it lies anywhere in Bihar. */
+export const BIHAR_RADIUS_KM = 340
+/* the Patna metro area: Danapur, Phulwari, Hajipur across the Setu */
+export const PATNA_RADIUS_KM = 40
 
 function createRequestId() {
-  return globalThis.crypto?.randomUUID?.() || `mykolkata-${Date.now()}-${Math.random().toString(36).slice(2)}`
+  return globalThis.crypto?.randomUUID?.() || `mybihar-${Date.now()}-${Math.random().toString(36).slice(2)}`
 }
 
 function extractResults(payload) {
@@ -38,16 +42,16 @@ function isAddressFragment(place) {
   return !place.tags.length && /^\d/.test(place.name)
 }
 
-export function isInKolkata(place) {
+export function isInBihar(place) {
   return hasCoordinates(place)
-    && haversineDistanceKm(KOLKATA_CENTRE, { lat: place.latitude, lng: place.longitude }) <= KOLKATA_RADIUS_KM + 20
+    && haversineDistanceKm(PATNA_CENTRE, { lat: place.latitude, lng: place.longitude }) <= BIHAR_RADIUS_KM
 }
 
-/* bias towards the visitor while they are in the city, otherwise the centre */
+/* bias towards the visitor while they are in the state, otherwise Patna */
 function searchOrigin(lat, lng) {
   if (Number.isFinite(lat) && Number.isFinite(lng)
-    && haversineDistanceKm(KOLKATA_CENTRE, { lat, lng }) <= KOLKATA_RADIUS_KM) return { lat, lng }
-  return KOLKATA_CENTRE
+    && haversineDistanceKm(PATNA_CENTRE, { lat, lng }) <= BIHAR_RADIUS_KM) return { lat, lng }
+  return PATNA_CENTRE
 }
 
 /* round so a small pan reuses the cached answer instead of a new request */
@@ -152,12 +156,12 @@ export class OlaPlacesProvider {
 
   async resolveDetails({ name, lat, lng }) {
     const candidates = await this.autocomplete({ query: name, lat, lng })
-    const targetTokens = new Set(normalizeText(name).split(' ').filter((token) => token.length > 2 && token !== 'kolkata'))
+    const targetTokens = new Set(normalizeText(name).split(' ').filter((token) => token.length > 2 && token !== 'bihar' && token !== 'patna'))
     const ranked = candidates
       .filter((place) => place.providerPlaceId)
       .map((place) => {
         const candidateName = normalizeText(place.name)
-        const candidateTokens = new Set(candidateName.split(' ').filter((token) => token.length > 2 && token !== 'kolkata'))
+        const candidateTokens = new Set(candidateName.split(' ').filter((token) => token.length > 2 && token !== 'bihar' && token !== 'patna'))
         const matches = [...targetTokens].filter((token) => candidateTokens.has(token)).length
         const similarity = targetTokens.size ? matches / targetTokens.size : 0
         const exact = candidateName === normalizeText(name) ? 2 : 0
@@ -168,32 +172,32 @@ export class OlaPlacesProvider {
     return candidate ? this.details(candidate.providerPlaceId) : null
   }
 
-  /* Name search. Text search only answers "cafes in Gariahat"-style queries and
+  /* Name search. Text search only answers "cafes in Boring Road"-style queries and
      returns nothing for a venue's own name, so names go through autocomplete. */
   async autocomplete({ query, lat, lng }) {
     const origin = searchOrigin(lat, lng)
     const places = await this.request(process.env.OLA_MAPS_AUTOCOMPLETE_PATH || '/places/v1/autocomplete', {
       input: query,
       location: `${coordinate(origin.lat)},${coordinate(origin.lng)}`,
-      radius: KOLKATA_RADIUS_KM * 1000,
+      radius: PATNA_RADIUS_KM * 1000,
       strictbounds: 'true',
     })
     return places
-      .filter((place) => isInKolkata(place) && !isAddressFragment(place))
+      .filter((place) => isInBihar(place) && !isAddressFragment(place))
       .map((place) => ({ ...place, matchedBy: 'autocomplete' }))
   }
 
   async searchText({ query, category, lat, lng, limit = 20 }) {
     const types = providerTypesForCategory(category)
     const origin = searchOrigin(lat, lng)
-    const cityScopedQuery = /\b(kolkata|calcutta)\b/i.test(query) ? query : `${query} in Kolkata`
+    const cityScopedQuery = /\b(bihar|patna)\b/i.test(query) ? query : `${query} in Bihar`
     const places = await this.request(process.env.OLA_MAPS_TEXT_SEARCH_PATH || '/places/v1/textsearch', {
       input: cityScopedQuery,
       location: `${coordinate(origin.lat)},${coordinate(origin.lng)}`,
       types: types.length ? types.join(',') : undefined,
     })
     return places
-      .filter((place) => isInKolkata(place) && !isAddressFragment(place))
+      .filter((place) => isInBihar(place) && !isAddressFragment(place))
       .slice(0, limit)
       .map((place) => ({ ...place, matchedBy: 'text' }))
   }

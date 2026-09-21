@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { categories, categoryIcon, findCategory } from '@/lib/places/taxonomy'
 
-export const KOLKATA = Object.freeze({ lat: 22.5726, lng: 88.3639 })
+export const PATNA = Object.freeze({ lat: 25.5941, lng: 85.1376 })
 
 /* the chips every explore surface offers, in the order the city uses them */
 export const exploreCategories = categories
@@ -10,9 +10,10 @@ const PLACE_CATEGORIES = new Set(categories.map((category) => category.slug))
 
 function inferArea(address = '') {
   const parts = String(address).split(',').map((part) => part.trim()).filter(Boolean)
-  const kolkataIndex = parts.findIndex((part) => /^kolkata$/i.test(part))
-  if (kolkataIndex > 0) return parts[kolkataIndex - 1]
-  return 'Kolkata'
+  /* "…, Boring Road, Patna, Bihar 800001, India" → the part before the city or the state */
+  const cityIndex = parts.findIndex((part) => /^(patna|bihar)(\s+\d{6})?$/i.test(part))
+  if (cityIndex > 0) return parts[cityIndex - 1]
+  return 'Patna'
 }
 
 export function formatDistance(distanceKm) {
@@ -33,7 +34,7 @@ export function presentLivePlace(place) {
     id: place.providerPlaceId || place.slug || place.id,
     category: category?.name ?? place.category ?? 'Places',
     area,
-    address: place.address || `${area}, Kolkata`,
+    address: place.address || `${area}, Patna, Bihar`,
     distance: formatDistance(place.distanceKm === null || place.distanceKm === undefined ? Number.NaN : Number(place.distanceKm)),
     // Never present generic category artwork as a photo of a specific venue.
     image: place.image || null,
@@ -50,7 +51,7 @@ export function presentLivePlace(place) {
 export async function fetchLivePlaces(path, { signal } = {}) {
   const response = await fetch(path, { signal, headers: { Accept: 'application/json' } })
   const payload = await response.json().catch(() => null)
-  if (!response.ok) throw new Error(payload?.error?.message || 'Could not load Kolkata places')
+  if (!response.ok) throw new Error(payload?.error?.message || 'Could not load Bihar places')
   return {
     places: (payload?.data || [])
       .map(presentLivePlace)
@@ -75,7 +76,7 @@ export async function fetchPlaceDetails(place, { signal } = {}) {
 
 /* The request a live list makes: text search when there is a query, otherwise
    what is around the origin. One builder so /places and /near-you agree. */
-export function exploreRequest({ query = '', category = 'All', origin = KOLKATA, radiusKm = 3, limit = 40 }) {
+export function exploreRequest({ query = '', category = 'All', origin = PATNA, radiusKm = 3, limit = 40 }) {
   const params = new URLSearchParams({
     lat: String(Number(origin.lat).toFixed(5)),
     lng: String(Number(origin.lng).toFixed(5)),

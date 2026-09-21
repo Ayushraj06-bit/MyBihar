@@ -3,20 +3,21 @@
 
 import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { KOLKATA, exploreCategories, exploreRequest, fetchLivePlaces, mapHref } from '@/lib/livePlaces'
+import { PATNA, exploreCategories, exploreRequest, fetchLivePlaces, mapHref } from '@/lib/livePlaces'
 import { haversineDistanceKm } from '@/lib/places/geo'
 import { Card } from '@/components/brand/Card'
 import { SectionHead } from '@/components/brand/SectionHead'
-import { Sprig } from '@/components/brand/kolka'
+import { Sprig } from '@/components/brand/mithila'
 import { CityIcon, UiIcon } from '@/components/brand/icons'
-import { AlponaLoader } from '@/components/brand/Alpona'
+import { AripanLoader } from '@/components/brand/Aripan'
 import styles from '@/styles/Explore.module.css'
 
 const RESULT_BATCH_SIZE = 8
 const ROW_SIZE = 10
 const NEARBY_RADIUS_KM = 3
-const OUTSIDE_KOLKATA_KM = 60
-const CENTRAL_KOLKATA = Object.freeze({ ...KOLKATA, source: 'default' })
+/* Patna to Kishanganj is about 330 km; beyond this the visitor isn't in Bihar */
+const OUTSIDE_BIHAR_KM = 340
+const CENTRAL_PATNA = Object.freeze({ ...PATNA, source: 'default' })
 
 /* the live rows the page opens with, closest first */
 const rowCategories = ['cafes', 'food', 'culture', 'outdoors', 'shopping']
@@ -26,7 +27,7 @@ const rowCategories = ['cafes', 'food', 'culture', 'outdoors', 'shopping']
 const heroShortcuts = exploreCategories.filter((category) => ['food', 'places', 'culture', 'experiences'].includes(category.slug))
 
 function originPhrase(origin) {
-  return origin.source === 'user' ? 'near you' : 'around central Kolkata'
+  return origin.source === 'user' ? 'near you' : 'around central Patna'
 }
 
 /* links carry the visitor's position, so the map reopens the same list */
@@ -76,7 +77,7 @@ function ExploreResultsSkeleton({ count = RESULT_BATCH_SIZE, className = styles.
 /* the sub-line already names the area, so the card keeps just the street */
 function shortAddress(place) {
   const parts = String(place.address || '').split(',').map((part) => part.trim())
-    .filter((part) => part && part !== place.area && !/^kolkata$/i.test(part))
+    .filter((part) => part && part !== place.area && !/^bihar$/i.test(part))
   return parts.slice(0, 3).join(', ') || null
 }
 
@@ -141,7 +142,7 @@ function Explore() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [isComposing, setIsComposing] = useState(false)
   const [paging, setPaging] = useState({ url: null, count: RESULT_BATCH_SIZE })
-  const [origin, setOrigin] = useState(CENTRAL_KOLKATA)
+  const [origin, setOrigin] = useState(CENTRAL_PATNA)
   const [locationState, setLocationState] = useState('idle')
   const searchRef = useRef(null)
 
@@ -171,7 +172,7 @@ function Explore() {
   const remainingResultCount = Math.max(0, displayedItems.length - visibleResults.length)
   const areaAnchor = searchStatus === 'success' && debouncedQuery ? results.meta?.area : null
   const resultsTitle = searchStatus === 'loading'
-    ? 'Finding Kolkata places'
+    ? 'Finding Bihar places'
     : debouncedQuery
       ? (displayedItems.length ? `Results for “${debouncedQuery}”` : `Nothing matches “${debouncedQuery}” yet`)
       : (displayedItems.length ? `${activeCategory} ${originPhrase(origin)}` : `No ${activeCategory.toLowerCase()} ${originPhrase(origin)} yet`)
@@ -189,7 +190,7 @@ function Explore() {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         const position = { lat: coords.latitude, lng: coords.longitude }
-        if (haversineDistanceKm(KOLKATA, position) > OUTSIDE_KOLKATA_KM) {
+        if (haversineDistanceKm(PATNA, position) > OUTSIDE_BIHAR_KM) {
           setLocationState('far')
           return
         }
@@ -239,10 +240,10 @@ function Explore() {
   const changeCategory = (nextCategory) => setActiveCategory(nextCategory)
 
   const locationNote = {
-    denied: 'Location access wasn’t available, so these are around central Kolkata.',
-    timeout: 'Finding you took too long, so these are around central Kolkata. Try again.',
-    unsupported: 'This browser can’t share its location, so these are around central Kolkata.',
-    far: 'You’re outside Kolkata, so these are around the city centre.'
+    denied: 'Location access wasn’t available, so these are around central Patna.',
+    timeout: 'Finding you took too long, so these are around central Patna. Try again.',
+    unsupported: 'This browser can’t share its location, so these are around central Patna.',
+    far: 'You’re outside Bihar, so these are around central Patna.'
   }[locationState]
 
   return (
@@ -250,22 +251,22 @@ function Explore() {
       <section className="mk-banner" aria-labelledby="explore-title">
         <img
           className="mk-banner-img"
-          src="/explore-hero-v2.webp"
-          alt="Kolkata at blue hour after rain, a yellow taxi on the wet street and the Howrah Bridge lit up beyond"
-          width="1942"
-          height="809"
-          style={{ objectPosition: '56% 58%' }}
+          src="/explore-hero.jpg"
+          alt="Golghar at sunset, the great granary dome of Patna lit gold against a darkening sky"
+          width="2000"
+          height="1123"
+          style={{ objectPosition: '50% 62%' }}
         />
         <div className="mk-banner-scrim" aria-hidden="true" />
         <div className="mk-banner-content">
           <div className={styles.heroCopy}>
             <Sprig size={38} />
-            <h1 id="explore-title" className="mk-display" style={{ marginTop: 8 }}>Find your next Kolkata plan.</h1>
-            <p className="mk-banner-lede">Good food, quiet corners and stories worth leaving home for.</p>
+            <h1 id="explore-title" className="mk-display" style={{ marginTop: 8 }}>Find your next Bihar plan.</h1>
+            <p className="mk-banner-lede">Litti at the chowk, ruins by the river, and stories worth leaving home for.</p>
 
             <div className={styles.heroActions}>
               <form className={`mk-line ${styles.searchForm}`} role="search" noValidate onSubmit={(event) => event.preventDefault()}>
-                <label className="sr-only" htmlFor="explore-search">Search Kolkata</label>
+                <label className="sr-only" htmlFor="explore-search">Search Bihar</label>
                 <UiIcon name="search" size={20} />
                 <input
                   ref={searchRef}
@@ -278,7 +279,7 @@ function Explore() {
                     setIsComposing(false)
                     changeQuery(event.currentTarget.value)
                   }}
-                  placeholder="Search a café, a dish, a para"
+                  placeholder="Search a café, a dish, a mohalla, a town"
                   autoComplete="off"
                   enterKeyHint="search"
                 />
@@ -343,7 +344,7 @@ function Explore() {
               action={<button type="button" className="mk-btn mk-btn--text" onClick={resetDiscovery}>Clear filters</button>}
             />
             <p className="sr-only" aria-live="polite">
-              {searchStatus === 'loading' ? 'Searching Kolkata places' : `${displayedItems.length} results found`}
+              {searchStatus === 'loading' ? 'Searching Bihar places' : `${displayedItems.length} results found`}
             </p>
             {areaAnchor && (
               <Link
@@ -355,12 +356,12 @@ function Explore() {
             )}
             {searchStatus === 'loading' ? (
               <>
-                <AlponaLoader label="Looking across the city" className={styles.loader} />
+                <AripanLoader label="Looking across the city" className={styles.loader} />
                 <ExploreResultsSkeleton />
               </>
             ) : searchStatus === 'error' ? (
               <div className={`mk-panel mk-empty ${styles.state}`} role="status">
-                <h3 className="mk-h3">Kolkata places didn&apos;t load.</h3>
+                <h3 className="mk-h3">Bihar places didn&apos;t load.</h3>
                 <p className="mk-body">Check your connection, then try the search again.</p>
                 <button type="button" className="mk-btn mk-btn--secondary" onClick={results.retry}>
                   Try again
@@ -403,8 +404,8 @@ function Explore() {
               </>
             ) : (
               <div className={`mk-panel mk-empty ${styles.state}`}>
-                <h3 className="mk-h3">{debouncedQuery ? 'Nothing in Kolkata matches that yet.' : `No ${activeCategory.toLowerCase()} mapped close by.`}</h3>
-                <p className="mk-body">{debouncedQuery ? 'Check the spelling, or search a para, a street or a landmark.' : 'Open the map and look a little further out.'}</p>
+                <h3 className="mk-h3">{debouncedQuery ? 'Nothing in Bihar matches that yet.' : `No ${activeCategory.toLowerCase()} mapped close by.`}</h3>
+                <p className="mk-body">{debouncedQuery ? 'Check the spelling, or search a mohalla, a street or a landmark.' : 'Open the map and look a little further out.'}</p>
                 <button type="button" className="mk-btn mk-btn--secondary" onClick={resetDiscovery}>Start over</button>
               </div>
             )}
@@ -415,7 +416,7 @@ function Explore() {
           <section id="near-you" className={styles.section} aria-labelledby="near-title">
             <SectionHead
               id="near-title"
-              title={origin.source === 'user' ? 'Near you' : 'Around central Kolkata'}
+              title={origin.source === 'user' ? 'Near you' : 'Around central Patna'}
               lede={origin.source === 'user'
                 ? 'Live from the map, closest first.'
                 : 'Live from the map. Share your location to start from where you are.'}

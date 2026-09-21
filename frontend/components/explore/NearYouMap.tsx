@@ -2,16 +2,16 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { AlponaLoader } from '@/components/brand/Alpona'
+import { AripanLoader } from '@/components/brand/Aripan'
 import { clientOlaStyleUrl, proxiedOlaMapsUrl } from '@/lib/places/olaMapsProxy'
 import styles from '@/styles/NearYou.module.css'
 
-const KOLKATA_CENTER = [88.3639, 22.5726]
+const PATNA_CENTER = [85.1376, 25.5941]
 /* Dark is the primary experience. Style loads via our proxy so phone/LAN
    origins are not blocked by Ola's browser-domain allowlist. */
-const SOURCE_ID = 'mykolkata-places'
-const SELECTED_LAYER_ID = 'mykolkata-selected-place'
-const PLACE_PHOTO_LAYER_ID = 'mykolkata-place-photos'
+const SOURCE_ID = 'mybihar-places'
+const SELECTED_LAYER_ID = 'mybihar-selected-place'
+const PLACE_PHOTO_LAYER_ID = 'mybihar-place-photos'
 
 function safeErrorMessage(error) {
   const message = error instanceof Error ? error.message : String(error || 'Unknown Ola Maps error')
@@ -31,7 +31,7 @@ export const CATEGORY_MARKERS = {
 }
 
 function imageIdFor(place) {
-  return place.hasRealImage ? `mykolkata-photo-${place.id}` : `mykolkata-category-${place.markerCategory || 'places'}`
+  return place.hasRealImage ? `mybihar-photo-${place.id}` : `mybihar-category-${place.markerCategory || 'places'}`
 }
 
 function placesGeoJson(places, selectedPlaceId) {
@@ -299,7 +299,7 @@ export default function NearYouMap({ places, selectedPlaceId, onSelect, userPosi
           container: elementRef.current,
           /* the SDK only accepts a style URL string — it calls style.includes() */
           style: styleUrl,
-          center: saved?.center || KOLKATA_CENTER,
+          center: saved?.center || PATNA_CENTER,
           zoom: saved?.zoom || 13.5,
           attributionControl: true,
           /* Overrides the SDK transform so every Ola URL goes through /api/maps/ola */
@@ -470,10 +470,10 @@ export default function NearYouMap({ places, selectedPlaceId, onSelect, userPosi
 
   return (
     <div className={styles.mapFrame}>
-      <div ref={elementRef} className={styles.map} aria-label="Interactive Ola map of Kolkata places" />
+      <div ref={elementRef} className={styles.map} aria-label="Interactive Ola map of Bihar places" />
       {status === 'loading' && (
         <div className={styles.mapStatus}>
-          <AlponaLoader label="Loading the Kolkata map" />
+          <AripanLoader label="Loading the Bihar map" />
         </div>
       )}
       {status === 'missing-key' && (

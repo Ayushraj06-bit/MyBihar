@@ -6,22 +6,22 @@ import { useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import NearYouMap, { CATEGORY_MARKERS } from '@/components/explore/NearYouMap'
 import {
-  KOLKATA, exploreCategories, exploreRequest, fetchLivePlaces, fetchPlaceDetails
+  PATNA, exploreCategories, exploreRequest, fetchLivePlaces, fetchPlaceDetails
 } from '@/lib/livePlaces'
 import { haversineDistanceKm } from '@/lib/places/geo'
 import { findCategory } from '@/lib/places/taxonomy'
-import { Sprig } from '@/components/brand/kolka'
+import { Sprig } from '@/components/brand/mithila'
 import { CityIcon, UiIcon } from '@/components/brand/icons'
-import { AlponaLoader } from '@/components/brand/Alpona'
+import { AripanLoader } from '@/components/brand/Aripan'
 import styles from '@/styles/NearYou.module.css'
 
 const nearCategories = ['All', ...exploreCategories.map((category) => category.name)]
-const DEFAULT_ORIGIN = Object.freeze({ ...KOLKATA, label: 'central Kolkata', source: 'default', radiusKm: 3 })
+const DEFAULT_ORIGIN = Object.freeze({ ...PATNA, label: 'central Patna', source: 'default', radiusKm: 3 })
 /* how far "near" reaches around a person, a searched area and a chosen place */
 const NEAR_YOU_RADIUS_KM = 2.5
 const AREA_RADIUS_KM = 1.5
-/* beyond this the visitor isn't in Kolkata, and the city stays on screen */
-const OUTSIDE_KOLKATA_KM = 60
+/* Patna to Kishanganj is about 330 km; beyond this the visitor isn't in Bihar, and Patna stays on screen */
+const OUTSIDE_BIHAR_KM = 340
 const NEARBY_LIMIT = 120
 const SEARCH_LIMIT = 40
 const PAGE_SIZE = 24
@@ -33,7 +33,7 @@ const viewOptions = [
   { id: 'list', label: 'List' }
 ]
 
-const VIEW_ICONS = { map: 'howrah', grid: 'grid', list: 'list' }
+const VIEW_ICONS = { map: 'setu', grid: 'grid', list: 'list' }
 
 /* how a count of each kind reads: "12 places to eat", not "12 food" */
 const CATEGORY_NOUNS = {
@@ -44,7 +44,7 @@ const CATEGORY_NOUNS = {
 function originPhrase(origin) {
   if (origin.source === 'user') return 'near you'
   if (origin.source === 'map') return 'in this part of the map'
-  if (origin.source === 'default') return 'around central Kolkata'
+  if (origin.source === 'default') return 'around central Patna'
   return `around ${origin.label}`
 }
 
@@ -111,11 +111,11 @@ function DiscoveryControls({
   if (mapIdentity) {
     return (
       <div className={`${styles.controlDeck} ${styles.mapDeck}`}>
-        <Link href="/places" className={styles.mapBack} aria-label={`Back to Explore from ${locationKnown ? 'Near you' : 'Kolkata map'}`}>
+        <Link href="/places" className={styles.mapBack} aria-label={`Back to Explore from ${locationKnown ? 'Near you' : 'Bihar map'}`}>
           <UiIcon name="back" />
         </Link>
         <label className={`mk-line ${styles.searchBox}`}>
-          <span className="sr-only">Search a café, a dish, a para or a landmark</span>
+          <span className="sr-only">Search a café, a dish, a mohalla or a landmark</span>
           <UiIcon name="search" size={16} />
           <input
             ref={searchRef}
@@ -124,7 +124,7 @@ function DiscoveryControls({
             onChange={(event) => onQueryChange(event.target.value)}
             onCompositionStart={onCompositionStart}
             onCompositionEnd={onCompositionEnd}
-            placeholder="Search Kolkata"
+            placeholder="Search Bihar"
             autoComplete="off"
             enterKeyHint="search"
           />
@@ -165,7 +165,7 @@ function DiscoveryControls({
   return (
     <div className={styles.controlDeck}>
       <label className={`mk-line ${styles.searchBox}`}>
-        <span className="sr-only">Search a café, a dish, a para or a landmark</span>
+        <span className="sr-only">Search a café, a dish, a mohalla or a landmark</span>
         <UiIcon name="search" />
         <input
           ref={searchRef}
@@ -174,7 +174,7 @@ function DiscoveryControls({
           onChange={(event) => onQueryChange(event.target.value)}
           onCompositionStart={onCompositionStart}
           onCompositionEnd={onCompositionEnd}
-          placeholder="Search a café, a dish, a para"
+          placeholder="Search a café, a dish, a mohalla"
           autoComplete="off"
           enterKeyHint="search"
         />
@@ -200,7 +200,7 @@ function DiscoveryControls({
       <div className={`mk-seg ${styles.viewToggle}`} role="group" aria-label="Choose results view">
         {viewOptions.map(({ id, label }) => (
           <button key={id} type="button" aria-pressed={view === id} onClick={() => onViewChange(id)}>
-            {id === 'map' ? <CityIcon name="howrah" size={18} /> : <UiIcon name={VIEW_ICONS[id]} size={16} />}
+            {id === 'map' ? <CityIcon name="setu" size={18} /> : <UiIcon name={VIEW_ICONS[id]} size={16} />}
             <span>{label}</span>
           </button>
         ))}
@@ -289,7 +289,7 @@ function PlaceVisual({ place, detail = false }) {
 
   return (
     <div className={styles.placeVisualFallback} role="img" aria-label={`Photo not available for ${place.name}`}>
-      <CityIcon name={place.icon || 'victoria'} size={36} />
+      <CityIcon name={place.icon || 'golghar'} size={36} />
       <span className="mk-meta">{place.category}</span>
     </div>
   )
@@ -359,7 +359,7 @@ function PlaceDetails({ place, origin, onClose, onExploreAround, enrichmentStatu
           {place.rating && <span>Rated {place.rating}{place.ratingCount ? ` by ${place.ratingCount}` : ''}</span>}
           {distance
             ? <span className={styles.distance}>{distance}</span>
-            : place.area && place.area !== 'Kolkata' && <span>{place.area}</span>}
+            : place.area && place.area !== 'Bihar' && <span>{place.area}</span>}
         </p>
         <h2 className={styles.detailsTitle}>{place.name}</h2>
         <p className={styles.detailsAddress}>{place.address}</p>
@@ -436,8 +436,8 @@ function PlaceCard({ place, layout, origin, onShowMap, onExploreAround }) {
 function PlaceResultsSkeleton({ layout }) {
   const count = layout === 'grid' ? 6 : 4
   return (
-    <section className={styles.skeletonResults} aria-label="Loading Kolkata places" role="status">
-      <AlponaLoader label="Loading Kolkata places" className={styles.loader} />
+    <section className={styles.skeletonResults} aria-label="Loading Bihar places" role="status">
+      <AripanLoader label="Loading Bihar places" className={styles.loader} />
       <div className={layout === 'grid' ? styles.gridView : styles.listView}>
         {Array.from({ length: count }, (_, index) => (
           <div key={index} className={`${styles.placeSkeleton} ${layout === 'list' ? styles.placeSkeletonList : ''}`} aria-hidden="true">
@@ -459,8 +459,8 @@ function EmptyResults({ searchText, category, origin, onClearSearch, onShowAllCa
   let body
   let action = null
   if (searchText) {
-    title = `Nothing in Kolkata matches “${searchText}”.`
-    body = 'Check the spelling, or search a para, a street or a landmark.'
+    title = `Nothing in Bihar matches “${searchText}”.`
+    body = 'Check the spelling, or search a mohalla, a street or a landmark.'
     action = <button type="button" className="mk-btn mk-btn--secondary mk-btn--sm" onClick={onClearSearch}>Clear search</button>
   } else if (category !== 'All') {
     title = `No ${CATEGORY_NOUNS[category] ?? 'places'} ${originPhrase(origin)}.`
@@ -520,7 +520,7 @@ export default function NearYouClient() {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         const position = { lat: coords.latitude, lng: coords.longitude }
-        if (haversineDistanceKm(KOLKATA, position) > OUTSIDE_KOLKATA_KM) {
+        if (haversineDistanceKm(PATNA, position) > OUTSIDE_BIHAR_KM) {
           setUserPosition(null)
           setLocationState('far')
           return
@@ -594,7 +594,7 @@ export default function NearYouClient() {
   const areas = useMemo(() => {
     const counts = new Map()
     for (const place of places) {
-      if (place.area && place.area !== 'Kolkata') counts.set(place.area, (counts.get(place.area) || 0) + 1)
+      if (place.area && place.area !== 'Bihar') counts.set(place.area, (counts.get(place.area) || 0) + 1)
     }
     const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([name]) => name)
     return top.length > 1 ? ['All areas', ...top] : []
@@ -769,12 +769,12 @@ export default function NearYouClient() {
   const summary = searchText ? `for “${searchText}”` : originPhrase(origin)
 
   const locationMessage = locationState === 'denied'
-    ? 'Location access wasn’t available. Search a para or move the map instead.'
+    ? 'Location access wasn’t available. Search a mohalla or move the map instead.'
     : locationState === 'timeout'
-      ? 'Finding you took too long. Tap locate to try again, or search a para.'
+      ? 'Finding you took too long. Tap locate to try again, or search a mohalla.'
       : locationState === 'far'
-        ? 'You’re outside Kolkata, so the map stays on the city.'
-        : 'This browser can’t share its location. Use HTTPS, or search a para instead.'
+        ? 'You’re outside Bihar, so the map stays on Patna.'
+        : 'This browser can’t share its location. Use HTTPS, or search a mohalla instead.'
   const showLocationNotice = ['denied', 'unsupported', 'far', 'timeout'].includes(locationState)
 
   const controls = (mapIdentity) => (
@@ -820,7 +820,7 @@ export default function NearYouClient() {
   return (
     <main className={`${styles.root} ${view === 'map' ? styles.mapMode : styles.resultsMode}`}>
       {view === 'map' ? (
-        <section className={styles.mapWorkspace} aria-label="Explore Kolkata places on the map">
+        <section className={styles.mapWorkspace} aria-label="Explore Bihar places on the map">
           <NearYouMap
             places={visiblePlaces}
             selectedPlaceId={selectedPlace?.id || null}
@@ -871,7 +871,7 @@ export default function NearYouClient() {
 
           {dataStatus === 'error' && (
             <div className={styles.dataNotice} role="status">
-              <span>Kolkata places couldn’t be loaded.</span>
+              <span>Bihar places couldn’t be loaded.</span>
               <button type="button" className="mk-btn mk-btn--secondary mk-btn--sm" onClick={retryPlaces}>Try again</button>
             </div>
           )}
@@ -901,7 +901,7 @@ export default function NearYouClient() {
                 return (
                   <li key={place.id}>
                     <button type="button" className={styles.railItem} onClick={() => selectPlace(place.id)}>
-                      <span className={styles.railIcon} aria-hidden="true"><CityIcon name={place.icon || 'victoria'} size={22} /></span>
+                      <span className={styles.railIcon} aria-hidden="true"><CityIcon name={place.icon || 'golghar'} size={22} /></span>
                       <span className={styles.railText}>
                         <span className={styles.railTitle}>{place.name}</span>
                         <span className={styles.railMeta}>{[place.category, distance ? place.distance : place.area].filter(Boolean).join(' · ')}</span>
@@ -930,12 +930,12 @@ export default function NearYouClient() {
                       ? 'Near you'
                       : origin.source === 'area' || origin.source === 'place'
                         ? `Around ${origin.label}`
-                        : 'Explore Kolkata'}
+                        : 'Explore Bihar'}
                 </h1>
               </div>
             </div>
           </header>
-          <section className={styles.explorer} aria-label="Kolkata places">
+          <section className={styles.explorer} aria-label="Bihar places">
             {controls(false)}
             {filters}
 
@@ -958,13 +958,13 @@ export default function NearYouClient() {
               <PlaceResultsSkeleton layout={view} />
             ) : dataStatus === 'error' ? (
               <div className={`mk-panel mk-empty ${styles.emptyPage}`} role="status">
-                <h2 className="mk-h3">We couldn’t load Kolkata places.</h2>
+                <h2 className="mk-h3">We couldn’t load Bihar places.</h2>
                 <p className="mk-body">Check your connection, then try again.</p>
                 <button type="button" className="mk-btn mk-btn--secondary" onClick={retryPlaces}>Try again</button>
               </div>
             ) : visiblePlaces.length ? (
               <>
-                <section className={view === 'grid' ? styles.gridView : styles.listView} aria-label={`Kolkata places ${view}`}>
+                <section className={view === 'grid' ? styles.gridView : styles.listView} aria-label={`Bihar places ${view}`}>
                   {visiblePlaces.slice(0, visibleCount).map((place) => (
                     <PlaceCard
                       key={place.id}

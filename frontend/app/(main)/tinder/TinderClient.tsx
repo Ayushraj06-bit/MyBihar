@@ -2,8 +2,8 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import { Sprig } from '@/components/brand/kolka'
-import { AlponaLoader } from '@/components/brand/Alpona'
+import { Sprig } from '@/components/brand/mithila'
+import { AripanLoader } from '@/components/brand/Aripan'
 import styles from '@/styles/Experiences.module.css'
 
 const DESCRIPTION_LIMIT = 180;
@@ -175,7 +175,7 @@ function Tinder() {
   }
 
   if (loading) {
-    return <main className="mk-page mk-page-top mk-wrap"><AlponaLoader label="Finding experiences" /></main>
+    return <main className="mk-page mk-page-top mk-wrap"><AripanLoader label="Finding experiences" /></main>
   }
   if (error) {
     return (
@@ -192,7 +192,7 @@ function Tinder() {
       <main className="mk-page mk-page-top mk-wrap">
         <div className="mk-panel mk-empty" style={{ maxWidth: 640 }}>
           <h1 className="mk-h3">No experiences yet.</h1>
-          <p className="mk-body">New places are added every week. Start with a pandal near you in the meantime.</p>
+          <p className="mk-body">New places are added every week. Start with a ghat near you in the meantime.</p>
         </div>
       </main>
     )
@@ -274,7 +274,7 @@ function Tinder() {
                 <span>Elsewhere <span className={styles.ratingValue}>{profile.baseStars.toFixed(1)}</span> of 5</span>
               )}
               {typeof profile.averageStars === 'number' && (
-                <span>On My Kolkata <span className={styles.ratingValue}>{profile.averageStars.toFixed(1)}</span> of 5</span>
+                <span>On My Bihar <span className={styles.ratingValue}>{profile.averageStars.toFixed(1)}</span> of 5</span>
               )}
             </div>
           </div>

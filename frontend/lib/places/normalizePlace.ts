@@ -34,13 +34,13 @@ function slugify(value) {
     .replace(/^-|-$/g, '')
 }
 
-/* "Flurys, 18A, Park St, Park Street Area, Kolkata, West Bengal, 700071, India"
-   → "18A, Park St, Park Street Area, Kolkata" */
+/* "Bansi Vihar, Fraser Rd, Fraser Road Area, Patna, Bihar, 800001, India"
+   → "Fraser Rd, Fraser Road Area, Patna" */
 export function tidyAddress(address, name = '') {
   if (!present(address)) return null
   let parts = String(address).split(',').map((part) => part.trim()).filter(Boolean)
   if (name && parts.length > 1 && normalizeText(parts[0]) === normalizeText(name)) parts = parts.slice(1)
-  parts = parts.filter((part) => !/^(india|west bengal|\d{6}|west bengal \d{6})$/i.test(part))
+  parts = parts.filter((part) => !/^(india|bihar|\d{6}|bihar \d{6})$/i.test(part))
   const tidy = parts.join(', ')
   return tidy || null
 }
@@ -51,11 +51,12 @@ export function inferArea(raw, address) {
   const components = Array.isArray(raw?.address_components) ? raw.address_components : []
   for (const type of AREA_COMPONENT_TYPES) {
     const component = components.find((entry) => entry.types?.includes(type) && present(entry.long_name))
-    if (component && !/^kolkata$/i.test(component.long_name)) return component.long_name
+    if (component && !/^(patna|bihar)$/i.test(component.long_name)) return component.long_name
   }
+  /* "…, Fraser Road Area, Patna, Bihar, 800001, India" → the part before the city (or the state) */
   const parts = String(address || '').split(',').map((part) => part.trim()).filter(Boolean)
-  const kolkataIndex = parts.findIndex((part) => /^kolkata$/i.test(part))
-  if (kolkataIndex > 0 && !/^\d/.test(parts[kolkataIndex - 1])) return parts[kolkataIndex - 1]
+  const cityIndex = parts.findIndex((part) => /^(patna|bihar)$/i.test(part))
+  if (cityIndex > 0 && !/^\d/.test(parts[cityIndex - 1])) return parts[cityIndex - 1]
   return null
 }
 

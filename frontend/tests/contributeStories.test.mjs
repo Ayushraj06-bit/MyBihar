@@ -58,7 +58,7 @@ test('Google Drive file links use the public thumbnail endpoint', () => {
 test('Instagram posts and reels use Instagram’s own embed page', () => {
   assert.equal(resolveStoryMedia('https://www.instagram.com/p/C8xYz12AbCd/').embedUrl, 'https://www.instagram.com/p/C8xYz12AbCd/embed/')
   assert.equal(resolveStoryMedia('https://instagram.com/reel/C9aBcDeFgHi/?igsh=abc').embedUrl, 'https://www.instagram.com/reel/C9aBcDeFgHi/embed/')
-  assert.equal(resolveStoryMedia('https://www.instagram.com/kolkata_diaries/').kind, 'link', 'a profile is not a post')
+  assert.equal(resolveStoryMedia('https://www.instagram.com/patna_se_hai_/').kind, 'link', 'a profile is not a post')
 })
 
 test('X/Twitter posts use the official embed, from a numeric id only', () => {

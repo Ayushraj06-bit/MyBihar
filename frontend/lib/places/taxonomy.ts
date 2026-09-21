@@ -7,24 +7,24 @@
  */
 const TAXONOMY = [
   {
-    slug: 'cafes', name: 'Cafés', icon: 'bhaar',
+    slug: 'cafes', name: 'Cafés', icon: 'kulhad',
     aliases: ['cafe', 'cafes', 'café', 'cafés', 'coffee', 'coffee shop', 'coffee shops', 'bakery', 'bakeries'],
     providerTypes: ['cafe', 'bakery'],
   },
   {
-    slug: 'food', name: 'Food', icon: 'phuchka',
+    slug: 'food', name: 'Food', icon: 'litti',
     aliases: ['food', 'restaurant', 'restaurants', 'dining', 'street food', 'eat', 'places to eat', 'bar', 'bars'],
-    /* Park Street's old dining rooms — Peter Cat, Mocambo — are typed only as bars */
+    /* Fraser Road's old dining rooms and the Maurya Lok bars are typed only as bars */
     providerTypes: ['restaurant', 'bar'],
   },
   {
-    slug: 'places', name: 'Places', icon: 'victoria',
+    slug: 'places', name: 'Places', icon: 'golghar',
     aliases: ['place', 'places', 'landmark', 'landmarks', 'attraction', 'attractions', 'sightseeing', 'monument', 'monuments'],
     providerTypes: ['tourist_attraction', 'landmark'],
   },
   {
     slug: 'culture', name: 'Culture', icon: 'book',
-    aliases: ['culture', 'art', 'arts', 'gallery', 'galleries', 'museum', 'museums', 'library', 'libraries', 'heritage', 'temple', 'temples', 'church', 'churches', 'mosque', 'mosques'],
+    aliases: ['culture', 'art', 'arts', 'gallery', 'galleries', 'museum', 'museums', 'library', 'libraries', 'heritage', 'temple', 'temples', 'church', 'churches', 'mosque', 'mosques', 'gurudwara', 'gurudwaras', 'stupa', 'stupas', 'monastery', 'monasteries', 'ruins'],
     providerTypes: ['museum', 'art_gallery', 'library', 'place_of_worship'],
   },
   {
@@ -39,7 +39,7 @@ const TAXONOMY = [
   },
   {
     slug: 'outdoors', name: 'Outdoors', icon: 'boat',
-    aliases: ['outdoors', 'outdoor', 'park', 'parks', 'garden', 'gardens', 'nature', 'lake', 'lakes', 'zoo'],
+    aliases: ['outdoors', 'outdoor', 'park', 'parks', 'garden', 'gardens', 'nature', 'lake', 'lakes', 'zoo', 'ghat', 'ghats', 'river', 'sanctuary'],
     providerTypes: ['park', 'zoo', 'natural_feature'],
   },
 ]
@@ -117,5 +117,5 @@ export function providerTypesForCategory(value) {
 }
 
 export function categoryIcon(value) {
-  return findCategory(value)?.icon ?? 'howrah'
+  return findCategory(value)?.icon ?? 'setu'
 }

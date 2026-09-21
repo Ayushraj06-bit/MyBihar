@@ -97,7 +97,7 @@ for await (const line of lines) {
   const category = categoryFor(properties)
   if (!category) { skippedCount += 1; continue }
   const address = addressFor(properties)
-  const locality = properties.addresses?.[0]?.locality || 'Kolkata'
+  const locality = properties.addresses?.[0]?.locality || 'Bihar'
   const place = {
     id: feature.id,
     name,

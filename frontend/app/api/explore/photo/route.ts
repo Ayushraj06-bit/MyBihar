@@ -20,7 +20,7 @@ export async function GET(request: Request) {
     url.searchParams.set('api_key', provider.apiKey)
     const headers: Record<string, string> = {
       Accept: 'image/*',
-      'X-Request-Id': globalThis.crypto?.randomUUID?.() || `mykolkata-${Date.now()}`,
+      'X-Request-Id': globalThis.crypto?.randomUUID?.() || `mybihar-${Date.now()}`,
     }
     if (provider.requestOrigin) {
       headers.Origin = provider.requestOrigin

@@ -15,7 +15,7 @@ const UTILITY_TYPES = new Set([
 ])
 /* how far a category word looks around the searcher, e.g. "coffee" */
 const CATEGORY_INTENT_RADIUS_KM = 4
-const STOP_WORDS = new Set(['in', 'at', 'near', 'around', 'the', 'of', 'and', 'best', 'top', 'good', 'kolkata', 'calcutta'])
+const STOP_WORDS = new Set(['in', 'at', 'near', 'around', 'the', 'of', 'and', 'best', 'top', 'good', 'bihar', 'patna'])
 
 const tagsOf = (place) => (place.tags ?? []).map((tag) => normalizeText(tag).replaceAll('_', ' '))
 const isArea = (place) => tagsOf(place).some((tag) => AREA_TYPES.has(tag))
@@ -23,7 +23,7 @@ const isUtility = (place) => tagsOf(place).some((tag) => UTILITY_TYPES.has(tag))
 
 const matchable = (value) => normalizeText(value).replace(/['’]/g, '')
 
-/* Text search answers "cafes in Gariahat" loosely, so its results must mention
+/* Text search answers "cafes in Boring Road" loosely, so its results must mention
    every word of the query somewhere; autocomplete already matched the name. */
 export function matchesEveryWord(place, query) {
   const words = matchable(query).split(/[^a-z0-9]+/).filter((word) => word.length > 1 && !STOP_WORDS.has(word))
@@ -66,7 +66,7 @@ function withDistances(places, origin) {
   })
 }
 
-/* "Park Street" → Park Street Area, so the visitor can look around it */
+/* "Boring Road" → Boring Road Area, so the visitor can look around it */
 export function findAreaAnchor(query, places) {
   const needle = normalizeText(query)
   if (needle.length < 3) return null

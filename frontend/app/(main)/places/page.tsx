@@ -4,7 +4,7 @@ import PlacesClient from './PlacesClient'
 
 export const metadata: Metadata = {
   title: 'Explore',
-  description: 'Food, culture, hidden corners and the places Kolkata keeps for itself.',
+  description: 'Food, culture, ruins and river — the places Bihar keeps for itself.',
 }
 
 export default async function PlacesPage() {

@@ -28,13 +28,13 @@ import { categories, categoryFromProviderTypes, findCategory, providerTypesForCa
 
 function place(overrides = {}) {
   return {
-    provider: 'mykolkata',
+    provider: 'mybihar',
     providerPlaceId: 'local-1',
-    name: 'Flurys',
+    name: 'Bansi Vihar',
     category: 'Cafés',
     categorySlug: 'cafes',
-    latitude: 22.5527,
-    longitude: 88.3526,
+    latitude: 25.6127,
+    longitude: 85.1426,
     rating: 4.7,
     ratingCount: 100,
     sourceConfidence: 1,
@@ -74,24 +74,24 @@ test('provider types label places by their most specific kind', () => {
   assert.equal(categoryFromProviderTypes(['apartment complex']).slug, 'places')
 })
 
-test('geographic helpers validate coordinates and calculate Kolkata distances', () => {
-  assert.equal(parseCoordinate('22.5726', 'latitude'), 22.5726)
+test('geographic helpers validate coordinates and calculate Bihar distances', () => {
+  assert.equal(parseCoordinate('25.5941', 'latitude'), 25.5941)
   assert.equal(parseCoordinate('181', 'longitude'), null)
   const distance = haversineDistanceKm(
-    { lat: 22.5527, lng: 88.3526 },
-    { lat: 22.5576, lng: 88.3510 }
+    { lat: 25.6127, lng: 85.1426 },
+    { lat: 25.6176, lng: 85.1410 }
   )
   assert.equal(distance > 0.5 && distance < 0.7, true)
-  const bounds = boundingBox({ lat: 22.5527, lng: 88.3526 }, 1)
-  assert.equal(isInsideBounds({ lat: 22.5576, lng: 88.3510 }, bounds), true)
+  const bounds = boundingBox({ lat: 25.6127, lng: 85.1426 }, 1)
+  assert.equal(isInsideBounds({ lat: 25.6176, lng: 85.1410 }, bounds), true)
 })
 
 test('provider records normalize varying place response shapes', () => {
   const normalized = normalizeProviderPlace({
     place_id: 'ola-123',
-    name: 'Indian Museum',
-    formatted_address: '27 Jawaharlal Nehru Road, Kolkata',
-    geometry: { location: { lat: 22.5576, lng: 88.3510 } },
+    name: 'Patna Museum',
+    formatted_address: 'Buddha Marg, Patna',
+    geometry: { location: { lat: 25.6176, lng: 85.1410 } },
     types: ['museum'],
     rating: '4.6',
     user_ratings_total: '2500',
@@ -99,19 +99,19 @@ test('provider records normalize varying place response shapes', () => {
 
   assert.equal(normalized.providerPlaceId, 'ola-123')
   assert.equal(normalized.categorySlug, 'culture')
-  assert.equal(normalized.latitude, 22.5576)
+  assert.equal(normalized.latitude, 25.6176)
   assert.equal(normalized.ratingCount, 2500)
 })
 
 test('Ola predictions lose their placeholders and keep a tidy address and neighbourhood', () => {
   const normalized = normalizeProviderPlace({
     place_id: 'ola-platform:5000047274683',
-    description: 'Flurys, 18A, Park St, Park Street Area, Kolkata, West Bengal, 700071, India',
+    description: 'Bansi Vihar, Fraser Rd, Fraser Road Area, Patna, Bihar, 800001, India',
     structured_formatting: {
-      main_text: 'Flurys',
-      secondary_text: '18A, Park St, Park Street Area, Kolkata, West Bengal, 700071, India',
+      main_text: 'Bansi Vihar',
+      secondary_text: 'Fraser Rd, Fraser Road Area, Patna, Bihar, 800001, India',
     },
-    geometry: { location: { lat: 22.5528, lng: 88.3524 } },
+    geometry: { location: { lat: 25.6128, lng: 85.1424 } },
     types: ['bakery'],
     rating: -1,
     user_ratings_total: 0,
@@ -122,10 +122,10 @@ test('Ola predictions lose their placeholders and keep a tidy address and neighb
     distance_meters: 2501,
   }, 'ola')
 
-  assert.equal(normalized.name, 'Flurys')
+  assert.equal(normalized.name, 'Bansi Vihar')
   assert.equal(normalized.description, null)
-  assert.equal(normalized.address, '18A, Park St, Park Street Area, Kolkata')
-  assert.equal(normalized.area, 'Park Street Area')
+  assert.equal(normalized.address, 'Fraser Rd, Fraser Road Area, Patna')
+  assert.equal(normalized.area, 'Fraser Road Area')
   assert.equal(normalized.categorySlug, 'cafes')
   assert.equal(normalized.rating, null)
   assert.equal(normalized.ratingCount, null)
@@ -137,23 +137,23 @@ test('Ola predictions lose their placeholders and keep a tidy address and neighb
 })
 
 test('entity matching merges the same real place across providers', () => {
-  const local = place({ providerPlaceId: 'local-flurys', address: '18A Park Street' })
+  const local = place({ providerPlaceId: 'local-bansi', address: 'Fraser Road' })
   const provider = place({
     provider: 'ola',
-    providerPlaceId: 'ola-flurys',
-    latitude: 22.55272,
-    longitude: 88.35261,
+    providerPlaceId: 'ola-bansi',
+    latitude: 25.61272,
+    longitude: 85.14261,
     tags: ['bakery'],
     sourceConfidence: 0.9,
   })
   assert.equal(placeMatchConfidence(local, provider) >= 0.85, true)
   const merged = mergeUniquePlaces([local], [provider])
   assert.equal(merged.length, 1)
-  assert.equal(merged[0].provider, 'mykolkata')
+  assert.equal(merged[0].provider, 'mybihar')
   assert.deepEqual(merged[0].tags.sort(), ['bakery', 'cafe'])
 
   const filled = mergeUniquePlaces([place({ phone: null })], [place({ provider: 'ola', providerPlaceId: 'x', phone: '+91 33 2229 7664' })])
-  assert.equal(filled[0].provider, 'mykolkata')
+  assert.equal(filled[0].provider, 'mybihar')
   assert.equal(filled[0].phone, '+91 33 2229 7664')
 })
 
@@ -169,22 +169,22 @@ test('Ola adapter sends bounded nearby parameters and normalizes results', async
   const provider = new OlaPlacesProvider({
     apiKey: 'private-test-key',
     baseUrl: 'https://example.test',
-    requestOrigin: 'https://mykolkata.example',
+    requestOrigin: 'https://mybihar.example',
     fetchImpl: async (url, options) => {
       requestedUrl = new URL(url)
       requestedOptions = options
       return {
         ok: true,
-        json: async () => ({ results: [{ place_id: '1', name: 'Coffee House', lat: 22.576, lng: 88.364, types: ['cafe'] }] }),
+        json: async () => ({ results: [{ place_id: '1', name: 'Coffee House', lat: 25.636, lng: 85.154, types: ['cafe'] }] }),
       }
     },
   })
-  const results = await provider.nearby({ lat: 22.57, lng: 88.36, radiusKm: 3, category: 'cafes' })
+  const results = await provider.nearby({ lat: 25.63, lng: 85.15, radiusKm: 3, category: 'cafes' })
   assert.equal(requestedUrl.pathname, '/places/v1/nearbysearch')
   assert.equal(requestedUrl.searchParams.get('radius'), '3000')
   assert.equal(requestedUrl.searchParams.get('types').includes('cafe'), true)
-  assert.equal(requestedOptions.headers.Origin, 'https://mykolkata.example')
-  assert.equal(requestedOptions.headers.Referer, 'https://mykolkata.example/')
+  assert.equal(requestedOptions.headers.Origin, 'https://mybihar.example')
+  assert.equal(requestedOptions.headers.Referer, 'https://mybihar.example/')
   assert.equal(typeof requestedOptions.headers['X-Request-Id'], 'string')
   assert.equal(results[0].provider, 'ola')
 })
@@ -199,14 +199,14 @@ test('Ola detail enrichment name-matches an Overture place before requesting adv
       requestedPaths.push(requested.pathname)
       if (requested.pathname.endsWith('/autocomplete')) {
         return { ok: true, json: async () => ({ predictions: [
-          { place_id: 'wrong', structured_formatting: { main_text: 'Science City' }, geometry: { location: { lat: 22.54, lng: 88.39 } }, types: ['museum'] },
-          { place_id: 'correct', structured_formatting: { main_text: 'Indian Museum' }, geometry: { location: { lat: 22.5576, lng: 88.351 } }, types: ['museum'] },
+          { place_id: 'wrong', structured_formatting: { main_text: 'Buddha Smriti Park' }, geometry: { location: { lat: 25.60, lng: 85.18 } }, types: ['museum'] },
+          { place_id: 'correct', structured_formatting: { main_text: 'Patna Museum' }, geometry: { location: { lat: 25.6176, lng: 85.141 } }, types: ['museum'] },
         ] }) }
       }
-      return { ok: true, json: async () => ({ result: { place_id: requested.searchParams.get('place_id'), name: 'Indian Museum, Kolkata', lat: 22.5576, lng: 88.351 } }) }
+      return { ok: true, json: async () => ({ result: { place_id: requested.searchParams.get('place_id'), name: 'Patna Museum, Patna', lat: 25.6176, lng: 85.141 } }) }
     },
   })
-  const details = await provider.resolveDetails({ name: 'Indian Museum', lat: 22.5576, lng: 88.351 })
+  const details = await provider.resolveDetails({ name: 'Patna Museum', lat: 25.6176, lng: 85.141 })
   assert.equal(details.providerPlaceId, 'correct')
   assert.deepEqual(requestedPaths, ['/places/v1/autocomplete', '/places/v1/details/advanced'])
 })
@@ -230,7 +230,7 @@ test('Ola nearby asks for coordinates and covers every category when none is cho
       '/nearbysearch': (requested) => ({ ok: true, json: async () => ({ predictions: [{
         place_id: `id-${requested.searchParams.get('types')}`,
         structured_formatting: { main_text: `Near ${requested.searchParams.get('types')}` },
-        geometry: { location: { lat: 22.553, lng: 88.352 } },
+        geometry: { location: { lat: 25.613, lng: 85.142 } },
         types: requested.searchParams.get('types').split(','),
       }, {
         place_id: 'no-coordinates', structured_formatting: { main_text: 'Nowhere' }, types: ['cafe'],
@@ -238,7 +238,7 @@ test('Ola nearby asks for coordinates and covers every category when none is cho
     }, calls),
   })
 
-  const all = await provider.nearby({ lat: 22.5526, lng: 88.3524, radiusKm: 2, limit: 70 })
+  const all = await provider.nearby({ lat: 25.6126, lng: 85.1424, radiusKm: 2, limit: 70 })
   assert.equal(calls.length, categories.length)
   assert.ok(calls.every((url) => url.searchParams.get('withCentroid') === 'true'))
   assert.ok(calls.every((url) => Number(url.searchParams.get('limit')) === 10))
@@ -246,7 +246,7 @@ test('Ola nearby asks for coordinates and covers every category when none is cho
   assert.ok(all.every((place) => Number.isFinite(place.latitude)))
 
   calls.length = 0
-  const outdoors = await provider.nearby({ lat: 22.5526, lng: 88.3524, radiusKm: 2, category: 'Outdoors', limit: 20 })
+  const outdoors = await provider.nearby({ lat: 25.6126, lng: 85.1424, radiusKm: 2, category: 'Outdoors', limit: 20 })
   assert.equal(calls.length, 1)
   assert.equal(calls[0].searchParams.get('types'), 'park,zoo,natural_feature')
   assert.equal(outdoors[0].categorySlug, 'outdoors')
@@ -260,16 +260,16 @@ test('Ola search finds venues by name through autocomplete and survives text sea
       '/autocomplete': (requested) => {
         assert.equal(requested.searchParams.get('strictbounds'), 'true')
         return { ok: true, json: async () => ({ predictions: [
-          { place_id: 'flurys', structured_formatting: { main_text: 'Flurys', secondary_text: '18A, Park St, Kolkata' }, geometry: { location: { lat: 22.5528, lng: 88.3524 } }, types: ['bakery'] },
-          { place_id: 'hyderabad', structured_formatting: { main_text: 'Flurys Hyderabad' }, geometry: { location: { lat: 17.38, lng: 78.48 } }, types: ['bakery'] },
-          { place_id: 'fragment', structured_formatting: { main_text: '47, Near Flurys' }, geometry: { location: { lat: 22.55, lng: 88.35 } }, types: [] },
+          { place_id: 'bansi', structured_formatting: { main_text: 'Bansi Vihar', secondary_text: 'Fraser Rd, Patna' }, geometry: { location: { lat: 25.6128, lng: 85.1424 } }, types: ['bakery'] },
+          { place_id: 'hyderabad', structured_formatting: { main_text: 'Bansi Vihar Hyderabad' }, geometry: { location: { lat: 17.38, lng: 78.48 } }, types: ['bakery'] },
+          { place_id: 'fragment', structured_formatting: { main_text: '47, Near Bansi Vihar' }, geometry: { location: { lat: 25.61, lng: 85.14 } }, types: [] },
         ] }) }
       },
       '/textsearch': () => ({ ok: false, status: 500, json: async () => ({}) }),
     }),
   })
-  const results = await provider.search({ query: 'flurys', lat: 22.5726, lng: 88.3639 })
-  assert.deepEqual(results.map((result) => result.providerPlaceId), ['flurys'])
+  const results = await provider.search({ query: 'bansi vihar', lat: 25.5941, lng: 85.1376 })
+  assert.deepEqual(results.map((result) => result.providerPlaceId), ['bansi'])
   assert.equal(results[0].matchedBy, 'autocomplete')
 })
 
@@ -283,17 +283,17 @@ test('the map endpoint falls back to live places inside the viewport when the ca
       nearby: async (params) => {
         nearbyParams = params
         return [
-          place({ provider: 'ola', providerPlaceId: 'inside', latitude: 22.555, longitude: 88.355 }),
-          place({ provider: 'ola', providerPlaceId: 'outside', name: 'Far', latitude: 22.7, longitude: 88.5 }),
+          place({ provider: 'ola', providerPlaceId: 'inside', latitude: 25.615, longitude: 85.145 }),
+          place({ provider: 'ola', providerPlaceId: 'outside', name: 'Far', latitude: 25.8, longitude: 85.3 }),
         ]
       },
     },
   })
-  const bounds = { west: 88.33, south: 22.53, east: 88.39, north: 22.58 }
+  const bounds = { west: 85.12, south: 25.59, east: 85.18, north: 25.64 }
   const result = await service.withinBounds({ bounds, limit: 100 })
   assert.deepEqual(result.places.map((entry) => entry.providerPlaceId), ['inside'])
   assert.equal(result.meta.source, 'ola')
-  assert.ok(Math.abs(nearbyParams.lat - 22.555) < 1e-9 && nearbyParams.radiusKm > 3 && nearbyParams.radiusKm < 5)
+  assert.ok(Math.abs(nearbyParams.lat - 25.615) < 1e-9 && nearbyParams.radiusKm > 3 && nearbyParams.radiusKm < 5)
 })
 
 test('search turns a neighbourhood into an anchor and keeps loose text matches out', async () => {
@@ -303,19 +303,19 @@ test('search turns a neighbourhood into an anchor and keeps loose text matches o
       name: 'ola',
       configured: true,
       search: async () => [
-        place({ provider: 'ola', providerPlaceId: 'area', name: 'Park Street Area', tags: ['borough'], matchedBy: 'autocomplete', latitude: 22.549, longitude: 88.3547 }),
-        place({ provider: 'ola', providerPlaceId: 'social', name: 'Park Street Social', tags: ['restaurant'], category: 'Food', categorySlug: 'food', matchedBy: 'autocomplete' }),
+        place({ provider: 'ola', providerPlaceId: 'area', name: 'Boring Road Area', tags: ['borough'], matchedBy: 'autocomplete', latitude: 25.609, longitude: 85.1447 }),
+        place({ provider: 'ola', providerPlaceId: 'social', name: 'Boring Road Social', tags: ['restaurant'], category: 'Food', categorySlug: 'food', matchedBy: 'autocomplete' }),
         place({ provider: 'ola', providerPlaceId: 'maidan', name: 'Millennium Park', tags: ['park'], address: 'Strand Rd', matchedBy: 'text' }),
       ],
     },
   })
-  const result = await service.search({ query: 'Park Street', lat: 22.5726, lng: 88.3639, limit: 20 })
-  assert.equal(result.meta.area.name, 'Park Street Area')
+  const result = await service.search({ query: 'Boring Road', lat: 25.5941, lng: 85.1376, limit: 20 })
+  assert.equal(result.meta.area.name, 'Boring Road Area')
   assert.deepEqual(result.places.map((entry) => entry.providerPlaceId), ['social'])
 })
 
 test('text results must mention every word of the query somewhere', () => {
-  const roastery = place({ name: 'Roastery Coffee House', address: 'Golpark, Gariahat, Kolkata', category: 'Cafés', tags: ['cafe'] })
+  const roastery = place({ name: 'Roastery Coffee House', address: 'Golpark, Gariahat, Bihar', category: 'Cafés', tags: ['cafe'] })
   assert.equal(matchesEveryWord(roastery, 'cafes in Gariahat'), true)
   assert.equal(matchesEveryWord(roastery, 'cafes in Salt Lake'), false)
   assert.equal(matchesEveryWord(place({ name: "Flury's Confectionery" }), 'flurys'), true)
@@ -331,11 +331,11 @@ test('a bare category word searches that category around the visitor as well as 
       search: async () => [place({ provider: 'ola', providerPlaceId: 'coffee-house', name: 'Coffee House', matchedBy: 'autocomplete' })],
       nearby: async (params) => {
         nearbyCategory = params.category
-        return [place({ provider: 'ola', providerPlaceId: 'mintelaa', name: 'Mintelaa', latitude: 22.542, longitude: 88.3526 })]
+        return [place({ provider: 'ola', providerPlaceId: 'mintelaa', name: 'Mintelaa', latitude: 25.602, longitude: 85.1426 })]
       },
     },
   })
-  const result = await service.search({ query: 'coffee', lat: 22.5526, lng: 88.3524, limit: 20 })
+  const result = await service.search({ query: 'coffee', lat: 25.6126, lng: 85.1424, limit: 20 })
   assert.equal(nearbyCategory, 'cafes')
   assert.equal(result.meta.categoryIntent.slug, 'cafes')
   assert.deepEqual(result.places.map((entry) => entry.providerPlaceId), ['coffee-house', 'mintelaa'])
@@ -346,12 +346,12 @@ test('Wikimedia enrichment accepts a nearby name match and preserves licence att
     fetchImpl: async () => ({
       ok: true,
       json: async () => ({ query: { pages: [
-        { title: 'File:Unrelated building.jpg', coordinates: [{ lat: 22.5576, lon: 88.351 }], imageinfo: [{ mime: 'image/jpeg', thumburl: 'https://upload.wikimedia.org/unrelated.jpg', extmetadata: {} }] },
-        { title: 'File:Indian Museum Kolkata.jpg', coordinates: [{ lat: 22.5577, lon: 88.3511 }], imageinfo: [{ mime: 'image/jpeg', thumburl: 'https://upload.wikimedia.org/museum.jpg', descriptionurl: 'https://commons.wikimedia.org/wiki/File:Indian_Museum_Kolkata.jpg', extmetadata: { Artist: { value: '<b>Photographer</b>' }, LicenseShortName: { value: 'CC BY-SA 4.0' } } }] },
+        { title: 'File:Unrelated building.jpg', coordinates: [{ lat: 25.6176, lon: 85.141 }], imageinfo: [{ mime: 'image/jpeg', thumburl: 'https://upload.wikimedia.org/unrelated.jpg', extmetadata: {} }] },
+        { title: 'File:Patna Museum Patna.jpg', coordinates: [{ lat: 25.6177, lon: 85.1411 }], imageinfo: [{ mime: 'image/jpeg', thumburl: 'https://upload.wikimedia.org/museum.jpg', descriptionurl: 'https://commons.wikimedia.org/wiki/File:Patna_Museum_Patna.jpg', extmetadata: { Artist: { value: '<b>Photographer</b>' }, LicenseShortName: { value: 'CC BY-SA 4.0' } } }] },
       ] } }),
     }),
   })
-  const image = await provider.findImage({ name: 'Indian Museum', lat: 22.5576, lng: 88.351 })
+  const image = await provider.findImage({ name: 'Patna Museum', lat: 25.6176, lng: 85.141 })
   assert.equal(image.image, 'https://upload.wikimedia.org/museum.jpg')
   assert.equal(image.imageAttribution, 'Photographer')
   assert.equal(image.imageLicense, 'CC BY-SA 4.0')
@@ -364,7 +364,7 @@ test('Wikimedia enrichment rejects unrelated nearby photography', async () => {
       { title: 'File:Traffic on Chowringhee.jpg', imageinfo: [{ mime: 'image/jpeg', thumburl: 'https://upload.wikimedia.org/traffic.jpg', extmetadata: {} }] },
     ] } }) }),
   })
-  const image = await provider.findImage({ name: 'Indian Museum', lat: 22.5575, lng: 88.3512 })
+  const image = await provider.findImage({ name: 'Patna Museum', lat: 25.6175, lng: 85.1412 })
   assert.equal(image, null)
 })
 
@@ -442,7 +442,7 @@ test('database failure degrades to provider results without touching the schema'
       name: 'ola',
       configured: true,
       searchText: async () => [place({ provider: 'ola', providerPlaceId: 'live-1' })],
-      nearby: async () => [place({ provider: 'ola', providerPlaceId: 'live-1', latitude: 22.57, longitude: 88.36 })],
+      nearby: async () => [place({ provider: 'ola', providerPlaceId: 'live-1', latitude: 25.63, longitude: 85.15 })],
     },
   })
   const originalError = console.error
@@ -453,7 +453,7 @@ test('database failure degrades to provider results without touching the schema'
     assert.equal(search.meta.localStatus, 'unavailable')
     assert.equal(search.meta.providerStatus, 'ok')
 
-    const nearby = await service.nearby({ lat: 22.57, lng: 88.36, radiusKm: 2, limit: 10 })
+    const nearby = await service.nearby({ lat: 25.63, lng: 85.15, radiusKm: 2, limit: 10 })
     assert.equal(nearby.places.length, 1)
     assert.equal(nearby.meta.localStatus, 'unavailable')
     assert.equal(nearby.meta.providerStatus, 'ok')
@@ -463,35 +463,35 @@ test('database failure degrades to provider results without touching the schema'
 })
 
 test('file catalogue returns only places inside the requested viewport with a cursor', async (context) => {
-  const directory = await mkdtemp(join(tmpdir(), 'mykolkata-catalog-'))
+  const directory = await mkdtemp(join(tmpdir(), 'mybihar-catalog-'))
   context.after(() => rm(directory, { recursive: true, force: true }))
   await mkdir(join(directory, 'tiles'))
   const places = [
-    { id: 'in-1', name: 'Coffee House', category: 'cafes', latitude: 22.575, longitude: 88.365, area: 'College Street', confidence: .9, primaryType: 'cafe' },
-    { id: 'in-2', name: 'Indian Museum', category: 'culture', latitude: 22.558, longitude: 88.351, area: 'Esplanade', confidence: .8, primaryType: 'museum' },
-    { id: 'out-1', name: 'Outside Place', category: 'places', latitude: 22.7, longitude: 88.5, area: 'Kolkata', confidence: .9, primaryType: 'landmark' },
+    { id: 'in-1', name: 'Coffee House', category: 'cafes', latitude: 25.635, longitude: 85.155, area: 'Boring Road', confidence: .9, primaryType: 'cafe' },
+    { id: 'in-2', name: 'Patna Museum', category: 'culture', latitude: 25.618, longitude: 85.141, area: 'Buddha Marg', confidence: .8, primaryType: 'museum' },
+    { id: 'out-1', name: 'Outside Place', category: 'places', latitude: 25.8, longitude: 85.3, area: 'Hajipur', confidence: .9, primaryType: 'landmark' },
   ]
-  await writeFile(join(directory, 'manifest.json'), JSON.stringify({ tileSize: 1, tiles: [{ key: '88_22', count: 3 }] }))
-  await writeFile(join(directory, 'tiles', '88_22.json'), JSON.stringify(places))
+  await writeFile(join(directory, 'manifest.json'), JSON.stringify({ tileSize: 1, tiles: [{ key: '85_25', count: 3 }] }))
+  await writeFile(join(directory, 'tiles', '85_25.json'), JSON.stringify(places))
 
   const repository = new FilePlaceRepository({ directory })
-  const first = await repository.withinBounds({ bounds: { west: 88.3, south: 22.5, east: 88.4, north: 22.6 }, limit: 1 })
+  const first = await repository.withinBounds({ bounds: { west: 85.1, south: 25.6, east: 85.2, north: 25.7 }, limit: 1 })
   assert.equal(first.places.length, 1)
   assert.equal(first.total, 2)
   assert.equal(first.nextCursor, '1')
-  const second = await repository.withinBounds({ bounds: { west: 88.3, south: 22.5, east: 88.4, north: 22.6 }, limit: 1, cursor: first.nextCursor })
+  const second = await repository.withinBounds({ bounds: { west: 85.1, south: 25.6, east: 85.2, north: 25.7 }, limit: 1, cursor: first.nextCursor })
   assert.equal(second.places.length, 1)
   assert.notEqual(second.places[0].id, first.places[0].id)
 })
 
 test('request parsers reject unsafe inputs and clamp result sizes', () => {
   assert.throws(() => parseSearchQuery({ q: 'a' }), RequestValidationError)
-  assert.throws(() => parseSearchQuery({ q: 'coffee', lat: '22.5' }), RequestValidationError)
+  assert.throws(() => parseSearchQuery({ q: 'coffee', lat: '25.6' }), RequestValidationError)
   assert.throws(() => parseNearbyQuery({ lat: '200', lng: '88' }), RequestValidationError)
   assert.equal(parseSearchQuery({ q: ' coffee ', limit: '500' }).limit, 50)
-  assert.equal(parseNearbyQuery({ lat: '22.57', lng: '88.36', radiusKm: '100' }).radiusKm, 25)
-  assert.equal(parseBoundsQuery({ west: '88.3', south: '22.5', east: '88.4', north: '22.6', limit: '999' }).limit, 500)
-  assert.throws(() => parseBoundsQuery({ west: '88.4', south: '22.5', east: '88.3', north: '22.6' }), RequestValidationError)
+  assert.equal(parseNearbyQuery({ lat: '25.63', lng: '85.15', radiusKm: '100' }).radiusKm, 25)
+  assert.equal(parseBoundsQuery({ west: '85.1', south: '25.6', east: '85.2', north: '25.7', limit: '999' }).limit, 500)
+  assert.throws(() => parseBoundsQuery({ west: '85.2', south: '25.6', east: '85.1', north: '25.7' }), RequestValidationError)
 })
 
 test('API handler returns a stable envelope and private cache policy', async () => {
@@ -499,7 +499,7 @@ test('API handler returns a stable envelope and private cache policy', async () 
     parse: parseSearchQuery,
     service: async () => ({ places: [place()], meta: { providerStatus: 'not-needed' } }),
   })
-  const res = await GET(request('http://localhost/api/explore/search?q=Flurys'))
+  const res = await GET(request('http://localhost/api/explore/search?q=Bansi%20Vihar'))
   assert.equal(res.status, 200)
   const body = await res.json()
   assert.equal(body.meta.count, 1)
@@ -582,15 +582,15 @@ test('official-site discovery keeps images as review candidates', async () => {
         ok: true,
         json: async () => ({
           status: 'completed',
-          cleanedHtml: '<html><head><meta property="og:title" content="Flurys Kolkata"><meta property="og:image" content="/venue.jpg"></head></html>',
+          cleanedHtml: '<html><head><meta property="og:title" content="Bansi Vihar Patna"><meta property="og:image" content="/venue.jpg"></head></html>',
         }),
       }
     },
   })
-  const candidate = await provider.findImage({ name: 'Flurys', website: 'https://www.flurys.com' })
+  const candidate = await provider.findImage({ name: 'Bansi Vihar', website: 'https://www.bansivihar.com' })
   assert.equal(candidate.verification, 'CANDIDATE')
-  assert.equal(candidate.sourceUrl, 'https://www.flurys.com/')
-  assert.equal(candidate.url, 'https://www.flurys.com/venue.jpg')
+  assert.equal(candidate.sourceUrl, 'https://www.bansivihar.com/')
+  assert.equal(candidate.url, 'https://www.bansivihar.com/venue.jpg')
   assert.equal(calls.length, 1)
 })
 

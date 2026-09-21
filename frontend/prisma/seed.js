@@ -23,70 +23,77 @@ const prisma = new PrismaClient()
    show when nothing has been ingested. Mirrored in lib/news/home.ts. */
 const news = [
   {
-    title: 'Anandabazar Patrika today',
-    description: 'এগিয়ে থাকে,এগিয়ে রাখে।',
-    image: '/ana.jpg',
-    link: 'https://epaper.anandabazar.com/',
+    title: 'Prabhat Khabar today',
+    description: 'अख़बार नहीं, आंदोलन।',
+    image: '/gandhi-maidan.jpg',
+    link: 'https://epaper.prabhatkhabar.com/',
     type: 'NEWSPAPER',
     category: 'newspaper',
-    sourceName: 'Anandabazar Patrika',
-    sourceDomain: 'anandabazar.com'
+    sourceName: 'Prabhat Khabar',
+    sourceDomain: 'prabhatkhabar.com'
   },
   {
-    title: "International Book Fair '25",
-    description: 'The biggest literary event of the year! This year was great!',
-    image: '/bkf.avif',
-    link: 'https://kolkatabookfair.net/download-ikbf-app',
+    title: "Patna Pustak Mela '25",
+    description: 'Gandhi Maidan filled with books again. This year was great!',
+    image: '/gandhi-maidan.jpg',
+    link: 'https://patnabookfair.com/',
     type: 'CITY',
     category: 'culture',
-    eventSlug: 'kolkata-book-fair',
+    eventSlug: 'patna-book-fair',
     isActive: false
   },
   {
-    title: 'Kolkata Derby: EB vs MB',
-    description: "The age-old rivalry continues! Don't miss the epic clash this weekend.",
-    image: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800',
-    link: 'https://www.google.com/search?q=east+bengal+vs+mohun+bagan',
+    title: 'Patna Pirates at home',
+    description: 'Three-time champions. Catch the raid at Patliputra Sports Complex this weekend.',
+    image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800',
+    link: 'https://www.prokabaddi.com/teams/patna-pirates-profile-6',
     type: 'SPORTS',
-    category: 'football',
+    category: 'kabaddi',
     isActive: false
   }
 ]
 
 const marketplace = [
   {
-    title: "Handloom Sarees - Bengal's pride.",
-    location: 'Gariahat Market',
-    price: '₹1,500 onwards',
-    image: '/sare.jpg',
-    link: 'https://www.orangewayfarer.com/best-saree-shops-in-kolkata/'
+    title: "Bhagalpuri Tussar silk - Bihar's pride.",
+    location: 'Nathnagar, Bhagalpur',
+    price: '₹2,500 onwards',
+    image: '/madhubani-artist.jpg',
+    link: 'https://www.bharatsthali.com/bhagalpuri-silk-sarees'
   },
   {
-    title: 'Bengali Sweets - The best of the best.',
-    location: 'New Market',
-    price: '₹20 onwards',
-    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800',
-    link: 'https://balarammullick.com/'
+    title: 'Silao Khaja - GI-tagged, sixty layers thin.',
+    location: 'Silao, Nalanda',
+    price: '₹30 onwards',
+    image: '/khaja.jpg',
+    link: 'https://en.wikipedia.org/wiki/Silao_Khaja'
   },
   {
-    title: 'Bongmade - Bengali Merch with a modern twist.',
-    location: 'Online',
-    price: '₹199 onwards',
-    image: '/shirt.webp',
-    link: 'https://bongmade.com/'
+    title: 'Madhubani on paper - straight from the painter.',
+    location: 'Jitwarpur, Madhubani',
+    price: '₹499 onwards',
+    image: '/madhubani.jpg',
+    link: 'https://www.gaatha.com/category/madhubani-paintings/'
   }
 ]
 
 const places = [
-  { slug: 'flurys-park-street', name: 'Flurys', type: 'Cafe', location: 'Park Street', area: 'Park Street', address: '18A Park Street, Kolkata', latitude: 22.552732, longitude: 88.352590, tags: ['cafe', 'bakery', 'breakfast'], description: 'Iconic cafe known for its European-style cakes and pastries.', image: '/flury.avif', rating: 4.5, status: 'Open now', sourceConfidence: 1 },
-  { name: 'Paris Cafe', type: 'Cafe', location: 'Park Street', description: 'Cozy cafe serving French pastries and coffee.', image: '/street.jpg', rating: 4.3, status: 'Open now' },
-  { slug: 'mocambo-park-street', name: 'Mocambo', type: 'Food', location: 'Park Street', area: 'Park Street', address: '25B Park Street, Kolkata', latitude: 22.553247, longitude: 88.353177, tags: ['restaurant', 'continental'], description: 'Vintage restaurant with Continental cuisine.', image: '/moc.jpg', rating: 4.6, status: 'Open now', sourceConfidence: 1 },
-  { slug: 'victoria-memorial', name: 'Victoria Memorial', type: 'Places', location: 'Central Kolkata', area: 'Maidan', address: 'Victoria Memorial Hall, Kolkata', latitude: 22.544809, longitude: 88.342557, tags: ['monument', 'museum', 'heritage'], description: 'Majestic marble building and museum.', image: 'https://images.unsplash.com/photo-1558431382-27e303142255?w=800', rating: 4.8, status: 'Open now', sourceConfidence: 1 },
-  { slug: 'howrah-bridge', name: 'Howrah Bridge', type: 'Places', location: 'Howrah', area: 'Howrah', address: 'Howrah Bridge, Kolkata', latitude: 22.585148, longitude: 88.346806, tags: ['bridge', 'landmark', 'heritage'], description: 'Iconic cantilever bridge over Hooghly River.', image: '/hwh.jpg', rating: 4.7, status: 'Open now', sourceConfidence: 1 },
-  { slug: 'indian-museum-kolkata', name: 'Indian Museum', type: 'Culture', location: 'Park Street', area: 'Chowringhee', address: '27 Jawaharlal Nehru Road, Kolkata', latitude: 22.557586, longitude: 88.351027, tags: ['museum', 'culture', 'heritage'], description: 'Oldest and largest museum in India.', image: 'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=800', rating: 4.5, status: 'Closes at 5 PM', sourceConfidence: 1 },
-  { name: 'Darjeeling', type: 'Hill Station', location: 'West Bengal', description: 'Queen of Hills with tea gardens and mountain views.', image: '/dar.webp', rating: 4.8, status: 'Open now' },
-  { name: 'Sundarbans', type: 'Forest', location: 'West Bengal', description: "World's largest mangrove forest.", image: '/sundarban.jpg', rating: 4.7, status: 'Open now' },
-  { name: 'Digha', type: 'Beach', location: 'West Bengal', description: 'Popular beach destination.', image: '/dig.jpg', rating: 4.4, status: 'Open now' }
+  { slug: 'bansi-vihar-fraser-road', name: 'Bansi Vihar', type: 'Food', location: 'Fraser Road', area: 'Fraser Road', address: 'Fraser Road, Patna', latitude: 25.610760, longitude: 85.138150, tags: ['restaurant', 'vegetarian', 'thali'], description: 'Patna institution since 1942, for a proper vegetarian thali and litti.', image: '/litti.jpg', rating: 4.3, status: 'Open now', sourceConfidence: 0.9 },
+  { name: 'Maurya Lok', type: 'Food', location: 'Dak Bungalow Chowk', description: 'The old shopping complex where the city eats litti chokha and chaat standing up.', image: '/litti.jpg', rating: 4.2, status: 'Open now' },
+  { slug: 'cafe-hideout-boring-road', name: 'Café Hideout', type: 'Cafe', location: 'Boring Road', area: 'Boring Road', address: 'Boring Road, Patna', latitude: 25.619900, longitude: 85.106900, tags: ['cafe', 'coffee', 'students'], description: 'The Boring Road café where half the coaching batch goes after class.', image: '/ganga-ghat.jpg', rating: 4.3, status: 'Open now', sourceConfidence: 0.8 },
+  { slug: 'golghar', name: 'Golghar', type: 'Places', location: 'Gandhi Maidan', area: 'Gandhi Maidan', address: 'Golghar, Bankipur, Patna', latitude: 25.619700, longitude: 85.139400, tags: ['monument', 'heritage', 'viewpoint'], description: 'The 1786 granary. Climb the spiral for the Ganga and the whole of Patna.', image: '/golghar.jpg', rating: 4.6, status: 'Open now', sourceConfidence: 1 },
+  { slug: 'mahatma-gandhi-setu', name: 'Mahatma Gandhi Setu', type: 'Places', location: 'Gaighat', area: 'Gaighat', address: 'Mahatma Gandhi Setu, Patna', latitude: 25.625400, longitude: 85.195600, tags: ['bridge', 'landmark', 'ganga'], description: 'Five and a half kilometres over the Ganga to Hajipur.', image: '/gandhi-setu.jpg', rating: 4.5, status: 'Open now', sourceConfidence: 1 },
+  { slug: 'bihar-museum', name: 'Bihar Museum', type: 'Culture', location: 'Bailey Road', area: 'Bailey Road', address: 'Jawaharlal Nehru Marg, Patna', latitude: 25.607200, longitude: 85.120100, tags: ['museum', 'culture', 'didarganj'], description: 'The Didarganj Yakshi and everything Magadh made.', image: '/bihar-museum.jpg', rating: 4.7, status: 'Closes at 5 PM', sourceConfidence: 1 },
+  { slug: 'patna-museum', name: 'Patna Museum', type: 'Culture', location: 'Buddha Marg', area: 'Buddha Marg', address: 'Buddha Marg, Patna', latitude: 25.610300, longitude: 85.136000, tags: ['museum', 'heritage', 'buddha relic'], description: "The 1917 Jadu Ghar, with a casket of the Buddha's relics.", image: '/patna-museum.jpg', rating: 4.4, status: 'Closes at 5 PM', sourceConfidence: 1 },
+  { slug: 'takht-sri-patna-sahib', name: 'Takht Sri Patna Sahib', type: 'Culture', location: 'Patna City', area: 'Patna City', address: 'Harmandir Gali, Patna City', latitude: 25.601400, longitude: 85.231000, tags: ['gurudwara', 'heritage', 'langar'], description: 'Birthplace of Guru Gobind Singh, one of the five takhts of the Sikhs.', image: '/patna-sahib.jpg', rating: 4.8, status: 'Open now', sourceConfidence: 1 },
+  { slug: 'mahabodhi-temple', name: 'Mahabodhi Temple', type: 'Places', location: 'Bodh Gaya', area: 'Bodh Gaya', address: 'Bodh Gaya, Gaya', latitude: 24.695900, longitude: 84.991400, tags: ['temple', 'unesco', 'buddhist'], description: 'Where the Buddha sat down under a tree. UNESCO World Heritage.', image: '/mahabodhi.jpg', rating: 4.9, status: 'Open now', sourceConfidence: 1 },
+  { slug: 'nalanda-mahavihara', name: 'Nalanda Mahavihara', type: 'Places', location: 'Nalanda', area: 'Nalanda', address: 'Nalanda, Bihar', latitude: 25.135700, longitude: 85.443000, tags: ['ruins', 'unesco', 'university'], description: "The ruins of the world's first residential university, 5th century.", image: '/nalanda.jpg', rating: 4.8, status: 'Open now', sourceConfidence: 1 },
+  { name: 'Rajgir', type: 'Hill Station', location: 'Nalanda', description: 'Hot springs, the ropeway to the Vishwa Shanti Stupa, and the Glass Bridge.', image: '/rajgir.jpg', rating: 4.6, status: 'Open now' },
+  { name: 'Valmiki Tiger Reserve', type: 'Forest', location: 'West Champaran', description: "Bihar's only tiger reserve, along the Gandak at the foot of the Himalaya.", image: '/valmiki.jpg', rating: 4.5, status: 'Open now' },
+  { name: 'Vikramshila', type: 'Places', location: 'Bhagalpur', description: 'The other great university of Pala Bihar, on the banks of the Ganga.', image: '/vikramshila.jpg', rating: 4.4, status: 'Open now' },
+  { name: 'Kesaria Stupa', type: 'Places', location: 'East Champaran', description: 'The tallest stupa in the world, and one of the least visited.', image: '/kesaria.jpg', rating: 4.5, status: 'Open now' },
+  { name: 'Barabar Caves', type: 'Places', location: 'Jehanabad', description: 'Ashoka-era caves cut into granite and polished like glass.', image: '/barabar.jpg', rating: 4.5, status: 'Open now' },
+  { name: 'Ganga Ghats, Patna', type: 'Outdoors', location: 'Patna', description: 'The river walk from Gandhi Ghat to Digha, best at dusk.', image: '/ganga-ghat.jpg', rating: 4.4, status: 'Open now' }
 ]
 
 const exploreCategories = [
@@ -109,70 +116,72 @@ const placeCategoryByType = {
   Museum: 'culture',
   'Hill Station': 'places',
   Forest: 'outdoors',
+  Outdoors: 'outdoors',
   Beach: 'outdoors',
 }
 
-const pandals = [
-  { name: 'Bagbazar Sarbojanin', location: 'Bagbazar, Kolkata', description: 'One of the oldest and most popular Durga Puja celebrations in Kolkata.', image: 'https://images.unsplash.com/photo-1601181487375-f2194c87a04b?w=800', distance: '2.5 km', rating: 4.8 },
-  { name: 'Mohammad Ali Park', location: 'Central Kolkata', description: 'Famous for its unique themes and elaborate decorations.', image: 'https://images.unsplash.com/photo-1601931935934-17c3717239ab?w=800', distance: '3.1 km', rating: 4.6 },
-  { name: 'College Square', location: 'College Street', description: 'Known for its stunning water body reflections and lighting arrangements.', image: 'https://images.unsplash.com/photo-1592305029529-4a6a3d0cde1c?w=800', distance: '1.8 km', rating: 4.7 },
-  { name: 'Victoria Memorial', location: 'Central Kolkata', description: 'Historic marble building and museum showcasing British-era architecture.', image: 'https://images.unsplash.com/photo-1558431382-27e303142255?w=800', distance: '4.2 km', rating: 4.9 }
+/* Chhath ghats: distances from Gandhi Maidan */
+const ghats = [
+  { name: 'Gandhi Ghat', location: 'Patna', description: 'The main Patna ghat, under the NIT. The biggest Sandhya Arghya crowd in the state.', image: '/ganga-ghat.jpg', distance: '1.4 km', rating: 4.8 },
+  { name: 'Collectorate Ghat', location: 'Patna', description: 'Old Patna: broad steps, boats for hire, and the Setu in the distance.', image: '/chhath-ghat.jpg', distance: '1.9 km', rating: 4.6 },
+  { name: 'Digha Ghat', location: 'Digha, Patna', description: 'The west end of the river walk, with the JP Setu behind the sun.', image: '/digha-ghat.jpg', distance: '7.5 km', rating: 4.7 },
+  { name: 'Kangan Ghat', location: 'Patna City', description: 'The Patna Sahib ghat. Ancient, quiet, and lit end to end on Chhath.', image: '/patna-sahib.jpg', distance: '11 km', rating: 4.5 }
 ]
 
 const regions = [
-  { name: 'North Kolkata', description: 'Traditional pujas with heritage touch', image: 'https://assets.telegraphindia.com/telegraph/2021/Nov/1636726963_img_8377-jpg.jpg' },
-  { name: 'South Kolkata', description: 'Contemporary art meets tradition', image: '/southkol.png' },
-  { name: 'Central Kolkata', description: 'Modern themes with grand displays', image: 'https://www.shutterstock.com/shutterstock/videos/3485372951/thumb/1.jpg?ip=x480' },
-  { name: 'New Kolkata', description: 'Skyline pujas across Rajarhat and Salt Lake', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Kolkata-Rajarhat_view_from_high_rise.jpg/1280px-Kolkata-Rajarhat_view_from_high_rise.jpg' },
+  { name: 'Magadh', description: 'Patna, Gaya, Bodh Gaya, Nalanda — the ghats and the ruins', image: '/nalanda.jpg' },
+  { name: 'Mithila', description: 'Darbhanga, Madhubani — painted courtyards and makhana ponds', image: '/madhubani.jpg' },
+  { name: 'Bhojpur', description: "Ara, Buxar, Sasaram — Bhojpuri song and Sher Shah's tomb", image: '/sasaram.jpg' },
+  { name: 'Anga', description: 'Bhagalpur, Munger — silk, Vikramshila and the dolphins of the Ganga', image: '/vikramshila.jpg' },
 ]
 
 const communities = [
-  { name: 'GDG Kolkata', description: 'Google Developer Group Kolkata - Tech community', link: 'https://gdg.community.dev/gdg-kolkata/', icon: 'FaMeetup' },
-  { name: 'TFUG Kolkata', description: 'TensorFlow User Group Kolkata', link: 'https://www.tensorflow.org/community/groups', icon: 'FaMeetup' },
-  { name: 'Calcutta Instagrammers', description: 'Photography and city stories', link: 'https://www.instagram.com/calcutta.instagrammers/', icon: 'FaInstagram' },
-  { name: 'Streets of Calcutta', description: 'Daily life and culture', link: 'https://www.instagram.com/streetsofcalcutta/', icon: 'FaInstagram' }
+  { name: 'GDG Patna', description: 'Google Developer Group Patna - Tech community', link: 'https://gdg.community.dev/gdg-patna/', icon: 'FaMeetup' },
+  { name: 'HackSlash NIT Patna', description: 'The NIT Patna developer community, open source and coding culture', link: 'https://hackslash.nitp.ac.in/', icon: 'FaMeetup' },
+  { name: 'Patna se hai', description: 'City guides, culture, food and everyday Patna', link: 'https://www.instagram.com/patna_se_hai_/', icon: 'FaInstagram' },
+  { name: 'Patna City', description: 'Exploring the old city, Patna Sahib and the ghats', link: 'https://www.instagram.com/patnacity_/', icon: 'FaInstagram' }
 ]
 
 const transport = [
-  { category: 'auto', name: 'Gariahat Crossing', distance: '0.3 km', time: '2 mins' },
-  { category: 'auto', name: 'Rashbehari Crossing', distance: '0.8 km', time: '5 mins' },
-  { category: 'auto', name: 'Golpark', distance: '1.2 km', time: '7 mins' },
-  { category: 'bus', name: 'Gariahat Bus Stop', distance: '0.5 km', time: '5 mins', routes: ['S24', 'VS5', '47B'] },
-  { category: 'bus', name: 'Ballygunge Phari', distance: '1.2 km', time: '8 mins', routes: ['S24', 'VS5', '47B'] },
-  { category: 'bus', name: 'Golpark Bus Stand', distance: '1.5 km', time: '10 mins', routes: ['S24', 'VS5', '47B'] },
-  { category: 'taxi', name: 'Gariahat Taxi Stand', distance: '0.4 km', time: '3 mins' },
-  { category: 'taxi', name: 'Ballygunge Station', distance: '1.0 km', time: '6 mins' },
-  { category: 'taxi', name: 'Southern Avenue', distance: '1.3 km', time: '8 mins' },
-  { category: 'metro', name: 'Kalighat Metro', distance: '0.8 km', time: '10 mins walk' },
-  { category: 'metro', name: 'Jatin Das Park', distance: '1.2 km', time: '15 mins walk' },
-  { category: 'metro', name: 'Maidan', distance: '1.5 km', time: '18 mins walk' },
-  { category: 'metro', from: 'Kavi Subhash', to: 'Dakshineswar', time: '10:00 AM' },
-  { category: 'metro', from: 'Dakshineswar', to: 'Kavi Subhash', time: '10:15 AM' },
-  { category: 'metro', from: 'Kavi Subhash', to: 'Dakshineswar', time: '10:30 AM' },
-  { category: 'metro', from: 'Dakshineswar', to: 'Kavi Subhash', time: '10:05 AM' },
-  { category: 'metro', from: 'Kavi Subhash', to: 'Dakshineswar', time: '10:20 AM' },
-  { category: 'metro', from: 'Dakshineswar', to: 'Kavi Subhash', time: '10:35 AM' },
-  { category: 'train', name: 'Bandel Local', platform: '1', time: '10:30 AM' },
-  { category: 'train', name: 'Burdwan Express', platform: '3', time: '11:00 AM' },
-  { category: 'train', name: 'Katwa Local', platform: '2', time: '11:30 AM' },
-  { category: 'train', name: 'Barrackpore Local', platform: '1', time: '10:45 AM' },
-  { category: 'train', name: 'Naihati Local', platform: '2', time: '11:15 AM' },
-  { category: 'train', name: 'Krishnanagar Express', platform: '4', time: '11:45 AM' },
-  { category: 'train', name: 'Kharagpur Local', platform: '1', time: '10:15 AM' },
-  { category: 'train', name: 'Midnapore Express', platform: '2', time: '10:45 AM' },
-  { category: 'train', name: 'Haldia Local', platform: '3', time: '11:15 AM' },
-  { category: 'train', name: 'Puri Express', platform: '1', time: '10:00 AM' },
-  { category: 'train', name: 'Digha Local', platform: '2', time: '10:30 AM' },
-  { category: 'train', name: 'Kharagpur Fast', platform: '1', time: '11:00 AM' }
+  { category: 'auto', name: 'Gandhi Maidan Auto Stand', distance: '0.3 km', time: '2 mins' },
+  { category: 'auto', name: 'Dak Bungalow Chowk', distance: '0.8 km', time: '5 mins' },
+  { category: 'auto', name: 'Income Tax Golambar', distance: '1.2 km', time: '7 mins' },
+  { category: 'bus', name: 'Gandhi Maidan Bus Stop', distance: '0.5 km', time: '5 mins', routes: ['Pink Bus', 'City Ride 1', 'BSRTC 6'] },
+  { category: 'bus', name: 'Patna Junction Bus Stand', distance: '1.6 km', time: '10 mins', routes: ['Pink Bus', 'City Ride 1', 'BSRTC 6'] },
+  { category: 'bus', name: 'Patliputra Bus Terminal', distance: '9 km', time: '30 mins', routes: ['BSRTC 6', 'Danapur Shuttle'] },
+  { category: 'taxi', name: 'Gandhi Maidan Cab Point', distance: '0.4 km', time: '3 mins' },
+  { category: 'taxi', name: 'Patna Junction Prepaid Stand', distance: '1.6 km', time: '8 mins' },
+  { category: 'taxi', name: 'Boring Road Crossing', distance: '2.8 km', time: '12 mins' },
+  { category: 'metro', name: 'Bhootnath', distance: '6.5 km', time: '25 mins by auto' },
+  { category: 'metro', name: 'Zero Mile', distance: '8 km', time: '30 mins by auto' },
+  { category: 'metro', name: 'Malahi Pakri', distance: '5.5 km', time: '22 mins by auto' },
+  { category: 'metro', from: 'Bhootnath', to: 'Patliputra Bus Terminal', time: '10:00 AM' },
+  { category: 'metro', from: 'Patliputra Bus Terminal', to: 'Bhootnath', time: '10:15 AM' },
+  { category: 'metro', from: 'Malahi Pakri', to: 'Patliputra Bus Terminal', time: '10:30 AM' },
+  { category: 'metro', from: 'Patliputra Bus Terminal', to: 'Malahi Pakri', time: '10:05 AM' },
+  { category: 'metro', from: 'Bhootnath', to: 'Patliputra Bus Terminal', time: '10:20 AM' },
+  { category: 'metro', from: 'Patliputra Bus Terminal', to: 'Bhootnath', time: '10:35 AM' },
+  { category: 'train', name: 'Vikramshila Express', platform: '1', time: '10:30 AM' },
+  { category: 'train', name: 'Magadh Express', platform: '3', time: '11:00 AM' },
+  { category: 'train', name: 'Patna Gaya Passenger', platform: '2', time: '11:30 AM' },
+  { category: 'train', name: 'Sampoorna Kranti Express', platform: '1', time: '10:45 AM' },
+  { category: 'train', name: 'Shramjeevi Express', platform: '2', time: '11:15 AM' },
+  { category: 'train', name: 'Danapur Buxar MEMU', platform: '4', time: '11:45 AM' },
+  { category: 'train', name: 'Patna Rajdhani', platform: '1', time: '10:15 AM' },
+  { category: 'train', name: 'Bihar Sampark Kranti', platform: '2', time: '10:45 AM' },
+  { category: 'train', name: 'Mokama MEMU', platform: '3', time: '11:15 AM' },
+  { category: 'train', name: 'Kosi Express', platform: '1', time: '10:00 AM' },
+  { category: 'train', name: 'Ganga Damodar Express', platform: '2', time: '10:30 AM' },
+  { category: 'train', name: 'Patliputra Passenger', platform: '1', time: '11:00 AM' }
 ]
 
 const tinderProfiles = [
-  { name: 'Victoria Memorial', age: '100+', bio: 'Majestic marble building dedicated to Queen Victoria. Looking for history enthusiasts!', image: 'https://images.unsplash.com/photo-1558431382-27e303142255?w=800', baseStars: 4.8, averageStars: 4.8 },
-  { name: 'Netaji Subhash Chandra Bose', age: '150+', bio: 'Netaji Subhas Chandra Bose was a prominent Indian freedom fighter and leader who played a key role in India\'s struggle for independence.', image: '/nscb.webp', baseStars: 4.7, averageStars: 4.7 },
-  { name: 'Jorasanko Thakur Bari, North Kolkata', age: '80+', bio: 'The ancestral home of Rabindranath Tagore, offering a glimpse into the literary history of Bengal.', image: '/jstb.jpg', baseStars: 4.6, averageStars: 4.6 },
-  { name: 'Maidan', age: '250+', bio: 'The largest urban park in Kolkata, often called the Lungs of Kolkata.', image: '/maidan.jpg', baseStars: 4.5, averageStars: 4.5 },
-  { name: 'Indian Museum', age: '210+', bio: 'Founded in 1814, the oldest museum in India and one of the oldest in the world.', image: '/indmus.jpg', baseStars: 4.5, averageStars: 4.5 },
-  { name: 'Dakshineswar Kali Temple', age: '170+', bio: 'Famous temple dedicated to Goddess Kali on the eastern bank of the Hooghly.', image: '/dkt.jpg', baseStars: 4.8, averageStars: 4.8 }
+  { name: 'Golghar', age: '240', bio: 'Built in 1786 to store grain against famine, and never really used for it. Looking for someone to climb 145 steps with at sunset.', image: '/golghar.jpg', baseStars: 4.6, averageStars: 4.6 },
+  { name: 'Mahabodhi Temple', age: '1500+', bio: 'The tree is a descendant of the original. The calm is the original. Looking for anyone who can sit still.', image: '/mahabodhi.jpg', baseStars: 4.9, averageStars: 4.9 },
+  { name: 'Nalanda Mahavihara', age: '1600+', bio: 'Had ten thousand students and a nine-storey library before anyone else did. Ruins now, but the red brick still glows at four in the afternoon.', image: '/nalanda.jpg', baseStars: 4.8, averageStars: 4.8 },
+  { name: 'Dr. Rajendra Prasad', age: '140+', bio: 'First President of India, from Zeradei in Siwan. Topped every exam he sat — one examiner wrote "examinee is better than examiner".', image: '/buddha-park.jpg', baseStars: 4.7, averageStars: 4.7 },
+  { name: 'Takht Sri Patna Sahib', age: '350+', bio: 'Guru Gobind Singh was born here in 1666. The langar has never once turned anyone away.', image: '/patna-sahib.jpg', baseStars: 4.8, averageStars: 4.8 },
+  { name: "Sher Shah Suri's Tomb", age: '480', bio: 'Sits in the middle of a lake at Sasaram. Built the Grand Trunk Road and the rupee; still the biggest thing in Rohtas.', image: '/sasaram.jpg', baseStars: 4.6, averageStars: 4.6 }
 ]
 
 async function seed() {
@@ -188,7 +197,7 @@ async function seed() {
   await prisma.news.deleteMany()
   await prisma.marketplaceItem.deleteMany()
   await prisma.place.deleteMany()
-  await prisma.pandal.deleteMany()
+  await prisma.ghat.deleteMany()
   await prisma.region.deleteMany()
   await prisma.community.deleteMany()
   await prisma.transport.deleteMany()
@@ -210,7 +219,7 @@ async function seed() {
     })
     .filter(Boolean)
   if (placeCategories.length) await prisma.placeCategory.createMany({ data: placeCategories })
-  await prisma.pandal.createMany({ data: pandals })
+  await prisma.ghat.createMany({ data: ghats })
   await prisma.region.createMany({ data: regions })
   await prisma.community.createMany({ data: communities })
   await prisma.transport.createMany({ data: transport })

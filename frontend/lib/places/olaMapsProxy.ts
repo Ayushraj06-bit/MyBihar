@@ -30,8 +30,8 @@ export function rewriteOlaMapsUrls(body: string, proxyOrigin = '') {
 }
 
 export function clientOlaStyleUrl() {
-  if (typeof window === 'undefined') return `${OLA_MAPS_PROXY_PREFIX}${OLA_STYLE_PATH}?app=mykolkata-v1`
-  return `${window.location.origin}${OLA_MAPS_PROXY_PREFIX}${OLA_STYLE_PATH}?app=mykolkata-v1`
+  if (typeof window === 'undefined') return `${OLA_MAPS_PROXY_PREFIX}${OLA_STYLE_PATH}?app=mybihar-v1`
+  return `${window.location.origin}${OLA_MAPS_PROXY_PREFIX}${OLA_STYLE_PATH}?app=mybihar-v1`
 }
 
 /* MapLibre may still request absolute Ola URLs from cached style bits — send them through us. */

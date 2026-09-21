@@ -4,10 +4,10 @@ import test from 'node:test'
 
 const pageSource = await readFile(new URL('../app/(main)/places/PlacesClient.tsx', import.meta.url), 'utf8')
 const stylesSource = await readFile(new URL('../styles/Explore.module.css', import.meta.url), 'utf8')
-const heroAsset = await stat(new URL('../public/explore-hero-v2.webp', import.meta.url))
+const heroAsset = await stat(new URL('../public/explore-hero.jpg', import.meta.url))
 
-test('Explore hero leads with a useful Kolkata plan and direct map action', () => {
-  assert.match(pageSource, /Find your next Kolkata plan\./)
+test('Explore hero leads with a useful Bihar plan and direct map action', () => {
+  assert.match(pageSource, /Find your next Bihar plan\./)
   assert.match(pageSource, /mapHref\(\{ locate: true \}\)/)
   assert.match(pageSource, /Open the live map/)
   assert.doesNotMatch(pageSource, /Tonight’s easy plan|heroPlan|FaClock/)
@@ -21,7 +21,7 @@ test('Explore hands a known location to the map instead of re-asking GPS', () =>
 })
 
 test('Explore hero is the brand banner: a full-bleed photograph, a scrim, content bottom-left', () => {
-  assert.match(pageSource, /src="\/explore-hero-v2\.webp"/)
+  assert.match(pageSource, /src="\/explore-hero\.jpg"/)
   assert.ok(heroAsset.size > 50_000 && heroAsset.size < 500_000)
   assert.match(pageSource, /className="mk-banner"/)
   assert.match(pageSource, /className="mk-banner-img"/)
@@ -50,7 +50,7 @@ test('Explore hides the large category section only while a text search is activ
 test('categories come from the shared taxonomy, not a page-local list', () => {
   assert.match(pageSource, /from '@\/lib\/livePlaces'/)
   assert.match(pageSource, /exploreCategories\.map\(\(category\) =>/)
-  assert.doesNotMatch(pageSource, /exploreData|trendingPlaces|hiddenKolkata|collections|nearbyPlaces/)
+  assert.doesNotMatch(pageSource, /exploreData|trendingPlaces|hiddenBihar|collections|nearbyPlaces/)
 })
 
 test('search and category results are live requests keyed by what was asked', () => {
@@ -77,9 +77,9 @@ test('a searched neighbourhood offers to explore around it', () => {
   assert.match(pageSource, /Explore around \{areaAnchor\.name\}/)
 })
 
-test('Explore loads with the alpona line and quiet placeholders — no spinner, no shimmer', () => {
+test('Explore loads with the aripan line and quiet placeholders — no spinner, no shimmer', () => {
   assert.match(pageSource, /function ExploreResultsSkeleton\(/)
-  assert.match(pageSource, /searchStatus === 'loading' \? \(\s*<>\s*<AlponaLoader/s)
+  assert.match(pageSource, /searchStatus === 'loading' \? \(\s*<>\s*<AripanLoader/s)
   assert.match(pageSource, /<ExploreResultsSkeleton \/>/)
   assert.match(stylesSource, /\.resultSkeleton/)
   assert.doesNotMatch(stylesSource, /@keyframes/)
@@ -94,13 +94,13 @@ test('the opening rows are live lists around the visitor, closest first', () => 
 })
 
 test('Explore only says "near you" once the visitor has shared where they are', () => {
-  assert.match(pageSource, /origin\.source === 'user' \? 'near you' : 'around central Kolkata'/)
-  assert.match(pageSource, /origin\.source === 'user' \? 'Near you' : 'Around central Kolkata'/)
+  assert.match(pageSource, /origin\.source === 'user' \? 'near you' : 'around central Patna'/)
+  assert.match(pageSource, /origin\.source === 'user' \? 'Near you' : 'Around central Patna'/)
   assert.match(pageSource, /if \(origin\.source === 'user' && place\.distance\)/)
 })
 
-test('Explore copy avoids emoji decoration and Pujo content', () => {
-  assert.doesNotMatch(pageSource, /🔥|📍|🤫|🗺️|Pujo|Pandal/i)
+test('Explore copy avoids emoji decoration and Chhath content', () => {
+  assert.doesNotMatch(pageSource, /🔥|📍|🤫|🗺️|Chhath|Arghya/i)
 })
 
 test('Explore sets type from the brand families and never from weight or capitals', () => {

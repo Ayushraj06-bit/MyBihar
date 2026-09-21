@@ -19,7 +19,7 @@ function plainText(value = '') {
 
 function words(value) {
   return new Set(normalizeText(value)
-    .replace(/\b(kolkata|calcutta|image|photo|file)\b/g, ' ')
+    .replace(/\b(bihar|patna|image|photo|file)\b/g, ' ')
     .split(' ')
     .filter((word) => word.length > 2))
 }
@@ -62,7 +62,7 @@ export class WikimediaImageProvider {
       const timeout = setTimeout(() => controller.abort(), 5000)
       try {
         const response = await this.fetchImpl(url, {
-          headers: { Accept: 'application/json', 'User-Agent': 'MyKolkata/1.0 (place image enrichment)' },
+          headers: { Accept: 'application/json', 'User-Agent': 'MyBihar/1.0 (place image enrichment)' },
           signal: controller.signal,
         })
         if (!response.ok) return null

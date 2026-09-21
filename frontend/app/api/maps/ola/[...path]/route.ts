@@ -45,7 +45,7 @@ export async function GET(
   const origin = olaMapsRequestOrigin()
   const headers: Record<string, string> = {
     Accept: request.headers.get('Accept') || '*/*',
-    'X-Request-Id': globalThis.crypto?.randomUUID?.() || `mykolkata-map-${Date.now()}`,
+    'X-Request-Id': globalThis.crypto?.randomUUID?.() || `mybihar-map-${Date.now()}`,
   }
   if (origin) {
     headers.Origin = origin

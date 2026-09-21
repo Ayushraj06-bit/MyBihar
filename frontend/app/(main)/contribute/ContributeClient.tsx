@@ -3,7 +3,7 @@
 import React, { useState, useEffect, type FormEvent } from 'react'
 import { SectionHead } from '@/components/brand/SectionHead'
 import { Emblem } from '@/components/brand/emblems'
-import { AlponaLoader } from '@/components/brand/Alpona'
+import { AripanLoader } from '@/components/brand/Aripan'
 import { UiIcon } from '@/components/brand/icons'
 import styles from '@/styles/Contribute.module.css'
 import { StoryMedia } from './StoryMedia'
@@ -24,7 +24,7 @@ const platformNames: Record<string, string> = {
   FaGithub: 'GitHub'
 }
 
-/* when a story was posted, on the Kolkata clock */
+/* when a story was posted, on the Bihar clock */
 function postedAt(iso: string) {
   return new Date(iso).toLocaleString('en-IN', {
     timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit',
@@ -124,13 +124,13 @@ function Contribute() {
         <SectionHead
           level={1}
           title="Contribute"
-          lede="The city is written by the people in it. Join a community, or tell a Kolkata story of your own."
+          lede="Bihar is written by the people in it. Join a community, or tell a story of your own."
         />
 
         <section className={styles.section} aria-labelledby="communities-title">
           <h2 id="communities-title" className="mk-h2">Communities</h2>
           {loading ? (
-            <AlponaLoader label="Finding the communities" className={styles.gap} />
+            <AripanLoader label="Finding the communities" className={styles.gap} />
           ) : error ? (
             <div className={`mk-panel mk-empty ${styles.gap}`} role="status" style={{ maxWidth: 640 }}>
               <h3 className="mk-h3">Communities didn&apos;t load.</h3>
@@ -183,7 +183,7 @@ function Contribute() {
                   value={newPost.title}
                   onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
                   className="mk-field"
-                  placeholder="The tram that still stops at Shyambazar"
+                  placeholder="The chai stall that still opens at five on Bailey Road"
                   maxLength={120}
                   required
                 />
@@ -221,7 +221,7 @@ function Contribute() {
           )}
 
           {storiesLoading ? (
-            <AlponaLoader label="Gathering today’s stories" className={styles.gap} />
+            <AripanLoader label="Gathering today’s stories" className={styles.gap} />
           ) : activeStories.length ? (
             <ul className={styles.stories} aria-label="Stories from the last 24 hours">
               {activeStories.map((story) => (
@@ -244,7 +244,7 @@ function Contribute() {
             <div className={`mk-panel mk-empty ${styles.empty}`}>
               <Emblem name="kalash" size={56} />
               <h3 className="mk-h3">No stories yet.</h3>
-              <p className="mk-body">Start with your para — the tea stall, the pandal, the house with the green shutters.</p>
+              <p className="mk-body">Start with your mohalla — the chai stall, the ghat steps, the haveli with the green shutters.</p>
             </div>
           )}
         </section>

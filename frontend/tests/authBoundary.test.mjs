@@ -12,7 +12,9 @@ const read = (relativePath) => readFile(new URL(relativePath, root), 'utf8')
 
 async function filesNamed(dir, name) {
   const entries = await readdir(new URL(dir, root), { recursive: true })
+  /* Windows hands back backslashes; normalise so the filter and the paths agree */
   return entries
+    .map((entry) => String(entry).replace(/\\/g, '/'))
     .filter((entry) => entry === name || entry.endsWith(`/${name}`))
     .map((entry) => `${dir}${entry}`)
 }
