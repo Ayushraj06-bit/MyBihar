@@ -13,7 +13,7 @@ export default async function NearYouPage() {
   await requireUser()
 
   return (
-    <Suspense fallback={<div className="mk-page mk-page-top mk-wrap"><AripanLoader label="Opening the map" /></div>}>
+    <Suspense fallback={<div className="hb-page hb-page-top hb-wrap"><AripanLoader label="Opening the map" /></div>}>
       <NearYouClient />
     </Suspense>
   )

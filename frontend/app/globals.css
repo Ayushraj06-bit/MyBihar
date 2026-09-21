@@ -52,16 +52,16 @@
 @layer base {
   html {
     color-scheme: dark;
-    background-color: var(--mk-obsidian);
+    background-color: var(--hb-obsidian);
     -webkit-text-size-adjust: 100%;
   }
 
   body {
     min-height: 100svh;
-    background: var(--mk-ground);
-    background-color: var(--mk-obsidian);
-    color: var(--mk-pearl);
-    font-family: var(--mk-text);
+    background: var(--hb-ground);
+    background-color: var(--hb-obsidian);
+    color: var(--hb-pearl);
+    font-family: var(--hb-text);
     font-size: 16px;
     font-weight: 400;
     line-height: 1.65;
@@ -79,17 +79,17 @@
   [lang="hi"] { letter-spacing: 0; }
 
   :focus-visible {
-    outline: 2px solid var(--mk-crimson);
+    outline: 2px solid var(--hb-crimson);
     outline-offset: 2px;
   }
 
   ::selection {
     background: rgba(215, 38, 56, 0.4);
-    color: var(--mk-white);
+    color: var(--hb-white);
   }
 
   @media (max-width: 767px) {
-    :root { --mk-nav: 52px; }
+    :root { --hb-nav: 52px; }
   }
 
   @media (prefers-reduced-motion: reduce) {

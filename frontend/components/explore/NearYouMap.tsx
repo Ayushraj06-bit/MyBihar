@@ -479,14 +479,14 @@ export default function NearYouMap({ places, selectedPlaceId, onSelect, userPosi
       {status === 'missing-key' && (
         <div className={styles.mapStatus} role="status">
           <p className={styles.mapStatusTitle}>Ola Maps is ready to connect.</p>
-          <p className="mk-caption">{process.env.NODE_ENV === 'development' ? 'Add OLA_MAPS_API_KEY to .env.local, then restart the server.' : 'Map configuration is incomplete.'}</p>
+          <p className="hb-caption">{process.env.NODE_ENV === 'development' ? 'Add OLA_MAPS_API_KEY to .env.local, then restart the server.' : 'Map configuration is incomplete.'}</p>
         </div>
       )}
       {status === 'error' && (
         <div className={styles.mapStatus} role="alert">
           <p className={styles.mapStatusTitle}>The Ola map could not load.</p>
-          <p className="mk-caption">Check your connection and map credentials, then try again.</p>
-          <button type="button" className="mk-btn mk-btn--secondary mk-btn--sm" onClick={() => setAttempt((value) => value + 1)}>Retry map</button>
+          <p className="hb-caption">Check your connection and map credentials, then try again.</p>
+          <button type="button" className="hb-btn hb-btn--secondary hb-btn--sm" onClick={() => setAttempt((value) => value + 1)}>Retry map</button>
         </div>
       )}
     </div>

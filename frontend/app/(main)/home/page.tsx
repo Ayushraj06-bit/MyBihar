@@ -44,39 +44,39 @@ export default async function HomePage() {
   return (
     <>
       <HomeEntry />
-      <main className="mk-page" style={{ paddingBottom: 0 }}>
-      <section className="mk-banner" aria-labelledby="home-title">
+      <main className="hb-page" style={{ paddingBottom: 0 }}>
+      <section className="hb-banner" aria-labelledby="home-title">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          className="mk-banner-img"
+          className="hb-banner-img"
           src="/hero-bg.jpg"
           alt="The Ganga at blue hour from Gandhi Ghat, the spans of the JP Setu running out across the water"
           style={{ objectPosition: '50% 58%' }}
         />
-        <div className="mk-banner-scrim" aria-hidden="true" />
-        <div className="mk-banner-content">
-          <div className="mk-banner-copy">
+        <div className="hb-banner-scrim" aria-hidden="true" />
+        <div className="hb-banner-content">
+          <div className="hb-banner-copy">
             <Sprig size={38} />
-            <h1 id="home-title" className="mk-display" style={{ marginTop: 8 }}>The state, this week.</h1>
-            <p className="mk-banner-hi" lang="hi">चलीं, तनी घूम आईं।</p>
-            <p className="mk-banner-lede">
+            <h1 id="home-title" className="hb-display" style={{ marginTop: 8 }}>The state, this week.</h1>
+            <p className="hb-banner-hi" lang="hi">चलीं, तनी घूम आईं।</p>
+            <p className="hb-banner-lede">
               What the mohallas are talking about, what is for sale down the gali, and every place
               worth the walk — from the ghats of Patna to the ruins of Nalanda.
             </p>
-            <div className="mk-banner-actions">
-              <Link href="/places" className="mk-btn mk-btn--primary">
-                Explore Bihar <span className="mk-btn-arrow" aria-hidden="true">→</span>
+            <div className="hb-banner-actions">
+              <Link href="/places" className="hb-btn hb-btn--primary">
+                Explore Bihar <span className="hb-btn-arrow" aria-hidden="true">→</span>
               </Link>
-              <Link href="/chhath" className="mk-btn mk-btn--secondary">Count down to Chhath</Link>
+              <Link href="/chhath" className="hb-btn hb-btn--secondary">Count down to Chhath</Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mk-band" aria-labelledby="news-title">
-        <div className="mk-wrap">
+      <section className="hb-band" aria-labelledby="news-title">
+        <div className="hb-wrap">
           <SectionHead id="news-title" title="In the news" lede="Papers, melas and fixtures the state is following." />
-          <div className="mk-row" style={{ marginTop: 48 }}>
+          <div className="hb-row" style={{ marginTop: 48 }}>
             {news.length ? news.map((item) => (
               <Card
                 key={item.id}
@@ -89,28 +89,28 @@ export default async function HomePage() {
                 ariaLabel={item.link ? `${item.title}, opens in a new tab` : undefined}
               />
             )) : (
-              <p className="mk-caption">Nothing in the news yet. Check back this evening.</p>
+              <p className="hb-caption">Nothing in the news yet. Check back this evening.</p>
             )}
           </div>
         </div>
       </section>
 
       {failed ? (
-        <section className="mk-band" style={{ paddingTop: 0 }}>
-          <div className="mk-wrap">
-            <div className="mk-panel mk-empty" role="status">
-              <h2 className="mk-h3">The market didn&apos;t load.</h2>
-              <p className="mk-body">The connection to our listings dropped. Refresh the page to try again.</p>
+        <section className="hb-band" style={{ paddingTop: 0 }}>
+          <div className="hb-wrap">
+            <div className="hb-panel hb-empty" role="status">
+              <h2 className="hb-h3">The market didn&apos;t load.</h2>
+              <p className="hb-body">The connection to our listings dropped. Refresh the page to try again.</p>
             </div>
           </div>
         </section>
       ) : (
         <>
-          <section className="mk-band" aria-labelledby="market-title" style={{ paddingTop: 0 }}>
-            <div className="mk-wrap">
+          <section className="hb-band" aria-labelledby="market-title" style={{ paddingTop: 0 }}>
+            <div className="hb-wrap">
               <SectionHead id="market-title" title="Marketplace" lede="Bhagalpuri silk, Silao khaja, Madhubani on paper — and where to find them." />
               {marketplace.length ? (
-                <div className="mk-grid" style={{ marginTop: 48 }}>
+                <div className="hb-grid" style={{ marginTop: 48 }}>
                   {marketplace.map((item) => (
                     <Card
                       key={item._id || item.id}
@@ -126,7 +126,7 @@ export default async function HomePage() {
                   ))}
                 </div>
               ) : (
-                <p className="mk-caption" style={{ marginTop: 32 }}>Nothing listed yet. The stalls open soon.</p>
+                <p className="hb-caption" style={{ marginTop: 32 }}>Nothing listed yet. The stalls open soon.</p>
               )}
             </div>
           </section>
@@ -135,17 +135,17 @@ export default async function HomePage() {
 
       <MithilaBorder />
 
-      <section className="mk-band mk-band--closing" aria-labelledby="closing-title">
-        <div className="mk-wrap">
+      <section className="hb-band hb-band--closing" aria-labelledby="closing-title">
+        <div className="hb-wrap">
           <Medallion size={132} />
-          <h2 id="closing-title" className="mk-display" style={{ marginTop: 24 }}>
+          <h2 id="closing-title" className="hb-display" style={{ marginTop: 24 }}>
             <span className="block">SAME BIHAR.</span>
             <span className="block">NEW STORIES.</span>
           </h2>
-          <p className="mk-banner-hi" lang="hi" style={{ fontSize: 'clamp(18px, 3vw, 32px)' }}>छठ आ रहल बा।</p>
-          <div className="mk-banner-actions">
-            <Link href="/chhath" className="mk-btn mk-btn--primary">
-              Go to the ghat <span className="mk-btn-arrow" aria-hidden="true">→</span>
+          <p className="hb-banner-hi" lang="hi" style={{ fontSize: 'clamp(18px, 3vw, 32px)' }}>छठ आ रहल बा।</p>
+          <div className="hb-banner-actions">
+            <Link href="/chhath" className="hb-btn hb-btn--primary">
+              Go to the ghat <span className="hb-btn-arrow" aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

@@ -6,9 +6,9 @@ import { petalPath } from './mithila'
     a Crimson accent, the way a Mithila artist fills a shape and then dots it.
     64px grid. These are NOT UI icons — see ./icons for those. design.md §7.    */
 
-const P = 'var(--mk-pearl)'
-const CR = 'var(--mk-crimson)'
-const YL = 'var(--mk-genda)'
+const P = 'var(--hb-pearl)'
+const CR = 'var(--hb-crimson)'
+const YL = 'var(--hb-genda)'
 
 type PetalProps = { x: number; y: number; rot: number; L: number; w: number; fill?: string }
 
@@ -155,7 +155,7 @@ export const EMBLEM_LIST: [EmblemName, string, string, string][] = [
 export function Emblem({ name, size = 56, className = '' }: { name: EmblemName; size?: number; className?: string }) {
   return (
     <svg viewBox="0 0 64 64" width={Math.max(40, size)} height={Math.max(40, size)}
-      className={`mk-emblem ${className}`} aria-hidden="true">
+      className={`hb-emblem ${className}`} aria-hidden="true">
       {EMBLEMS[name]}
     </svg>
   )

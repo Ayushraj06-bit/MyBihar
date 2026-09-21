@@ -65,9 +65,9 @@ function ExploreResultsSkeleton({ count = RESULT_BATCH_SIZE, className = styles.
     <div className={className} aria-hidden="true">
       {Array.from({ length: count }, (_, index) => (
         <div key={index} className={styles.resultSkeleton}>
-          <div className={`mk-skel ${styles.skeletonMedia}`} />
-          <span className={`mk-skel-line ${styles.skeletonTitle}`} />
-          <span className={`mk-skel-line ${styles.skeletonSub}`} />
+          <div className={`hb-skel ${styles.skeletonMedia}`} />
+          <span className={`hb-skel-line ${styles.skeletonTitle}`} />
+          <span className={`hb-skel-line ${styles.skeletonSub}`} />
         </div>
       ))}
     </div>
@@ -100,21 +100,21 @@ function NearbyRow({ category, origin }) {
         </h3>
         <Link
           href={mapHref({ view: 'grid', category: category.name, origin: originParam(origin) })}
-          className="mk-btn mk-btn--text"
+          className="hb-btn hb-btn--text"
           aria-label={`See all ${category.name.toLowerCase()} ${originPhrase(origin)}`}
         >
           See all
         </Link>
       </div>
       {status === 'loading' ? (
-        <ExploreResultsSkeleton count={4} className={`mk-row ${styles.rowOffset}`} />
+        <ExploreResultsSkeleton count={4} className={`hb-row ${styles.rowOffset}`} />
       ) : status === 'error' ? (
-        <p className={`mk-note ${styles.rowNote}`} role="status">
+        <p className={`hb-note ${styles.rowNote}`} role="status">
           {category.name} didn&apos;t load.{' '}
-          <button type="button" className="mk-btn mk-btn--text" onClick={retry}>Try again</button>
+          <button type="button" className="hb-btn hb-btn--text" onClick={retry}>Try again</button>
         </p>
       ) : places.length ? (
-        <div className={`mk-row ${styles.rowOffset}`}>
+        <div className={`hb-row ${styles.rowOffset}`}>
           {places.map((place) => (
             <Card
               key={place.id}
@@ -130,7 +130,7 @@ function NearbyRow({ category, origin }) {
           ))}
         </div>
       ) : (
-        <p className={`mk-caption ${styles.rowNote}`}>No {category.name.toLowerCase()} mapped within {NEARBY_RADIUS_KM} km yet.</p>
+        <p className={`hb-caption ${styles.rowNote}`}>No {category.name.toLowerCase()} mapped within {NEARBY_RADIUS_KM} km yet.</p>
       )}
     </section>
   )
@@ -247,25 +247,25 @@ function Explore() {
   }[locationState]
 
   return (
-    <main className={`mk-page ${styles.root}`}>
-      <section className="mk-banner" aria-labelledby="explore-title">
+    <main className={`hb-page ${styles.root}`}>
+      <section className="hb-banner" aria-labelledby="explore-title">
         <img
-          className="mk-banner-img"
+          className="hb-banner-img"
           src="/explore-hero.jpg"
           alt="Golghar at sunset, the great granary dome of Patna lit gold against a darkening sky"
           width="2000"
           height="1123"
           style={{ objectPosition: '50% 62%' }}
         />
-        <div className="mk-banner-scrim" aria-hidden="true" />
-        <div className="mk-banner-content">
+        <div className="hb-banner-scrim" aria-hidden="true" />
+        <div className="hb-banner-content">
           <div className={styles.heroCopy}>
             <Sprig size={38} />
-            <h1 id="explore-title" className="mk-display" style={{ marginTop: 8 }}>Find your next Bihar plan.</h1>
-            <p className="mk-banner-lede">Litti at the chowk, ruins by the river, and stories worth leaving home for.</p>
+            <h1 id="explore-title" className="hb-display" style={{ marginTop: 8 }}>Find your next Bihar plan.</h1>
+            <p className="hb-banner-lede">Litti at the chowk, ruins by the river, and stories worth leaving home for.</p>
 
             <div className={styles.heroActions}>
-              <form className={`mk-line ${styles.searchForm}`} role="search" noValidate onSubmit={(event) => event.preventDefault()}>
+              <form className={`hb-line ${styles.searchForm}`} role="search" noValidate onSubmit={(event) => event.preventDefault()}>
                 <label className="sr-only" htmlFor="explore-search">Search Bihar</label>
                 <UiIcon name="search" size={20} />
                 <input
@@ -284,22 +284,22 @@ function Explore() {
                   enterKeyHint="search"
                 />
                 {query && (
-                  <button type="button" className="mk-icon-btn mk-icon-btn--bare" onClick={clearSearch} aria-label="Clear search">
+                  <button type="button" className="hb-icon-btn hb-icon-btn--bare" onClick={clearSearch} aria-label="Clear search">
                     <UiIcon name="close" />
                   </button>
                 )}
               </form>
-              <Link href={mapHref({ locate: true })} className="mk-btn mk-btn--primary">
-                Open the live map <span className="mk-btn-arrow" aria-hidden="true">→</span>
+              <Link href={mapHref({ locate: true })} className="hb-btn hb-btn--primary">
+                Open the live map <span className="hb-btn-arrow" aria-hidden="true">→</span>
               </Link>
             </div>
 
-            <div className={`mk-chips ${styles.heroShortcuts}`} role="group" aria-label="Explore shortcuts">
+            <div className={`hb-chips ${styles.heroShortcuts}`} role="group" aria-label="Explore shortcuts">
               {heroShortcuts.map(({ name, icon }) => (
                 <button
                   key={name}
                   type="button"
-                  className="mk-chip"
+                  className="hb-chip"
                   aria-pressed={activeCategory === name}
                   onClick={() => changeCategory(activeCategory === name ? 'All' : name)}
                 >
@@ -312,7 +312,7 @@ function Explore() {
         </div>
       </section>
 
-      <div className="mk-wrap">
+      <div className="hb-wrap">
         {!query.trim() && (
           <section className={`${styles.categorySection} ${activeCategory !== 'All' ? styles.categorySectionActive : ''}`} aria-labelledby="category-title">
             <SectionHead id="category-title" title="Explore by category" />
@@ -323,7 +323,7 @@ function Explore() {
                   <button
                     key={category.slug}
                     type="button"
-                    className={`mk-chip ${styles.categoryButton}`}
+                    className={`hb-chip ${styles.categoryButton}`}
                     aria-pressed={isActive}
                     onClick={() => changeCategory(isActive ? 'All' : category.name)}
                   >
@@ -341,7 +341,7 @@ function Explore() {
             <SectionHead
               id="results-title"
               title={resultsTitle}
-              action={<button type="button" className="mk-btn mk-btn--text" onClick={resetDiscovery}>Clear filters</button>}
+              action={<button type="button" className="hb-btn hb-btn--text" onClick={resetDiscovery}>Clear filters</button>}
             />
             <p className="sr-only" aria-live="polite">
               {searchStatus === 'loading' ? 'Searching Bihar places' : `${displayedItems.length} results found`}
@@ -349,7 +349,7 @@ function Explore() {
             {areaAnchor && (
               <Link
                 href={mapHref({ origin: { lat: areaAnchor.latitude, lng: areaAnchor.longitude }, label: areaAnchor.name })}
-                className={`mk-btn mk-btn--secondary ${styles.anchorLink}`}
+                className={`hb-btn hb-btn--secondary ${styles.anchorLink}`}
               >
                 Explore around {areaAnchor.name}
               </Link>
@@ -360,10 +360,10 @@ function Explore() {
                 <ExploreResultsSkeleton />
               </>
             ) : searchStatus === 'error' ? (
-              <div className={`mk-panel mk-empty ${styles.state}`} role="status">
-                <h3 className="mk-h3">Bihar places didn&apos;t load.</h3>
-                <p className="mk-body">Check your connection, then try the search again.</p>
-                <button type="button" className="mk-btn mk-btn--secondary" onClick={results.retry}>
+              <div className={`hb-panel hb-empty ${styles.state}`} role="status">
+                <h3 className="hb-h3">Bihar places didn&apos;t load.</h3>
+                <p className="hb-body">Check your connection, then try the search again.</p>
+                <button type="button" className="hb-btn hb-btn--secondary" onClick={results.retry}>
                   Try again
                 </button>
               </div>
@@ -388,7 +388,7 @@ function Explore() {
                   {remainingResultCount > 0 && (
                     <button
                       type="button"
-                      className="mk-btn mk-btn--secondary"
+                      className="hb-btn hb-btn--secondary"
                       onClick={() => setPaging({ url: resultsUrl, count: visibleResultCount + RESULT_BATCH_SIZE })}
                     >
                       Show {Math.min(RESULT_BATCH_SIZE, remainingResultCount)} more
@@ -396,17 +396,17 @@ function Explore() {
                   )}
                   <Link
                     href={mapHref({ query: debouncedQuery, category: activeCategory, origin: originParam(origin) })}
-                    className="mk-btn mk-btn--text"
+                    className="hb-btn hb-btn--text"
                   >
                     View all on map
                   </Link>
                 </div>
               </>
             ) : (
-              <div className={`mk-panel mk-empty ${styles.state}`}>
-                <h3 className="mk-h3">{debouncedQuery ? 'Nothing in Bihar matches that yet.' : `No ${activeCategory.toLowerCase()} mapped close by.`}</h3>
-                <p className="mk-body">{debouncedQuery ? 'Check the spelling, or search a mohalla, a street or a landmark.' : 'Open the map and look a little further out.'}</p>
-                <button type="button" className="mk-btn mk-btn--secondary" onClick={resetDiscovery}>Start over</button>
+              <div className={`hb-panel hb-empty ${styles.state}`}>
+                <h3 className="hb-h3">{debouncedQuery ? 'Nothing in Bihar matches that yet.' : `No ${activeCategory.toLowerCase()} mapped close by.`}</h3>
+                <p className="hb-body">{debouncedQuery ? 'Check the spelling, or search a mohalla, a street or a landmark.' : 'Open the map and look a little further out.'}</p>
+                <button type="button" className="hb-btn hb-btn--secondary" onClick={resetDiscovery}>Start over</button>
               </div>
             )}
           </section>
@@ -421,11 +421,11 @@ function Explore() {
                 ? 'Live from the map, closest first.'
                 : 'Live from the map. Share your location to start from where you are.'}
               action={origin.source === 'user' ? (
-                <Link href={mapHref({ origin, locate: true })} className="mk-btn mk-btn--text">See them on the map</Link>
+                <Link href={mapHref({ origin, locate: true })} className="hb-btn hb-btn--text">See them on the map</Link>
               ) : (
                 <button
                   type="button"
-                  className="mk-btn mk-btn--text"
+                  className="hb-btn hb-btn--text"
                   onClick={() => requestLocation()}
                   disabled={locationState === 'loading'}
                 >
@@ -433,7 +433,7 @@ function Explore() {
                 </button>
               )}
             />
-            {locationNote && <p className={`mk-note ${styles.locationNote}`} role="status">{locationNote}</p>}
+            {locationNote && <p className={`hb-note ${styles.locationNote}`} role="status">{locationNote}</p>}
             {rowCategories.map((category) => (
               <NearbyRow key={category.slug} category={category} origin={origin} />
             ))}

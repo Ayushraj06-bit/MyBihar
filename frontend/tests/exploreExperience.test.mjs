@@ -23,16 +23,16 @@ test('Explore hands a known location to the map instead of re-asking GPS', () =>
 test('Explore hero is the brand banner: a full-bleed photograph, a scrim, content bottom-left', () => {
   assert.match(pageSource, /src="\/explore-hero\.jpg"/)
   assert.ok(heroAsset.size > 50_000 && heroAsset.size < 500_000)
-  assert.match(pageSource, /className="mk-banner"/)
-  assert.match(pageSource, /className="mk-banner-img"/)
-  assert.match(pageSource, /className="mk-banner-scrim"/)
+  assert.match(pageSource, /className="hb-banner"/)
+  assert.match(pageSource, /className="hb-banner-img"/)
+  assert.match(pageSource, /className="hb-banner-scrim"/)
   /* no accenting one word of a headline in a different colour — design.md §4.6 */
   assert.doesNotMatch(pageSource, /heroCity/)
 })
 
 test('Explore hero search is the house line input, and one primary button leads', () => {
-  assert.match(pageSource, /className=\{`mk-line \$\{styles\.searchForm\}`\}/)
-  assert.equal(pageSource.match(/mk-btn--primary/g)?.length, 1)
+  assert.match(pageSource, /className=\{`hb-line \$\{styles\.searchForm\}`\}/)
+  assert.equal(pageSource.match(/hb-btn--primary/g)?.length, 1)
 })
 
 test('Explore hero shortcuts pick a kind of place rather than typing a word into search', () => {
@@ -105,12 +105,12 @@ test('Explore copy avoids emoji decoration and Chhath content', () => {
 
 test('Explore sets type from the brand families and never from weight or capitals', () => {
   assert.doesNotMatch(stylesSource, /Anek|Manrope|@font-face/)
-  assert.match(stylesSource, /font-family: var\(--mk-display\)/)
+  assert.match(stylesSource, /font-family: var\(--hb-display\)/)
   assert.doesNotMatch(stylesSource, /font-weight:\s*[5-9]00/)
   assert.doesNotMatch(stylesSource, /text-transform:\s*uppercase/)
   assert.doesNotMatch(pageSource, /sectionEyebrow|eyebrow=/)
 })
 
 test('Explore rows bleed to the edge on phones', () => {
-  assert.match(stylesSource, /@media \(max-width: 640px\)[\s\S]*\.rowOffset\s*\{[^}]*margin-inline: calc\(-1 \* var\(--mk-edge\)\)/s)
+  assert.match(stylesSource, /@media \(max-width: 640px\)[\s\S]*\.rowOffset\s*\{[^}]*margin-inline: calc\(-1 \* var\(--hb-edge\)\)/s)
 })

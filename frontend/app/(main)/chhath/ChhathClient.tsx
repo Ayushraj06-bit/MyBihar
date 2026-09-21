@@ -50,20 +50,20 @@ function Chhath() {
   }, [])
 
   return (
-    <main className="mk-page">
+    <main className="hb-page">
       {/* the homecoming — no crimson anywhere in this band. design.md §9.7 */}
       <section className={styles.scene} aria-labelledby="chhath-title">
         <h1 id="chhath-title" className="sr-only">Chhath Puja</h1>
         <CountdownScene />
-        <div className="mk-wrap">
+        <div className="hb-wrap">
           <ChhathDays className={styles.days} />
         </div>
       </section>
 
-      <AripanRule className="mk-wrap" />
+      <AripanRule className="hb-wrap" />
 
-      <section className="mk-band" aria-labelledby="regions-title">
-        <div className="mk-wrap">
+      <section className="hb-band" aria-labelledby="regions-title">
+        <div className="hb-wrap">
           <SectionHead
             id="regions-title"
             title="Where to go"
@@ -72,9 +72,9 @@ function Chhath() {
           {loading ? (
             <AripanLoader label="Finding the regions" className={styles.state} />
           ) : error ? (
-            <div className={`mk-panel mk-empty ${styles.state}`} role="status">
-              <h3 className="mk-h3">The regions didn&apos;t load.</h3>
-              <p className="mk-body">Check your connection, then refresh the page.</p>
+            <div className={`hb-panel hb-empty ${styles.state}`} role="status">
+              <h3 className="hb-h3">The regions didn&apos;t load.</h3>
+              <p className="hb-body">Check your connection, then refresh the page.</p>
             </div>
           ) : regions.length ? (
             <div className={styles.regions}>
@@ -92,13 +92,13 @@ function Chhath() {
               ))}
             </div>
           ) : (
-            <p className={`mk-caption ${styles.state}`}>No regions listed yet. The ghats are still being swept.</p>
+            <p className={`hb-caption ${styles.state}`}>No regions listed yet. The ghats are still being swept.</p>
           )}
         </div>
       </section>
 
-      <section className="mk-band" aria-labelledby="near-title" style={{ paddingTop: 0 }}>
-        <div className="mk-wrap">
+      <section className="hb-band" aria-labelledby="near-title" style={{ paddingTop: 0 }}>
+        <div className="hb-wrap">
           <div className={styles.nearGrid}>
             <div>
               <SectionHead id="near-title" title="Ghats near you" lede="The closest ones first. Be there before sunset on Sandhya Arghya, and before four in the morning for Usha." />

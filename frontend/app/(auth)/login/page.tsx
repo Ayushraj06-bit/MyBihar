@@ -24,12 +24,12 @@ function Login() {
       lede={isSignUpMode ? 'Make an account and keep the city close.' : 'Sign in and pick up where you left the city.'}
       footer={<>Created with &lt;3 by Ayush Raj</>}
     >
-      <div className="mk-seg mk-auth-switch" role="group" aria-label="Sign in or create an account">
+      <div className="hb-seg hb-auth-switch" role="group" aria-label="Sign in or create an account">
         <button type="button" aria-pressed={!isSignUpMode} onClick={() => setIsSignUpMode(false)}>Sign in</button>
         <button type="button" aria-pressed={isSignUpMode} onClick={() => setIsSignUpMode(true)}>Create account</button>
       </div>
 
-      <div className="mk-auth-form">
+      <div className="hb-auth-form">
         <GoogleSignIn
           label={isSignUpMode ? 'Create account with Google' : 'Sign in with Google'}
           initialError={failed ? 'That sign-in did not go through. Try again.' : null}

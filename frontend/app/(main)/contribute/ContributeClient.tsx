@@ -119,8 +119,8 @@ function Contribute() {
   const activeStories = stories.filter((story) => new Date(story.expiresAt).getTime() > now)
 
   return (
-    <main className="mk-page mk-page-top">
-      <div className="mk-wrap">
+    <main className="hb-page hb-page-top">
+      <div className="hb-wrap">
         <SectionHead
           level={1}
           title="Contribute"
@@ -128,13 +128,13 @@ function Contribute() {
         />
 
         <section className={styles.section} aria-labelledby="communities-title">
-          <h2 id="communities-title" className="mk-h2">Communities</h2>
+          <h2 id="communities-title" className="hb-h2">Communities</h2>
           {loading ? (
             <AripanLoader label="Finding the communities" className={styles.gap} />
           ) : error ? (
-            <div className={`mk-panel mk-empty ${styles.gap}`} role="status" style={{ maxWidth: 640 }}>
-              <h3 className="mk-h3">Communities didn&apos;t load.</h3>
-              <p className="mk-body">Check your connection, then refresh the page.</p>
+            <div className={`hb-panel hb-empty ${styles.gap}`} role="status" style={{ maxWidth: 640 }}>
+              <h3 className="hb-h3">Communities didn&apos;t load.</h3>
+              <p className="hb-body">Check your connection, then refresh the page.</p>
             </div>
           ) : (
             <ul className={styles.communities}>
@@ -160,11 +160,11 @@ function Contribute() {
 
         <section className={styles.section} aria-labelledby="stories-title">
           <div className={styles.storiesHead}>
-            <h2 id="stories-title" className="mk-h2">Share your story</h2>
+            <h2 id="stories-title" className="hb-h2">Share your story</h2>
             <button
               type="button"
               onClick={() => setShowForm(!showForm)}
-              className="mk-btn mk-btn--secondary"
+              className="hb-btn hb-btn--secondary"
               aria-expanded={showForm}
               aria-controls="story-form"
             >
@@ -174,47 +174,47 @@ function Contribute() {
           </div>
 
           {showForm && (
-            <form id="story-form" onSubmit={handleSubmit} className={`mk-panel ${styles.form}`}>
+            <form id="story-form" onSubmit={handleSubmit} className={`hb-panel ${styles.form}`}>
               <div>
-                <label className="mk-label" htmlFor="story-title">Title</label>
+                <label className="hb-label" htmlFor="story-title">Title</label>
                 <input
                   id="story-title"
                   type="text"
                   value={newPost.title}
                   onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-                  className="mk-field"
+                  className="hb-field"
                   placeholder="The chai stall that still opens at five on Bailey Road"
                   maxLength={120}
                   required
                 />
               </div>
               <div>
-                <label className="mk-label" htmlFor="story-content">Your story</label>
+                <label className="hb-label" htmlFor="story-content">Your story</label>
                 <textarea
                   id="story-content"
                   value={newPost.content}
                   onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
-                  className="mk-field"
+                  className="hb-field"
                   maxLength={2000}
                   required
                 />
               </div>
               <div>
-                <label className="mk-label" htmlFor="story-link">A link, if there is one</label>
+                <label className="hb-label" htmlFor="story-link">A link, if there is one</label>
                 <input
                   id="story-link"
                   type="url"
                   value={newPost.link}
                   onChange={(e) => setNewPost({ ...newPost, link: e.target.value })}
-                  className="mk-field"
+                  className="hb-field"
                   placeholder="https://"
                   maxLength={2048}
                 />
               </div>
-              {submitError && <p className={`mk-caption ${styles.formError}`} role="alert">{submitError}</p>}
+              {submitError && <p className={`hb-caption ${styles.formError}`} role="alert">{submitError}</p>}
               <div>
-                <button type="submit" className="mk-btn mk-btn--primary" disabled={submitting}>
-                  {submitting ? 'Posting…' : 'Post your story'} <span className="mk-btn-arrow" aria-hidden="true">→</span>
+                <button type="submit" className="hb-btn hb-btn--primary" disabled={submitting}>
+                  {submitting ? 'Posting…' : 'Post your story'} <span className="hb-btn-arrow" aria-hidden="true">→</span>
                 </button>
               </div>
             </form>
@@ -226,25 +226,25 @@ function Contribute() {
             <ul className={styles.stories} aria-label="Stories from the last 24 hours">
               {activeStories.map((story) => (
                 <li key={story.id}>
-                  <article className={`mk-panel ${styles.story}`}>
-                    <h3 className="mk-h3">{story.title}</h3>
-                    <time className="mk-meta" dateTime={story.createdAt}>{postedAt(story.createdAt)}</time>
-                    <p className={`mk-body ${styles.storyText}`}>{story.story}</p>
+                  <article className={`hb-panel ${styles.story}`}>
+                    <h3 className="hb-h3">{story.title}</h3>
+                    <time className="hb-meta" dateTime={story.createdAt}>{postedAt(story.createdAt)}</time>
+                    <p className={`hb-body ${styles.storyText}`}>{story.story}</p>
                     <StoryMedia url={story.externalUrl} />
                   </article>
                 </li>
               ))}
             </ul>
           ) : storiesFailed ? (
-            <div className={`mk-panel mk-empty ${styles.empty}`} role="status">
-              <h3 className="mk-h3">Stories didn&apos;t load.</h3>
-              <p className="mk-body">Check your connection, then refresh the page.</p>
+            <div className={`hb-panel hb-empty ${styles.empty}`} role="status">
+              <h3 className="hb-h3">Stories didn&apos;t load.</h3>
+              <p className="hb-body">Check your connection, then refresh the page.</p>
             </div>
           ) : (
-            <div className={`mk-panel mk-empty ${styles.empty}`}>
+            <div className={`hb-panel hb-empty ${styles.empty}`}>
               <Emblem name="kalash" size={56} />
-              <h3 className="mk-h3">No stories yet.</h3>
-              <p className="mk-body">Start with your mohalla — the chai stall, the ghat steps, the haveli with the green shutters.</p>
+              <h3 className="hb-h3">No stories yet.</h3>
+              <p className="hb-body">Start with your mohalla — the chai stall, the ghat steps, the haveli with the green shutters.</p>
             </div>
           )}
         </section>

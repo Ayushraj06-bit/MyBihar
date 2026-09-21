@@ -175,34 +175,34 @@ function Tinder() {
   }
 
   if (loading) {
-    return <main className="mk-page mk-page-top mk-wrap"><AripanLoader label="Finding experiences" /></main>
+    return <main className="hb-page hb-page-top hb-wrap"><AripanLoader label="Finding experiences" /></main>
   }
   if (error) {
     return (
-      <main className="mk-page mk-page-top mk-wrap">
-        <div className="mk-panel mk-empty" role="status" style={{ maxWidth: 640 }}>
-          <h1 className="mk-h3">Experiences didn&apos;t load.</h1>
-          <p className="mk-body">Check your connection, then refresh the page.</p>
+      <main className="hb-page hb-page-top hb-wrap">
+        <div className="hb-panel hb-empty" role="status" style={{ maxWidth: 640 }}>
+          <h1 className="hb-h3">Experiences didn&apos;t load.</h1>
+          <p className="hb-body">Check your connection, then refresh the page.</p>
         </div>
       </main>
     )
   }
   if (!profiles.length) {
     return (
-      <main className="mk-page mk-page-top mk-wrap">
-        <div className="mk-panel mk-empty" style={{ maxWidth: 640 }}>
-          <h1 className="mk-h3">No experiences yet.</h1>
-          <p className="mk-body">New places are added every week. Start with a ghat near you in the meantime.</p>
+      <main className="hb-page hb-page-top hb-wrap">
+        <div className="hb-panel hb-empty" style={{ maxWidth: 640 }}>
+          <h1 className="hb-h3">No experiences yet.</h1>
+          <p className="hb-body">New places are added every week. Start with a ghat near you in the meantime.</p>
         </div>
       </main>
     )
   }
   if (currentIndex >= profiles.length) {
     return (
-      <main className="mk-page mk-page-top mk-wrap">
-        <div className="mk-panel mk-empty" style={{ maxWidth: 640 }}>
-          <h1 className="mk-h3">That&apos;s every experience for now.</h1>
-          <button onClick={() => setCurrentIndex(0)} className="mk-btn mk-btn--secondary">Start again</button>
+      <main className="hb-page hb-page-top hb-wrap">
+        <div className="hb-panel hb-empty" style={{ maxWidth: 640 }}>
+          <h1 className="hb-h3">That&apos;s every experience for now.</h1>
+          <button onClick={() => setCurrentIndex(0)} className="hb-btn hb-btn--secondary">Start again</button>
         </div>
       </main>
     )
@@ -220,11 +220,11 @@ function Tinder() {
   return (
     <main className={styles.stage}>
       <header className={styles.intro}>
-        <div className="mk-band-head">
+        <div className="hb-band-head">
           <Sprig size={38} />
-          <h1 className="mk-h2">Experiences</h1>
+          <h1 className="hb-h2">Experiences</h1>
         </div>
-        <p className="mk-caption">Drag right if it&apos;s for you, left if it isn&apos;t. Then tell us how it was.</p>
+        <p className="hb-caption">Drag right if it&apos;s for you, left if it isn&apos;t. Then tell us how it was.</p>
       </header>
 
       {showLeftGlow && !showFeedback && (
@@ -263,7 +263,7 @@ function Tinder() {
               {isDescriptionLong && (
                 <>
                   {' '}
-                  <button type="button" className="mk-btn mk-btn--text" onMouseDown={(e) => e.stopPropagation()} onClick={() => setShowFullDescription(true)}>
+                  <button type="button" className="hb-btn hb-btn--text" onMouseDown={(e) => e.stopPropagation()} onClick={() => setShowFullDescription(true)}>
                     Read the rest
                   </button>
                 </>
@@ -282,25 +282,25 @@ function Tinder() {
       )}
 
       {showFullDescription && (
-        <div className="mk-backdrop" onClick={() => setShowFullDescription(false)}>
-          <div className="mk-modal" role="dialog" aria-modal="true" aria-labelledby="exp-full-title" onClick={(e) => e.stopPropagation()}>
-            <h2 id="exp-full-title" className="mk-h3">{profile.name}</h2>
-            <p className="mk-meta" style={{ marginTop: 4 }}>{profile.age} years in the city</p>
-            <p className="mk-body" style={{ marginTop: 20, whiteSpace: 'pre-line' }}>{profile.bio}</p>
+        <div className="hb-backdrop" onClick={() => setShowFullDescription(false)}>
+          <div className="hb-modal" role="dialog" aria-modal="true" aria-labelledby="exp-full-title" onClick={(e) => e.stopPropagation()}>
+            <h2 id="exp-full-title" className="hb-h3">{profile.name}</h2>
+            <p className="hb-meta" style={{ marginTop: 4 }}>{profile.age} years in the city</p>
+            <p className="hb-body" style={{ marginTop: 20, whiteSpace: 'pre-line' }}>{profile.bio}</p>
             <div className={styles.modalActions}>
-              <button className="mk-btn mk-btn--secondary" onClick={() => setShowFullDescription(false)}>Close</button>
+              <button className="hb-btn hb-btn--secondary" onClick={() => setShowFullDescription(false)}>Close</button>
             </div>
           </div>
         </div>
       )}
 
       {showFeedback && (
-        <div className="mk-backdrop">
-          <div className="mk-modal" role="dialog" aria-modal="true" aria-labelledby="exp-feedback-title">
-            <h2 id="exp-feedback-title" className="mk-h3">How was it?</h2>
-            <p className="mk-caption" style={{ marginTop: 6 }}>{profile.name}. A number and a line is plenty.</p>
+        <div className="hb-backdrop">
+          <div className="hb-modal" role="dialog" aria-modal="true" aria-labelledby="exp-feedback-title">
+            <h2 id="exp-feedback-title" className="hb-h3">How was it?</h2>
+            <p className="hb-caption" style={{ marginTop: 6 }}>{profile.name}. A number and a line is plenty.</p>
 
-            <div className={`mk-seg ${styles.rating}`} role="group" aria-label="Your rating, out of 5">
+            <div className={`hb-seg ${styles.rating}`} role="group" aria-label="Your rating, out of 5">
               {RATINGS.map((star) => (
                 <button
                   key={star}
@@ -315,21 +315,21 @@ function Tinder() {
               ))}
             </div>
 
-            <label className="mk-label" htmlFor="exp-feedback">What stayed with you</label>
+            <label className="hb-label" htmlFor="exp-feedback">What stayed with you</label>
             <textarea
               id="exp-feedback"
-              className="mk-field"
+              className="hb-field"
               rows={3}
               placeholder="The light at five, the queue for the phuchka…"
               value={feedbackText}
               onChange={e => setFeedbackText(e.target.value)}
             />
             <div className={styles.modalActions}>
-              <button className="mk-btn mk-btn--primary" onClick={handleFeedbackDone}>
-                Send feedback <span className="mk-btn-arrow" aria-hidden="true">→</span>
+              <button className="hb-btn hb-btn--primary" onClick={handleFeedbackDone}>
+                Send feedback <span className="hb-btn-arrow" aria-hidden="true">→</span>
               </button>
               <button
-                className="mk-btn mk-btn--secondary"
+                className="hb-btn hb-btn--secondary"
                 onClick={() => { setShowFeedback(false); setShowFeedbackInput(false); setFeedbackText(''); }}
               >
                 Cancel

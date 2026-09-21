@@ -17,17 +17,17 @@ export function SectionHead({ title, id, devanagari, lede, action, level = 2, cl
   const Heading = level === 1 ? 'h1' : 'h2'
   return (
     <header className={className}>
-      <div className="mk-band-head mk-band-head--split">
-        <div className="mk-band-head-title">
+      <div className="hb-band-head hb-band-head--split">
+        <div className="hb-band-head-title">
           <Sprig size={level === 1 ? 46 : 38} />
-          <Heading id={id} className="mk-h1">
+          <Heading id={id} className="hb-h1">
             {title}
-            {devanagari && <span className="mk-hi" lang="hi" style={{ fontSize: '0.46em', marginLeft: 16 }}>{devanagari}</span>}
+            {devanagari && <span className="hb-hi" lang="hi" style={{ fontSize: '0.46em', marginLeft: 16 }}>{devanagari}</span>}
           </Heading>
         </div>
         {action}
       </div>
-      {lede && <p className="mk-lede">{lede}</p>}
+      {lede && <p className="hb-lede">{lede}</p>}
     </header>
   )
 }

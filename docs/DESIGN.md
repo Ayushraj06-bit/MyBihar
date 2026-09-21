@@ -90,20 +90,20 @@ and it comes in three steps so surfaces can actually sit on top of one another.
 
 | Token | Name | HEX | Role |
 |---|---|---|---|
-| `--mk-obsidian` | Obsidian | `#0D1012` | Base canvas — a cool rich black, never flat |
-| `--mk-ink` | Ink | `#141819` | Surface 1 — cards, panels |
-| `--mk-slate` | Slate | `#1C2225` | Surface 2 — elevated, hover |
-| `--mk-bordeaux` | Deep Bordeaux | `#3F0D12` | Warm surface, red bands |
-| `--mk-bordeaux-deep` | Bordeaux Deep | `#260A0E` | Cards on a red band — never black-on-red |
-| `--mk-crimson-depth` | Crimson Depth | `#710014` | Deep accent, dramatic grounds |
-| `--mk-ruby` | Ruby Red | `#98111E` | Secondary red, light-mode primary |
-| `--mk-crimson` | Crimson Silk | `#D72638` | **The action colour.** Budgeted — §3.5 |
-| `--mk-genda` | Genda Yellow | `#F2B33D` | **The Bihar accent.** Budgeted — §3.7 |
-| `--mk-ash` | Ash | `#AFA2A0` | Muted text, metadata, captions |
-| `--mk-pearl` | Soft Pearl | `#F2F1ED` | Body text, mithila border white |
-| `--mk-white` | Pop White | `#FCFBF8` | Display, numerals, card titles |
-| `--mk-blush` | Soft Blush | `#FBE4E3` | Rare highlight |
-| `--mk-sand` | Warm Sand | `#B38F6F` | **Retired from the interface.** Photography and illustration only |
+| `--hb-obsidian` | Obsidian | `#0D1012` | Base canvas — a cool rich black, never flat |
+| `--hb-ink` | Ink | `#141819` | Surface 1 — cards, panels |
+| `--hb-slate` | Slate | `#1C2225` | Surface 2 — elevated, hover |
+| `--hb-bordeaux` | Deep Bordeaux | `#3F0D12` | Warm surface, red bands |
+| `--hb-bordeaux-deep` | Bordeaux Deep | `#260A0E` | Cards on a red band — never black-on-red |
+| `--hb-crimson-depth` | Crimson Depth | `#710014` | Deep accent, dramatic grounds |
+| `--hb-ruby` | Ruby Red | `#98111E` | Secondary red, light-mode primary |
+| `--hb-crimson` | Crimson Silk | `#D72638` | **The action colour.** Budgeted — §3.5 |
+| `--hb-genda` | Genda Yellow | `#F2B33D` | **The Bihar accent.** Budgeted — §3.7 |
+| `--hb-ash` | Ash | `#AFA2A0` | Muted text, metadata, captions |
+| `--hb-pearl` | Soft Pearl | `#F2F1ED` | Body text, mithila border white |
+| `--hb-white` | Pop White | `#FCFBF8` | Display, numerals, card titles |
+| `--hb-blush` | Soft Blush | `#FBE4E3` | Rare highlight |
+| `--hb-sand` | Warm Sand | `#B38F6F` | **Retired from the interface.** Photography and illustration only |
 
 ### Why Warm Sand was retired, and what replaced it
 
@@ -124,7 +124,7 @@ It earns its place twice over:
 
 | Token | Name | HEX | Role |
 |---|---|---|---|
-| `--mk-monsoon` | Monsoon Teal | `#132A2E` | **Shadow grade only.** Never a fill, never a text colour, never a border. |
+| `--hb-monsoon` | Monsoon Teal | `#132A2E` | **Shadow grade only.** Never a fill, never a text colour, never a border. |
 
 Monsoon Teal exists because a red-on-black interface goes flat fast. Real cinema puts a cold
 tone in the shadows so the warm tones have something to be warm *against* — which is exactly
@@ -138,7 +138,7 @@ box-shadow: 0 24px 60px -20px rgba(19, 42, 46, 0.7);
 background:
   radial-gradient(1200px 600px at 72% 12%, rgba(152, 17, 30, 0.20), transparent 60%),
   radial-gradient(900px 500px at 10% 88%, rgba(19, 42, 46, 0.55), transparent 60%),
-  var(--mk-obsidian);
+  var(--hb-obsidian);
 ```
 
 `self.md` rules out "random greens." This is not a green — it is a shadow temperature, and it is
@@ -320,7 +320,7 @@ nowhere else**:
 ### Setting Devanagari
 
 ```css
-.mk-devanagari-display {
+.hb-devanagari-display {
   font-family: 'Noto Sans Devanagari', sans-serif;
   font-variation-settings: 'wght' 600, 'wdth' 100;
   line-height: 1.5;              /* headroom for the matra */
@@ -680,7 +680,7 @@ underneath them is a real surface scale (§3.1).
 
 | Part | Spec |
 |---|---|
-| Media | `16 / 10`, radius 14px, `--mk-ink` behind, `0 18px 40px -20px rgba(0,0,0,0.85)` |
+| Media | `16 / 10`, radius 14px, `--hb-ink` behind, `0 18px 40px -20px rgba(0,0,0,0.85)` |
 | Image | `saturate(1.06) contrast(1.18) brightness(1.05)` — vibrant, not washed |
 | Scrim | Black **through Bordeaux**, never flat black on the image |
 | Title | Pop White, so it lifts off the ground |
@@ -856,9 +856,9 @@ Motion is cinematic: **slow to start, decisive to finish.** Nothing bounces. Not
 ### 11.1 Curves
 
 ```css
---mk-ease-out:   cubic-bezier(0.16, 1, 0.3, 1);      /* reveals, entrances */
---mk-ease-in-out:cubic-bezier(0.65, 0, 0.35, 1);     /* moves, transitions */
---mk-ease-draw:  cubic-bezier(0.32, 0.72, 0, 1);     /* the aripan line */
+--hb-ease-out:   cubic-bezier(0.16, 1, 0.3, 1);      /* reveals, entrances */
+--hb-ease-in-out:cubic-bezier(0.65, 0, 0.35, 1);     /* moves, transitions */
+--hb-ease-draw:  cubic-bezier(0.32, 0.72, 0, 1);     /* the aripan line */
 ```
 
 ### 11.2 Durations
@@ -949,43 +949,43 @@ Implemented in [`src/styles/brand-tokens.css`](src/styles/brand-tokens.css).
 ```css
 :root {
   /* colour */
-  --mk-obsidian:      #161616;
-  --mk-bordeaux:      #3F0D12;
-  --mk-crimson-depth: #710014;
-  --mk-ruby:          #98111E;
-  --mk-crimson:       #D72638;
-  --mk-ash:           #AFA2A0;   /* muted UI text */
-  --mk-sand:          #B38F6F;   /* photography only — never type */
-  --mk-pearl:         #F2F1ED;
-  --mk-blush:         #FBE4E3;
-  --mk-monsoon:       #132A2E;   /* shadow grade only */
+  --hb-obsidian:      #161616;
+  --hb-bordeaux:      #3F0D12;
+  --hb-crimson-depth: #710014;
+  --hb-ruby:          #98111E;
+  --hb-crimson:       #D72638;
+  --hb-ash:           #AFA2A0;   /* muted UI text */
+  --hb-sand:          #B38F6F;   /* photography only — never type */
+  --hb-pearl:         #F2F1ED;
+  --hb-blush:         #FBE4E3;
+  --hb-monsoon:       #132A2E;   /* shadow grade only */
 
   /* type */
-  --mk-display: 'Clear Sans Display', system-ui, sans-serif;
-  --mk-text:    'Clear Sans Text', system-ui, sans-serif;
-  --mk-devanagari: 'Noto Sans Devanagari', system-ui, sans-serif;
+  --hb-display: 'Clear Sans Display', system-ui, sans-serif;
+  --hb-text:    'Clear Sans Text', system-ui, sans-serif;
+  --hb-devanagari: 'Noto Sans Devanagari', system-ui, sans-serif;
 
   /* space */
-  --mk-1: 4px;   --mk-2: 8px;   --mk-3: 12px;  --mk-4: 16px;
-  --mk-5: 24px;  --mk-6: 32px;  --mk-7: 48px;  --mk-8: 64px;
-  --mk-9: 96px;  --mk-10: 128px; --mk-11: 160px;
+  --hb-1: 4px;   --hb-2: 8px;   --hb-3: 12px;  --hb-4: 16px;
+  --hb-5: 24px;  --hb-6: 32px;  --hb-7: 48px;  --hb-8: 64px;
+  --hb-9: 96px;  --hb-10: 128px; --hb-11: 160px;
 
   /* radius */
-  --mk-r-sm: 8px;  --mk-r-md: 12px; --mk-r-lg: 20px; --mk-r-xl: 28px;
+  --hb-r-sm: 8px;  --hb-r-md: 12px; --hb-r-lg: 20px; --hb-r-xl: 28px;
 
   /* motion */
-  --mk-ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
-  --mk-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --mk-ease-draw:   cubic-bezier(0.32, 0.72, 0, 1);
-  --mk-t-fast:   120ms;
-  --mk-t-hover:  200ms;
-  --mk-t-reveal: 320ms;
-  --mk-t-bloom:  1300ms;
-  --mk-t-band:   700ms;
+  --hb-ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --hb-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --hb-ease-draw:   cubic-bezier(0.32, 0.72, 0, 1);
+  --hb-t-fast:   120ms;
+  --hb-t-hover:  200ms;
+  --hb-t-reveal: 320ms;
+  --hb-t-bloom:  1300ms;
+  --hb-t-band:   700ms;
 
   /* elevation — cold shadows */
-  --mk-shadow-card:  0 12px 32px -12px rgba(19, 42, 46, 0.55);
-  --mk-shadow-panel: 0 24px 60px -20px rgba(19, 42, 46, 0.70);
+  --hb-shadow-card:  0 12px 32px -12px rgba(19, 42, 46, 0.55);
+  --hb-shadow-panel: 0 24px 60px -20px rgba(19, 42, 46, 0.70);
 }
 ```
 

@@ -81,13 +81,13 @@ test('map markers use brand surfaces and letters, not a rainbow', () => {
   assert.match(mapSource, /cafes: \{ color: '#3f0d12', label: 'C' \}/)
   assert.match(mapSource, /places: \{ color: '#1c2225', label: 'P' \}/)
   assert.doesNotMatch(mapSource, /#3157e5|#7946a8|#24765f|#f5c344|Manrope/)
-  assert.match(stylesSource, /\.userMarker\s*\{[^}]*background: var\(--mk-genda\)/s)
+  assert.match(stylesSource, /\.userMarker\s*\{[^}]*background: var\(--hb-genda\)/s)
 })
 
 test('map mode fills the viewport and floats its controls under the notch bar', () => {
   assert.match(stylesSource, /\.mapMode\s*\{[^}]*height: 100dvh/s)
   assert.match(stylesSource, /\.mapFrame\s*\{[^}]*position: absolute;[^}]*inset: 0/s)
-  assert.match(stylesSource, /\.mapOverlay\s*\{[^}]*position: absolute;[^}]*top: calc\(var\(--mk-nav\) \+ 8px\)/s)
+  assert.match(stylesSource, /\.mapOverlay\s*\{[^}]*position: absolute;[^}]*top: calc\(var\(--hb-nav\) \+ 8px\)/s)
   assert.match(stylesSource, /\.controlDeck\s*\{[^}]*backdrop-filter: blur\(26px\) saturate\(180%\)/s)
   assert.doesNotMatch(stylesSource, /\.mapMode\s*\{[^}]*min-height: 540px/s)
 })
@@ -192,7 +192,7 @@ test('Search this area applies the current geographic viewport', () => {
 
 test('Near You sets type from the brand families, never from weight or capitals', () => {
   assert.doesNotMatch(stylesSource, /Anek|Manrope|@font-face/)
-  assert.match(stylesSource, /font-family: var\(--mk-display\)/)
+  assert.match(stylesSource, /font-family: var\(--hb-display\)/)
   assert.doesNotMatch(stylesSource, /font-weight:\s*[5-9]00/)
   assert.doesNotMatch(stylesSource, /text-transform:\s*uppercase/)
 })
@@ -203,13 +203,13 @@ test('Near You renders without the undefined Head element and without mojibake',
 })
 
 test('Near You search is the house line input, which draws its focus rule', () => {
-  assert.match(pageSource, /className=\{`mk-line \$\{styles\.searchBox\}`\}/)
+  assert.match(pageSource, /className=\{`hb-line \$\{styles\.searchBox\}`\}/)
   assert.doesNotMatch(stylesSource, /\.root input:focus-visible/)
 })
 
 test('Near You map chrome sits on the brand surfaces', () => {
-  assert.match(stylesSource, /\.map :global\(\.maplibregl-ctrl-group\)[^}]*background: var\(--mk-ink\)/s)
-  assert.match(stylesSource, /\.placeDetails\s*\{[^}]*background: var\(--mk-ink\)/s)
+  assert.match(stylesSource, /\.map :global\(\.maplibregl-ctrl-group\)[^}]*background: var\(--hb-ink\)/s)
+  assert.match(stylesSource, /\.placeDetails\s*\{[^}]*background: var\(--hb-ink\)/s)
   assert.doesNotMatch(stylesSource, /:global\(\.dark\)|leaflet-tile-pane|#14243a/)
 })
 

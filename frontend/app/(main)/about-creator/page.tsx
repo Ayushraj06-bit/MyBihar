@@ -32,18 +32,18 @@ export default async function AboutCreator() {
   const contributors = await getContributors()
 
   return (
-    <main className="mk-page mk-page-top">
-      <div className="mk-wrap">
+    <main className="hb-page hb-page-top">
+      <div className="hb-wrap">
         <SectionHead
           level={1}
           title="About the creator"
           lede="My Bihar is a community-built guide to the state — its places, its transport, its news and its markets, gathered in one place."
         />
 
-        <div className="mk-measure" style={{ marginTop: 64, display: 'grid', gap: 48 }}>
+        <div className="hb-measure" style={{ marginTop: 64, display: 'grid', gap: 48 }}>
           <section>
-            <h2 className="mk-h3">Why it exists</h2>
-            <p className="mk-body" style={{ marginTop: 12 }}>
+            <h2 className="hb-h3">Why it exists</h2>
+            <p className="hb-body" style={{ marginTop: 12 }}>
               To make Bihar easier to find your way around, and more fun to wander — and to bring the
               state&apos;s useful resources together, so no one has to keep twelve tabs open to plan an
               evening in Patna or a weekend in Rajgir. It began as a Bihar edition of the open-source
@@ -51,7 +51,7 @@ export default async function AboutCreator() {
             </p>
           </section>
           <section>
-            <h2 className="mk-h3">Built with love by Ayush Raj</h2>
+            <h2 className="hb-h3">Built with love by Ayush Raj</h2>
             {contributors.length > 0 ? (
               <ul style={{ listStyle: 'none', margin: '20px 0 0', padding: 0, display: 'grid', gap: 12 }}>
                 {contributors.map((person) => (
@@ -64,7 +64,7 @@ export default async function AboutCreator() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: 14,
-                        color: 'var(--mk-pearl)',
+                        color: 'var(--hb-pearl)',
                         textDecoration: 'none',
                       }}
                     >
@@ -74,15 +74,15 @@ export default async function AboutCreator() {
                         alt=""
                         width={40}
                         height={40}
-                        style={{ borderRadius: '50%', background: 'var(--mk-slate)' }}
+                        style={{ borderRadius: '50%', background: 'var(--hb-slate)' }}
                       />
-                      <span className="mk-body">{person.login}</span>
+                      <span className="hb-body">{person.login}</span>
                     </a>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="mk-body" style={{ marginTop: 12 }}>
+              <p className="hb-body" style={{ marginTop: 12 }}>
                 See the people on{' '}
                 <a href={`${REPO}/graphs/contributors`} target="_blank" rel="noreferrer">
                   GitHub

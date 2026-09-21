@@ -40,71 +40,71 @@
   /* colour — the rich black scale, design.md §3.1
      Cool-tinted and layered. A flat #161616 kills everything sitting on it:
      whites go grey, reds go muddy, cards stop reading as objects. */
-  --mk-obsidian: #0d1012;         /* base canvas */
-  --mk-ink: #141819;              /* surface 1 — cards, panels */
-  --mk-slate: #1c2225;            /* surface 2 — elevated, hover */
+  --hb-obsidian: #0d1012;         /* base canvas */
+  --hb-ink: #141819;              /* surface 1 — cards, panels */
+  --hb-slate: #1c2225;            /* surface 2 — elevated, hover */
 
-  --mk-bordeaux: #3f0d12;         /* warm surface */
-  --mk-bordeaux-deep: #260a0e;    /* card surface on a red band — never black-on-red */
-  --mk-crimson-depth: #710014;
-  --mk-ruby: #98111e;
-  --mk-crimson: #d72638;          /* the action colour — see the budget, §3.5 */
+  --hb-bordeaux: #3f0d12;         /* warm surface */
+  --hb-bordeaux-deep: #260a0e;    /* card surface on a red band — never black-on-red */
+  --hb-crimson-depth: #710014;
+  --hb-ruby: #98111e;
+  --hb-crimson: #d72638;          /* the action colour — see the budget, §3.5 */
 
-  --mk-genda: #f2b33d;             /* Bihar yellow — the genda garland, the thekua. §3.7 */
+  --hb-genda: #f2b33d;             /* Bihar yellow — the genda garland, the thekua. §3.7 */
 
-  --mk-ash: #afa2a0;              /* muted UI text */
-  --mk-sand: #b38f6f;             /* photography / illustration ONLY, never UI text */
-  --mk-pearl: #f2f1ed;            /* body text */
-  --mk-white: #fcfbf8;            /* the pop — display, numerals, card titles */
-  --mk-blush: #fbe4e3;
+  --hb-ash: #afa2a0;              /* muted UI text */
+  --hb-sand: #b38f6f;             /* photography / illustration ONLY, never UI text */
+  --hb-pearl: #f2f1ed;            /* body text */
+  --hb-white: #fcfbf8;            /* the pop — display, numerals, card titles */
+  --hb-blush: #fbe4e3;
 
   /* the grade — shadows and gradients only, never a fill. §3.2 */
-  --mk-monsoon: #132a2e;
+  --hb-monsoon: #132a2e;
 
   /* type — Devanagari listed after Latin so Devanagari glyphs fall through to Noto */
-  --mk-display: 'Clear Sans Display', 'Noto Sans Devanagari', system-ui, sans-serif;
-  --mk-text: 'Clear Sans Text', 'Noto Sans Devanagari', system-ui, sans-serif;
-  --mk-devanagari: 'Noto Sans Devanagari', system-ui, sans-serif;
+  --hb-display: 'Clear Sans Display', 'Noto Sans Devanagari', system-ui, sans-serif;
+  --hb-text: 'Clear Sans Text', 'Noto Sans Devanagari', system-ui, sans-serif;
+  --hb-devanagari: 'Noto Sans Devanagari', system-ui, sans-serif;
 
   /* space */
-  --mk-1: 4px;
-  --mk-2: 8px;
-  --mk-3: 12px;
-  --mk-4: 16px;
-  --mk-5: 24px;
-  --mk-6: 32px;
-  --mk-7: 48px;
-  --mk-8: 64px;
-  --mk-9: 96px;
-  --mk-10: 128px;
-  --mk-11: 160px;
+  --hb-1: 4px;
+  --hb-2: 8px;
+  --hb-3: 12px;
+  --hb-4: 16px;
+  --hb-5: 24px;
+  --hb-6: 32px;
+  --hb-7: 48px;
+  --hb-8: 64px;
+  --hb-9: 96px;
+  --hb-10: 128px;
+  --hb-11: 160px;
 
   /* layout — outer margin 20 → 80px (§8.2), and the clearance under the notch bar */
-  --mk-edge: clamp(20px, 6vw, 80px);
-  --mk-nav: 64px;
+  --hb-edge: clamp(20px, 6vw, 80px);
+  --hb-nav: 64px;
 
   /* radius — encodes role, §7.5 */
-  --mk-r-sm: 8px;
-  --mk-r-md: 12px;
-  --mk-r-lg: 20px;
-  --mk-r-xl: 28px;
+  --hb-r-sm: 8px;
+  --hb-r-md: 12px;
+  --hb-r-lg: 20px;
+  --hb-r-xl: 28px;
 
   /* motion */
-  --mk-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --mk-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --mk-ease-draw: cubic-bezier(0.32, 0.72, 0, 1);
-  --mk-t-fast: 120ms;
-  --mk-t-hover: 200ms;
-  --mk-t-reveal: 320ms;
-  --mk-t-bloom: 1300ms;
-  --mk-t-band: 700ms;
+  --hb-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --hb-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --hb-ease-draw: cubic-bezier(0.32, 0.72, 0, 1);
+  --hb-t-fast: 120ms;
+  --hb-t-hover: 200ms;
+  --hb-t-reveal: 320ms;
+  --hb-t-bloom: 1300ms;
+  --hb-t-band: 700ms;
 
   /* elevation — cold shadows, never grey */
-  --mk-shadow-card: 0 18px 40px -20px rgba(0, 0, 0, 0.85);
-  --mk-shadow-panel: 0 28px 64px -24px rgba(0, 0, 0, 0.9);
+  --hb-shadow-card: 0 18px 40px -20px rgba(0, 0, 0, 0.85);
+  --hb-shadow-panel: 0 28px 64px -24px rgba(0, 0, 0, 0.9);
 
   /* the house ground */
-  --mk-ground:
+  --hb-ground:
     radial-gradient(1100px 560px at 78% 6%, rgba(152, 17, 30, 0.13), transparent 62%),
     radial-gradient(900px 520px at 6% 94%, rgba(19, 42, 46, 0.5), transparent 62%),
     linear-gradient(180deg, #0d1012 0%, #0a0d0e 100%);

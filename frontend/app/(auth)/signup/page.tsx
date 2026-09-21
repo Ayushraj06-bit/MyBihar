@@ -19,12 +19,12 @@ export default function SignUpPage() {
 
   return (
     <AuthStage lede="Make an account with Google. It takes a minute.">
-      <div className="mk-auth-form">
+      <div className="hb-auth-form">
         <GoogleSignIn label="Create account with Google" />
       </div>
-      <p className="mk-caption mk-auth-foot">
+      <p className="hb-caption hb-auth-foot">
         <span>Already have an account?</span>
-        <Link href="/login" className="mk-btn mk-btn--text">Sign in instead</Link>
+        <Link href="/login" className="hb-btn hb-btn--text">Sign in instead</Link>
       </p>
     </AuthStage>
   )

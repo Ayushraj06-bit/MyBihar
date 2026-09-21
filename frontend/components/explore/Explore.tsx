@@ -29,13 +29,13 @@ function Explore() {
     fetchGhats()
   }, [])
 
-  if (loading) return <div className="mk-page mk-page-top mk-wrap"><AripanLoader label="Finding ghats" /></div>
+  if (loading) return <div className="hb-page hb-page-top hb-wrap"><AripanLoader label="Finding ghats" /></div>
   if (error) {
     return (
-      <div className="mk-page mk-page-top mk-wrap">
-        <div className="mk-panel mk-empty" role="status" style={{ maxWidth: 640 }}>
-          <h2 className="mk-h3">The ghats didn&apos;t load.</h2>
-          <p className="mk-body">Check your connection, then refresh the page.</p>
+      <div className="hb-page hb-page-top hb-wrap">
+        <div className="hb-panel hb-empty" role="status" style={{ maxWidth: 640 }}>
+          <h2 className="hb-h3">The ghats didn&apos;t load.</h2>
+          <p className="hb-body">Check your connection, then refresh the page.</p>
         </div>
       </div>
     )
@@ -47,8 +47,8 @@ function Explore() {
   )
 
   return (
-    <div className="mk-page mk-page-top mk-wrap">
-      <label className="mk-line" style={{ maxWidth: 640 }}>
+    <div className="hb-page hb-page-top hb-wrap">
+      <label className="hb-line" style={{ maxWidth: 640 }}>
         <span className="sr-only">Search ghats</span>
         <UiIcon name="search" size={20} />
         <input
@@ -59,7 +59,7 @@ function Explore() {
         />
       </label>
 
-      <div className="mk-grid" style={{ marginTop: 48 }}>
+      <div className="hb-grid" style={{ marginTop: 48 }}>
         {filteredGhats.map(ghat => (
           <Card
             key={ghat._id}

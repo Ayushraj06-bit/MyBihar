@@ -64,7 +64,7 @@ type MedallionProps = { open?: boolean; size?: number; className?: string }
 
 export function Medallion({ open = true, size = 160, className = '' }: MedallionProps) {
   return (
-    <svg className={`mk-mithila mk-medallion ${open ? 'is-open' : ''} ${className}`}
+    <svg className={`hb-mithila hb-medallion ${open ? 'is-open' : ''} ${className}`}
       viewBox="0 0 240 240" width={size} height={size} aria-hidden="true">
       <g className="k-pearl">
         {K_PETALS.map(([a, L, w], i) => (
@@ -83,7 +83,7 @@ export function Medallion({ open = true, size = 160, className = '' }: Medallion
         ))}
       </g>
       <g className="k-disc">
-        <circle cx={KC} cy={KCY} r={KR} fill="var(--mk-crimson)" />
+        <circle cx={KC} cy={KCY} r={KR} fill="var(--hb-crimson)" />
       </g>
     </svg>
   )
@@ -91,9 +91,9 @@ export function Medallion({ open = true, size = 160, className = '' }: Medallion
 
 type SprigProps = { size?: number; color?: string; className?: string }
 
-export function Sprig({ size = 32, color = 'var(--mk-crimson)', className = '' }: SprigProps) {
+export function Sprig({ size = 32, color = 'var(--hb-crimson)', className = '' }: SprigProps) {
   return (
-    <svg className={`mk-sprig ${className}`} viewBox="0 0 40 104"
+    <svg className={`hb-sprig ${className}`} viewBox="0 0 40 104"
       width={size * (40 / 104)} height={size} aria-hidden="true" fill={color}>
       <path d="M20 4 C13 22 8 34 8 43 C8 51 13 56 20 56 C27 56 32 51 32 43 C32 34 27 22 20 4 Z" />
       <circle cx="20" cy="74" r="5.5" /><circle cx="20" cy="92" r="3.5" />

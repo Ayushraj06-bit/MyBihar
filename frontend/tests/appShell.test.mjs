@@ -21,7 +21,7 @@ test('the authenticated app shell is the notch bar, with the account inside it',
 
   assert.match(shell, /<Navbar \/>/)
   assert.doesNotMatch(shell, /UserMenu|TopNavbar|DarkModeToggle/)
-  assert.match(nav, /className="mk-notchbar"/)
+  assert.match(nav, /className="hb-notchbar"/)
   assert.match(nav, /className="bezel"/)
   assert.match(nav, /nn nn-logo/)
   assert.match(nav, /nn nn-menu/)
@@ -62,8 +62,8 @@ test('Google is the only way in, through Supabase OAuth', async () => {
 test('auth screens are styled by the brand sheet, with no third-party widget', async () => {
   const css = await readSource('styles/auth.css')
 
-  assert.match(css, /\.mk-auth-card/)
-  assert.match(css, /\.mk-auth-error \{[^}]*var\(--mk-genda\)/)
+  assert.match(css, /\.hb-auth-card/)
+  assert.match(css, /\.hb-auth-error \{[^}]*var\(--hb-genda\)/)
 })
 
 test('home opens on a held title card, once a session', async () => {
@@ -76,10 +76,10 @@ test('home opens on a held title card, once a session', async () => {
   assert.match(entry, /sessionStorage/)
   assert.doesNotMatch(entry, /<video|\.mp4/, 'a held still, not a film')
   assert.match(entry, /<MedallionBloom/)
-  assert.match(entry, /className="mk-entry-skip" onClick=\{dismiss\}/)
+  assert.match(entry, /className="hb-entry-skip" onClick=\{dismiss\}/)
   assert.match(entry, /prefers-reduced-motion: reduce/)
   assert.doesNotMatch(css, /entry-video|entry-splash/)
-  assert.doesNotMatch(css, /\.mk-entry-still[^{]*\{[^}]*border-radius/)
+  assert.doesNotMatch(css, /\.hb-entry-still[^{]*\{[^}]*border-radius/)
   assert.match(css, /mask-composite: intersect/)
   assert.match(css, /linear-gradient\(to right/)
   assert.match(css, /linear-gradient\(to bottom/)

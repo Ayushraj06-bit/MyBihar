@@ -111,7 +111,7 @@ type IconProps = { name: CityIconName; size?: number; className?: string }
 
 export function CityIcon({ name, size = 32, className = '' }: IconProps) {
   return (
-    <svg viewBox="0 0 32 32" width={size} height={size} className={`mk-icon ${className}`}
+    <svg viewBox="0 0 32 32" width={size} height={size} className={`hb-icon ${className}`}
       fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
       strokeLinejoin="round" aria-hidden="true">
       {ICONS[name]}
@@ -141,7 +141,7 @@ export type UiIconName = keyof typeof UI
 
 export function UiIcon({ name, size = 18, className = '' }: { name: UiIconName; size?: number; className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" width={size} height={size} className={`mk-ui-icon ${className}`}
+    <svg viewBox="0 0 24 24" width={size} height={size} className={`hb-ui-icon ${className}`}
       fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"
       strokeLinejoin="round" aria-hidden="true">
       {UI[name]}

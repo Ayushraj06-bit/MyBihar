@@ -114,7 +114,7 @@ export default function Navbar() {
   )
 
   return (
-    <div className="mk-notchbar">
+    <div className="hb-notchbar">
       <div className="bezel" aria-hidden="true" />
       <div className={`nn-scrim ${menuOpen ? 'is-open' : ''}`} aria-hidden="true" onClick={() => setMenuOpen(false)} />
 

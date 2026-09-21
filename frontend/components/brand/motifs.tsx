@@ -5,8 +5,8 @@ import { EP } from './emblems'
 /*  Six motifs read straight off design/madhubani.jpg. Solid, symmetrical,
     built from teardrops and dot runs. 64 x 112 grid.                          */
 
-const P = 'var(--mk-pearl)'
-const CR = 'var(--mk-crimson)'
+const P = 'var(--hb-pearl)'
+const CR = 'var(--hb-crimson)'
 
 /* Rounded so the server and the client print identical attribute strings —
    an unrounded Math.sin result hydrates as a mismatch. */
@@ -92,7 +92,7 @@ export const MOTIF_LIB_LIST: [MotifName, string, string][] = [
 export function Motif({ name, height = 80, className = '' }: { name: MotifName; height?: number; className?: string }) {
   return (
     <svg viewBox="0 0 64 112" width={height * (64 / 112)} height={height}
-      className={`mk-motif ${className}`} aria-hidden="true">
+      className={`hb-motif ${className}`} aria-hidden="true">
       {MOTIF_LIB[name]}
     </svg>
   )

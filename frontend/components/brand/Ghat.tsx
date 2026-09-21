@@ -19,7 +19,7 @@ function seeded(seed: number) {
   }
 }
 
-const HORIZON = 580     /* the shader stops here — see .mk-sky-shader */
+const HORIZON = 580     /* the shader stops here — see .hb-sky-shader */
 const SHORE = 724       /* water ends, the first step begins — above the 21:9 crop line (~793) */
 const SUN = { x: 1180, y: 512, r: 58 }
 
@@ -150,9 +150,9 @@ function Diya({ x, y, s, o }: { x: number; y: number; s: number; o: number }) {
 export function GhatScene() {
   return (
     <>
-      <div className="mk-sky-frame">
-        <div className="mk-sky-fit">
-          <div className="mk-sky-shader">
+      <div className="hb-sky-frame">
+        <div className="hb-sky-fit">
+          <div className="hb-sky-shader">
             <CloudShader
               skyTopColor="#2E2650"
               skyBottomColor="#E5883A"
@@ -161,7 +161,7 @@ export function GhatScene() {
               speed={0.5}
             />
           </div>
-          <svg className="mk-sky" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
+          <svg className="hb-sky" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
             <defs>
               <radialGradient id="gh-halo" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stopColor="#FFD27A" stopOpacity="0.55" />
@@ -205,7 +205,7 @@ export function GhatScene() {
 
             {/* the sun — one yellow, one moment. §3.7 */}
             <circle cx={SUN.x} cy={SUN.y} r={SUN.r * 3.4} fill="url(#gh-halo)" />
-            <circle className="mk-sky-sun" cx={SUN.x} cy={SUN.y} r={SUN.r} fill="#F2B33D" />
+            <circle className="hb-sky-sun" cx={SUN.x} cy={SUN.y} r={SUN.r} fill="#F2B33D" />
             <circle cx={SUN.x} cy={SUN.y} r={SUN.r - 6} fill="#FFD27A" opacity="0.55" />
 
             {/* the far bank: Sonepur side, a dark line with a few trees */}
@@ -241,10 +241,10 @@ export function GhatScene() {
             {DIYAS.map((d, i) => <Diya key={i} {...d} />)}
 
             {/* the ikh — back row blurred, front row crisp */}
-            <g className="mk-sky-reed-back" filter="url(#gh-cane)">
+            <g className="hb-sky-reed-back" filter="url(#gh-cane)">
               {CANES.filter((k) => !k.front).map((k, i) => <Cane key={`b${i}`} k={k} />)}
             </g>
-            <g className="mk-sky-reed-front">
+            <g className="hb-sky-reed-front">
               {CANES.filter((k) => k.front).map((k, i) => <Cane key={`f${i}`} k={k} />)}
             </g>
 
@@ -281,7 +281,7 @@ export default function GhatStill() {
             linear-gradient(90deg, rgba(13,16,18,0.78) 0%, rgba(13,16,18,0.32) 36%, rgba(13,16,18,0) 62%),
             linear-gradient(0deg, rgba(13,16,18,0.62) 0%, rgba(38,10,14,0.18) 28%, rgba(38,10,14,0) 48%);
         }
-        .kp .mk-capdev {
+        .kp .hb-capdev {
           position: absolute;
           left: 0; bottom: 0;
           padding: clamp(24px, 5vw, 64px);
@@ -294,11 +294,11 @@ export default function GhatStill() {
       <figure className="kp">
         <GhatScene />
         <div className="kp-scrim" aria-hidden="true" />
-        <figcaption className="mk-capdev">
-          <span className="mk-capdev-tick" aria-hidden="true" />
+        <figcaption className="hb-capdev">
+          <span className="hb-capdev-tick" aria-hidden="true" />
           <div>
-            <p className="mk-capdev-1">The sun goes down over the Ganga,</p>
-            <p className="mk-capdev-2">and the whole ghat turns to face it.</p>
+            <p className="hb-capdev-1">The sun goes down over the Ganga,</p>
+            <p className="hb-capdev-2">and the whole ghat turns to face it.</p>
           </div>
         </figcaption>
       </figure>

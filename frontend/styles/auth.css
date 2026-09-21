@@ -1,76 +1,76 @@
 /* Sign in and create account. Built from styles/brand.css primitives. */
 
-.mk-auth {
+.hb-auth {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   min-height: 100svh;
 }
-.mk-auth--loading { display: flex; align-items: center; justify-content: center; padding: 0 var(--mk-edge); }
+.hb-auth--loading { display: flex; align-items: center; justify-content: center; padding: 0 var(--hb-edge); }
 
-.mk-auth-main {
+.hb-auth-main {
   position: relative;
   display: flex; align-items: center; justify-content: center;
-  padding: clamp(40px, 7vw, 96px) var(--mk-edge);
+  padding: clamp(40px, 7vw, 96px) var(--hb-edge);
   background:
     radial-gradient(700px 460px at 0% 100%, rgba(19, 42, 46, 0.5), transparent 62%),
-    var(--mk-obsidian);
+    var(--hb-obsidian);
 }
-.mk-auth-column {
+.hb-auth-column {
   display: flex; flex-direction: column; align-items: center;
   width: 100%; max-width: 440px; text-align: center;
 }
 
-.mk-auth-lockup { display: flex; align-items: center; gap: var(--mk-4); text-align: left; }
-.mk-auth-latin {
-  margin: 0; font-family: var(--mk-display); font-weight: 400; color: var(--mk-white);
+.hb-auth-lockup { display: flex; align-items: center; gap: var(--hb-4); text-align: left; }
+.hb-auth-latin {
+  margin: 0; font-family: var(--hb-display); font-weight: 400; color: var(--hb-white);
   font-size: 26px; letter-spacing: 0.14em; line-height: 1.1;
 }
 /* the wordmark's Devanagari — a whisper under the Latin, in Ash */
-.mk-auth-hi {
-  margin: 4px 0 0; font-family: var(--mk-devanagari); font-variation-settings: 'wght' 500;
-  font-size: 14px; line-height: 1.5; color: var(--mk-ash);
+.hb-auth-hi {
+  margin: 4px 0 0; font-family: var(--hb-devanagari); font-variation-settings: 'wght' 500;
+  font-size: 14px; line-height: 1.5; color: var(--hb-ash);
 }
-.mk-auth-lede { margin: var(--mk-6) 0 var(--mk-6); max-width: 36ch; }
+.hb-auth-lede { margin: var(--hb-6) 0 var(--hb-6); max-width: 36ch; }
 
-.mk-seg.mk-auth-switch {
+.hb-seg.hb-auth-switch {
   display: flex;
   width: fit-content;
-  margin-bottom: var(--mk-5);
+  margin-bottom: var(--hb-5);
   margin-inline: auto;
 }
-.mk-auth-form { width: 100%; }
+.hb-auth-form { width: 100%; }
 /* the card the sign-in widget used to draw: Ink on Obsidian, one Google button */
-.mk-auth-card {
-  display: flex; flex-direction: column; gap: var(--mk-4);
-  padding: var(--mk-6);
-  background: var(--mk-ink); border: 1px solid rgba(242, 241, 237, 0.08); border-radius: 20px;
+.hb-auth-card {
+  display: flex; flex-direction: column; gap: var(--hb-4);
+  padding: var(--hb-6);
+  background: var(--hb-ink); border: 1px solid rgba(242, 241, 237, 0.08); border-radius: 20px;
   box-shadow: 0 28px 64px -24px rgba(0, 0, 0, 0.9);
 }
-.mk-auth-google { display: inline-flex; align-items: center; justify-content: center; gap: var(--mk-3); }
+.hb-auth-google { display: inline-flex; align-items: center; justify-content: center; gap: var(--hb-3); }
 /* Genda Yellow, not Crimson — error text is small (design.md §3.6) */
-.mk-auth-error { margin: 0; color: var(--mk-genda); }
+.hb-auth-error { margin: 0; color: var(--hb-genda); }
 /* the credit line, pinned to the foot of the form half */
-.mk-auth-credit { position: absolute; left: 0; right: 0; bottom: var(--mk-5); text-align: center; }
-.mk-auth-foot { margin-top: var(--mk-5); display: flex; align-items: center; justify-content: center; gap: var(--mk-3); flex-wrap: wrap; }
+.hb-auth-credit { position: absolute; left: 0; right: 0; bottom: var(--hb-5); text-align: center; }
+.hb-auth-foot { margin-top: var(--hb-5); display: flex; align-items: center; justify-content: center; gap: var(--hb-3); flex-wrap: wrap; }
 
-.mk-auth-photo { position: relative; margin: 0; overflow: hidden; background: var(--mk-ink); }
-.mk-auth-photo img {
+.hb-auth-photo { position: relative; margin: 0; overflow: hidden; background: var(--hb-ink); }
+.hb-auth-photo img {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%;
   filter: saturate(0.96) contrast(1.12);
 }
 /* black passes through Bordeaux on its way down — never flat alpha over the image */
-.mk-auth-scrim {
+.hb-auth-scrim {
   position: absolute; inset: 0;
   background:
     linear-gradient(0deg, rgba(10,13,14,0.86) 0%, rgba(38,10,14,0.26) 36%, rgba(38,10,14,0) 60%),
     linear-gradient(90deg, rgba(13,16,18,0.55) 0%, rgba(13,16,18,0) 30%),
     linear-gradient(0deg, rgba(19,42,46,0.22), rgba(19,42,46,0.22));
 }
-.mk-auth-caption { position: absolute; left: 0; bottom: 0; padding: clamp(24px, 4vw, 56px); max-width: 560px; }
+.hb-auth-caption { position: absolute; left: 0; bottom: 0; padding: clamp(24px, 4vw, 56px); max-width: 560px; }
 
 @media (max-width: 900px) {
-  .mk-auth { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-  .mk-auth-photo { order: -1; min-width: 0; height: clamp(200px, 52vw, 360px); }
-  .mk-auth-caption { display: none; }
-  .mk-auth-main { align-items: flex-start; padding-top: var(--mk-7); }
+  .hb-auth { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .hb-auth-photo { order: -1; min-width: 0; height: clamp(200px, 52vw, 360px); }
+  .hb-auth-caption { display: none; }
+  .hb-auth-main { align-items: flex-start; padding-top: var(--hb-7); }
 }

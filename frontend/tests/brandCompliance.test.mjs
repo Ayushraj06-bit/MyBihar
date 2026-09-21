@@ -100,6 +100,6 @@ test('the brand kit and the product share one mithila, one set of icons and one 
   const kit = await readFile(new URL('app/brand-kit/page.tsx', root), 'utf8')
   assert.match(kit, /from '@\/components\/brand\/mithila'/)
   assert.match(kit, /from '@\/components\/brand\/icons'/)
-  assert.match(kit, /className="mk-notchbar"/)
+  assert.match(kit, /className="hb-notchbar"/)
   assert.doesNotMatch(kit, /function Medallion|const ICONS = |const EMBLEMS = |const NAHAY_KHAY/)
 })

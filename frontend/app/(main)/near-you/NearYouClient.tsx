@@ -114,7 +114,7 @@ function DiscoveryControls({
         <Link href="/places" className={styles.mapBack} aria-label={`Back to Explore from ${locationKnown ? 'Near you' : 'Bihar map'}`}>
           <UiIcon name="back" />
         </Link>
-        <label className={`mk-line ${styles.searchBox}`}>
+        <label className={`hb-line ${styles.searchBox}`}>
           <span className="sr-only">Search a café, a dish, a mohalla or a landmark</span>
           <UiIcon name="search" size={16} />
           <input
@@ -129,14 +129,14 @@ function DiscoveryControls({
             enterKeyHint="search"
           />
           {query && (
-            <button type="button" className={`mk-icon-btn mk-icon-btn--bare ${styles.deckIcon}`} onClick={onClearSearch} aria-label="Clear search">
+            <button type="button" className={`hb-icon-btn hb-icon-btn--bare ${styles.deckIcon}`} onClick={onClearSearch} aria-label="Clear search">
               <UiIcon name="close" size={16} />
             </button>
           )}
         </label>
         <button
           type="button"
-          className={`mk-icon-btn mk-icon-btn--bare ${styles.deckIcon}`}
+          className={`hb-icon-btn hb-icon-btn--bare ${styles.deckIcon}`}
           aria-expanded={filtersOpen}
           aria-controls="near-you-filters"
           aria-label="Filters"
@@ -145,12 +145,12 @@ function DiscoveryControls({
           <UiIcon name="filter" size={18} />
           {filterCount}
         </button>
-        <button type="button" className={`mk-icon-btn mk-icon-btn--bare ${styles.deckIcon}`} onClick={() => onViewChange('list')} aria-label="Show places as a list">
+        <button type="button" className={`hb-icon-btn hb-icon-btn--bare ${styles.deckIcon}`} onClick={() => onViewChange('list')} aria-label="Show places as a list">
           <UiIcon name="list" size={18} />
         </button>
         <button
           type="button"
-          className={`mk-icon-btn mk-icon-btn--bare ${styles.deckIcon} ${styles.locateIcon}`}
+          className={`hb-icon-btn hb-icon-btn--bare ${styles.deckIcon} ${styles.locateIcon}`}
           onClick={onLocate}
           disabled={locationState === 'loading'}
           aria-pressed={locationKnown}
@@ -164,7 +164,7 @@ function DiscoveryControls({
 
   return (
     <div className={styles.controlDeck}>
-      <label className={`mk-line ${styles.searchBox}`}>
+      <label className={`hb-line ${styles.searchBox}`}>
         <span className="sr-only">Search a café, a dish, a mohalla or a landmark</span>
         <UiIcon name="search" />
         <input
@@ -179,7 +179,7 @@ function DiscoveryControls({
           enterKeyHint="search"
         />
         {query && (
-          <button type="button" className="mk-icon-btn mk-icon-btn--bare" onClick={onClearSearch} aria-label="Clear search">
+          <button type="button" className="hb-icon-btn hb-icon-btn--bare" onClick={onClearSearch} aria-label="Clear search">
             <UiIcon name="close" />
           </button>
         )}
@@ -187,7 +187,7 @@ function DiscoveryControls({
 
       <button
         type="button"
-        className={`mk-btn mk-btn--secondary mk-btn--sm ${styles.filterButton}`}
+        className={`hb-btn hb-btn--secondary hb-btn--sm ${styles.filterButton}`}
         aria-expanded={filtersOpen}
         aria-controls="near-you-filters"
         onClick={onToggleFilters}
@@ -197,7 +197,7 @@ function DiscoveryControls({
         {filterCount}
       </button>
 
-      <div className={`mk-seg ${styles.viewToggle}`} role="group" aria-label="Choose results view">
+      <div className={`hb-seg ${styles.viewToggle}`} role="group" aria-label="Choose results view">
         {viewOptions.map(({ id, label }) => (
           <button key={id} type="button" aria-pressed={view === id} onClick={() => onViewChange(id)}>
             {id === 'map' ? <CityIcon name="setu" size={18} /> : <UiIcon name={VIEW_ICONS[id]} size={16} />}
@@ -208,7 +208,7 @@ function DiscoveryControls({
 
       <button
         type="button"
-        className={`mk-icon-btn ${styles.locateIcon}`}
+        className={`hb-icon-btn ${styles.locateIcon}`}
         onClick={onLocate}
         disabled={locationState === 'loading'}
         aria-pressed={locationKnown}
@@ -290,7 +290,7 @@ function PlaceVisual({ place, detail = false }) {
   return (
     <div className={styles.placeVisualFallback} role="img" aria-label={`Photo not available for ${place.name}`}>
       <CityIcon name={place.icon || 'golghar'} size={36} />
-      <span className="mk-meta">{place.category}</span>
+      <span className="hb-meta">{place.category}</span>
     </div>
   )
 }
@@ -300,16 +300,16 @@ function FilterStack({ category, onCategoryChange, area, areas, onAreaChange, re
     <div id="near-you-filters" className={styles.filterStack}>
       <div className={styles.filterHeading}>
         <div>
-          <p className="mk-meta">Refine the map</p>
+          <p className="hb-meta">Refine the map</p>
           <p className={styles.filterTitle}>{resultCount} {resultCount === 1 ? 'place' : 'places'} showing</p>
         </div>
-        <button type="button" className="mk-icon-btn mk-icon-btn--bare" onClick={onClose} aria-label="Close filters"><UiIcon name="close" /></button>
+        <button type="button" className="hb-icon-btn hb-icon-btn--bare" onClick={onClose} aria-label="Close filters"><UiIcon name="close" /></button>
       </div>
       <div className={styles.filterGroup}>
-        <span className="mk-meta">What</span>
+        <span className="hb-meta">What</span>
         <FilterScroller className={styles.categoryFilters} label="Filter by category">
           {nearCategories.map((item) => (
-            <button key={item} type="button" className="mk-chip" aria-pressed={category === item} onClick={() => onCategoryChange(item)}>
+            <button key={item} type="button" className="hb-chip" aria-pressed={category === item} onClick={() => onCategoryChange(item)}>
               {item}
             </button>
           ))}
@@ -317,17 +317,17 @@ function FilterStack({ category, onCategoryChange, area, areas, onAreaChange, re
       </div>
       {areas.length > 1 && (
         <div className={styles.filterGroup}>
-          <span className="mk-meta">Where, among these results</span>
+          <span className="hb-meta">Where, among these results</span>
           <FilterScroller className={styles.areaFilters} label="Filter by area">
             {areas.map((item) => (
-              <button key={item} type="button" className="mk-chip" aria-pressed={area === item} onClick={() => onAreaChange(item)}>
+              <button key={item} type="button" className="hb-chip" aria-pressed={area === item} onClick={() => onAreaChange(item)}>
                 {item}
               </button>
             ))}
           </FilterScroller>
         </div>
       )}
-      {activeFilterCount > 0 && <button type="button" className={`mk-btn mk-btn--text ${styles.clearFilters}`} onClick={onClearFilters}>Clear all filters</button>}
+      {activeFilterCount > 0 && <button type="button" className={`hb-btn hb-btn--text ${styles.clearFilters}`} onClick={onClearFilters}>Clear all filters</button>}
     </div>
   )
 }
@@ -349,7 +349,7 @@ function PlaceDetails({ place, origin, onClose, onExploreAround, enrichmentStatu
 
   return (
     <aside className={styles.placeDetails} aria-label={`${place.name} details`}>
-      <button type="button" className={`mk-icon-btn ${styles.closeDetails}`} onClick={onClose} aria-label={`Close ${place.name} details`}>
+      <button type="button" className={`hb-icon-btn ${styles.closeDetails}`} onClick={onClose} aria-label={`Close ${place.name} details`}>
         <UiIcon name="close" />
       </button>
       <div className={styles.detailsMedia}><PlaceVisual place={place} detail /></div>
@@ -373,8 +373,8 @@ function PlaceDetails({ place, origin, onClose, onExploreAround, enrichmentStatu
         )}
         {(place.phone || websiteUrl) && (
           <div className={styles.contactLinks}>
-            {place.phone && <a className="mk-btn mk-btn--secondary mk-btn--sm" href={`tel:${String(place.phone).replace(/[^+\d]/g, '')}`}>Call</a>}
-            {websiteUrl && <a className="mk-btn mk-btn--secondary mk-btn--sm" href={websiteUrl} target="_blank" rel="noopener noreferrer">Website</a>}
+            {place.phone && <a className="hb-btn hb-btn--secondary hb-btn--sm" href={`tel:${String(place.phone).replace(/[^+\d]/g, '')}`}>Call</a>}
+            {websiteUrl && <a className="hb-btn hb-btn--secondary hb-btn--sm" href={websiteUrl} target="_blank" rel="noopener noreferrer">Website</a>}
           </div>
         )}
         {place.imageAttribution && (
@@ -387,11 +387,11 @@ function PlaceDetails({ place, origin, onClose, onExploreAround, enrichmentStatu
         )}
         <div className={styles.detailsFooter}>
           <div className={styles.detailsActions}>
-            <button type="button" className="mk-btn mk-btn--text" onClick={() => onExploreAround(place)}>
+            <button type="button" className="hb-btn hb-btn--text" onClick={() => onExploreAround(place)}>
               What&apos;s nearby
             </button>
             <a
-              className="mk-btn mk-btn--text"
+              className="hb-btn hb-btn--text"
               href={googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -424,8 +424,8 @@ function PlaceCard({ place, layout, origin, onShowMap, onExploreAround }) {
         <div className={styles.cardFooter}>
           {distance && <span className={styles.distance}>{distance}</span>}
           <div className={styles.cardActions}>
-            <button type="button" className="mk-btn mk-btn--text" onClick={() => onExploreAround(place)}>What&apos;s nearby</button>
-            <button type="button" className="mk-btn mk-btn--text" onClick={() => onShowMap(place.id)}>Show on map</button>
+            <button type="button" className="hb-btn hb-btn--text" onClick={() => onExploreAround(place)}>What&apos;s nearby</button>
+            <button type="button" className="hb-btn hb-btn--text" onClick={() => onShowMap(place.id)}>Show on map</button>
           </div>
         </div>
       </div>
@@ -441,11 +441,11 @@ function PlaceResultsSkeleton({ layout }) {
       <div className={layout === 'grid' ? styles.gridView : styles.listView}>
         {Array.from({ length: count }, (_, index) => (
           <div key={index} className={`${styles.placeSkeleton} ${layout === 'list' ? styles.placeSkeletonList : ''}`} aria-hidden="true">
-            <div className={`mk-skel ${styles.placeSkeletonMedia}`} />
+            <div className={`hb-skel ${styles.placeSkeletonMedia}`} />
             <div className={styles.placeSkeletonBody}>
-              <span className="mk-skel-line" style={{ width: '62%', height: 18 }} />
-              <span className="mk-skel-line" style={{ width: '40%' }} />
-              <span className="mk-skel-line" style={{ width: '84%' }} />
+              <span className="hb-skel-line" style={{ width: '62%', height: 18 }} />
+              <span className="hb-skel-line" style={{ width: '40%' }} />
+              <span className="hb-skel-line" style={{ width: '84%' }} />
             </div>
           </div>
         ))}
@@ -461,19 +461,19 @@ function EmptyResults({ searchText, category, origin, onClearSearch, onShowAllCa
   if (searchText) {
     title = `Nothing in Bihar matches “${searchText}”.`
     body = 'Check the spelling, or search a mohalla, a street or a landmark.'
-    action = <button type="button" className="mk-btn mk-btn--secondary mk-btn--sm" onClick={onClearSearch}>Clear search</button>
+    action = <button type="button" className="hb-btn hb-btn--secondary hb-btn--sm" onClick={onClearSearch}>Clear search</button>
   } else if (category !== 'All') {
     title = `No ${CATEGORY_NOUNS[category] ?? 'places'} ${originPhrase(origin)}.`
     body = 'Zoom out and search this area, or try another kind of place.'
-    action = <button type="button" className="mk-btn mk-btn--secondary mk-btn--sm" onClick={onShowAllCategories}>Show every kind of place</button>
+    action = <button type="button" className="hb-btn hb-btn--secondary hb-btn--sm" onClick={onShowAllCategories}>Show every kind of place</button>
   } else {
     title = `Nothing is mapped ${originPhrase(origin)} yet.`
     body = 'Zoom out, then search this area.'
   }
   return (
     <div className={className} role="status">
-      <h2 className="mk-h3">{title}</h2>
-      <p className={compact ? 'mk-caption' : 'mk-body'}>{body}</p>
+      <h2 className="hb-h3">{title}</h2>
+      <p className={compact ? 'hb-caption' : 'hb-body'}>{body}</p>
       {action}
     </div>
   )
@@ -841,15 +841,15 @@ export default function NearYouClient() {
                 ? (holdForLocation ? 'Finding your location…' : 'Finding places…')
                 : dataStatus === 'error'
                   ? 'Places didn’t load'
-                  : <><span className="mk-tabular">{visiblePlaces.length}</span>&nbsp;{noun} {summary}</>}
+                  : <><span className="hb-tabular">{visiblePlaces.length}</span>&nbsp;{noun} {summary}</>}
             </span>
             {areaAnchor && (
-              <button type="button" className="mk-btn mk-btn--secondary mk-btn--sm" onClick={() => exploreArea(areaAnchor)}>
+              <button type="button" className="hb-btn hb-btn--secondary hb-btn--sm" onClick={() => exploreArea(areaAnchor)}>
                 Explore around {areaAnchor.name}
               </button>
             )}
             {pendingViewport && (
-              <button type="button" className="mk-btn mk-btn--primary mk-btn--sm" onClick={searchThisArea}>
+              <button type="button" className="hb-btn hb-btn--primary hb-btn--sm" onClick={searchThisArea}>
                 Search this area
               </button>
             )}
@@ -872,7 +872,7 @@ export default function NearYouClient() {
           {dataStatus === 'error' && (
             <div className={styles.dataNotice} role="status">
               <span>Bihar places couldn’t be loaded.</span>
-              <button type="button" className="mk-btn mk-btn--secondary mk-btn--sm" onClick={retryPlaces}>Try again</button>
+              <button type="button" className="hb-btn hb-btn--secondary hb-btn--sm" onClick={retryPlaces}>Try again</button>
             </div>
           )}
 
@@ -914,16 +914,16 @@ export default function NearYouClient() {
           )}
         </section>
       ) : (
-        <div className="mk-wrap">
+        <div className="hb-wrap">
           <header className={styles.resultsHeader}>
-            <Link href="/places" className={`mk-btn mk-btn--text ${styles.backLink}`}>
+            <Link href="/places" className={`hb-btn hb-btn--text ${styles.backLink}`}>
               <UiIcon name="back" /> Explore
             </Link>
-            <div className="mk-band-head">
+            <div className="hb-band-head">
               <Sprig size={46} />
               <div>
-                <p className="mk-caption">{category === 'All' ? 'Every kind of place' : category}</p>
-                <h1 className="mk-h1">
+                <p className="hb-caption">{category === 'All' ? 'Every kind of place' : category}</p>
+                <h1 className="hb-h1">
                   {searchText
                     ? `“${searchText}”`
                     : origin.source === 'user'
@@ -948,19 +948,19 @@ export default function NearYouClient() {
             </p>
 
             {areaAnchor && (
-              <button type="button" className={`mk-btn mk-btn--secondary ${styles.anchorButton}`} onClick={() => exploreArea(areaAnchor)}>
+              <button type="button" className={`hb-btn hb-btn--secondary ${styles.anchorButton}`} onClick={() => exploreArea(areaAnchor)}>
                 Explore around {areaAnchor.name}
               </button>
             )}
 
-            {showLocationNotice && <p className={`mk-note ${styles.resultsNotice}`} role="status">{locationMessage}</p>}
+            {showLocationNotice && <p className={`hb-note ${styles.resultsNotice}`} role="status">{locationMessage}</p>}
             {dataStatus === 'loading' ? (
               <PlaceResultsSkeleton layout={view} />
             ) : dataStatus === 'error' ? (
-              <div className={`mk-panel mk-empty ${styles.emptyPage}`} role="status">
-                <h2 className="mk-h3">We couldn’t load Bihar places.</h2>
-                <p className="mk-body">Check your connection, then try again.</p>
-                <button type="button" className="mk-btn mk-btn--secondary" onClick={retryPlaces}>Try again</button>
+              <div className={`hb-panel hb-empty ${styles.emptyPage}`} role="status">
+                <h2 className="hb-h3">We couldn’t load Bihar places.</h2>
+                <p className="hb-body">Check your connection, then try again.</p>
+                <button type="button" className="hb-btn hb-btn--secondary" onClick={retryPlaces}>Try again</button>
               </div>
             ) : visiblePlaces.length ? (
               <>
@@ -979,7 +979,7 @@ export default function NearYouClient() {
                 {visiblePlaces.length > visibleCount && (
                   <button
                     type="button"
-                    className={`mk-btn mk-btn--secondary ${styles.loadMore}`}
+                    className={`hb-btn hb-btn--secondary ${styles.loadMore}`}
                     onClick={() => setPaging({ key: requestKey, count: visibleCount + PAGE_SIZE })}
                   >
                     Show {Math.min(PAGE_SIZE, visiblePlaces.length - visibleCount)} more places
@@ -988,7 +988,7 @@ export default function NearYouClient() {
               </>
             ) : (
               <EmptyResults
-                className={`mk-panel mk-empty ${styles.emptyPage}`}
+                className={`hb-panel hb-empty ${styles.emptyPage}`}
                 searchText={searchText}
                 category={category}
                 origin={origin}

@@ -30,38 +30,38 @@ export function Card({
   const Title = headingLevel
   const inner = (
     <>
-      <div className="mk-card-media">
+      <div className="hb-card-media">
         {image ? (
           /* eslint-disable-next-line @next/next/no-img-element */
-          <img className="mk-card-img" src={image} alt={imageAlt} loading="lazy" decoding="async" />
+          <img className="hb-card-img" src={image} alt={imageAlt} loading="lazy" decoding="async" />
         ) : (
-          <div className="mk-card-fallback">
+          <div className="hb-card-fallback">
             {icon && <CityIcon name={icon} />}
-            <span className="mk-meta">{fallbackLabel ?? 'Photograph to come'}</span>
+            <span className="hb-meta">{fallbackLabel ?? 'Photograph to come'}</span>
           </div>
         )}
-        <div className="mk-card-scrim" aria-hidden="true" />
-        {image && icon && <CityIcon name={icon} className="mk-card-icon" />}
+        <div className="hb-card-scrim" aria-hidden="true" />
+        {image && icon && <CityIcon name={icon} className="hb-card-icon" />}
       </div>
-      <div className="mk-card-body">
+      <div className="hb-card-body">
         <Sprig size={22} />
-        <div className="mk-card-text">
-          <Title className="mk-card-title">{title}</Title>
-          {sub && <p className="mk-card-sub">{sub}</p>}
-          {desc && <p className="mk-card-desc">{desc}</p>}
+        <div className="hb-card-text">
+          <Title className="hb-card-title">{title}</Title>
+          {sub && <p className="hb-card-sub">{sub}</p>}
+          {desc && <p className="hb-card-desc">{desc}</p>}
         </div>
       </div>
     </>
   )
 
   if (href && external) {
-    return <a className={`mk-card ${className}`} href={href} target="_blank" rel="noopener noreferrer" aria-label={ariaLabel}>{inner}</a>
+    return <a className={`hb-card ${className}`} href={href} target="_blank" rel="noopener noreferrer" aria-label={ariaLabel}>{inner}</a>
   }
   if (href) {
-    return <Link className={`mk-card ${className}`} href={href} aria-label={ariaLabel}>{inner}</Link>
+    return <Link className={`hb-card ${className}`} href={href} aria-label={ariaLabel}>{inner}</Link>
   }
   if (onClick) {
-    return <button type="button" className={`mk-card text-left ${className}`} onClick={onClick} aria-label={ariaLabel}>{inner}</button>
+    return <button type="button" className={`hb-card text-left ${className}`} onClick={onClick} aria-label={ariaLabel}>{inner}</button>
   }
-  return <article className={`mk-card ${className}`} style={{ cursor: 'default' }}>{inner}</article>
+  return <article className={`hb-card ${className}`} style={{ cursor: 'default' }}>{inner}</article>
 }

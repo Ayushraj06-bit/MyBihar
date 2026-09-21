@@ -36,21 +36,21 @@ export function CountdownScene() {
     : [['--', 'days'], ['--', 'hours'], ['--', 'minutes'], ['--', 'seconds']]
 
   return (
-    <div className="mk-count-scene">
+    <div className="hb-count-scene">
       <GhatScene />
-      <div className="mk-count-scrim" aria-hidden="true" />
-      <div className="mk-count-copy">
-        <p className="mk-count-hi" lang="hi">छठ में घरे आ रहल बाड़ऽ नू?</p>
-        <p className="mk-count-home">Welcome home.</p>
-        <div className="mk-count-clock" role="timer" aria-live="off">
+      <div className="hb-count-scrim" aria-hidden="true" />
+      <div className="hb-count-copy">
+        <p className="hb-count-hi" lang="hi">छठ में घरे आ रहल बाड़ऽ नू?</p>
+        <p className="hb-count-home">Welcome home.</p>
+        <div className="hb-count-clock" role="timer" aria-live="off">
           {units.map(([v, label]) => (
-            <div className="mk-unit" key={label}>
-              <span className="mk-unit-num">{v}</span>
-              <span className="mk-unit-label">{label}</span>
+            <div className="hb-unit" key={label}>
+              <span className="hb-unit-num">{v}</span>
+              <span className="hb-unit-label">{label}</span>
             </div>
           ))}
         </div>
-        <p className="mk-count-sub">
+        <p className="hb-count-sub">
           {left?.done
             ? 'Nahay Khay has come. The ghats are ready.'
             : 'till Nahay Khay, 13 November. The ghats have already started getting ready.'}
@@ -62,12 +62,12 @@ export function CountdownScene() {
 
 export function ChhathDays({ className = '' }: { className?: string }) {
   return (
-    <ol className={`mk-count-days ${className}`}>
+    <ol className={`hb-count-days ${className}`}>
       {CHHATH_DAYS.map((d) => (
-        <li className="mk-count-day" key={d.en}>
-          <span className="mk-count-day-hi" lang="hi">{d.hi}</span>
-          <span className="mk-count-day-en">{d.en}</span>
-          <span className="mk-count-day-date">{formatChhathDate(d.iso)}</span>
+        <li className="hb-count-day" key={d.en}>
+          <span className="hb-count-day-hi" lang="hi">{d.hi}</span>
+          <span className="hb-count-day-en">{d.en}</span>
+          <span className="hb-count-day-date">{formatChhathDate(d.iso)}</span>
         </li>
       ))}
     </ol>

@@ -16,21 +16,21 @@ async function Transport() {
   await requireUser()
 
   return (
-    <main className="mk-page mk-page-top">
-      <div className="mk-wrap">
+    <main className="hb-page hb-page-top">
+      <div className="hb-wrap">
         <SectionHead
           level={1}
           title="Transport"
           lede="Live metro, train, bus, auto and cab times across Bihar. On its way — check back soon."
-          action={<span className="mk-tag mk-tag--warn">Coming soon</span>}
+          action={<span className="hb-tag hb-tag--warn">Coming soon</span>}
         />
-        <ul className="mk-transport-modes">
+        <ul className="hb-transport-modes">
           {MODES.map((mode) => (
-            <li key={mode.name} className="mk-surface mk-transport-mode">
+            <li key={mode.name} className="hb-surface hb-transport-mode">
               <CityIcon name={mode.icon} />
               <div>
-                <p className="mk-card-title" style={{ fontSize: 20 }}>{mode.name}</p>
-                <p className="mk-caption" style={{ marginTop: 4 }}>{mode.note}</p>
+                <p className="hb-card-title" style={{ fontSize: 20 }}>{mode.name}</p>
+                <p className="hb-caption" style={{ marginTop: 4 }}>{mode.note}</p>
               </div>
             </li>
           ))}
