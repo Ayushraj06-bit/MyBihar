@@ -50,7 +50,7 @@ export default async function AboutCreator() {
             </p>
           </section>
           <section>
-            <h2 className="hb-h3">Built with love by Ayush Raj</h2>
+            <h2 className="hb-h3">Built with love by Ayush Kumar Jha</h2>
             {contributors.length > 0 ? (
               <ul style={{ listStyle: 'none', margin: '20px 0 0', padding: 0, display: 'grid', gap: 12 }}>
                 {contributors.map((person) => (

@@ -22,7 +22,7 @@ function Login() {
   return (
     <AuthStage
       lede={isSignUpMode ? 'Make an account and keep the city close.' : 'Sign in and pick up where you left the city.'}
-      footer={<>Created with &lt;3 by Ayush Raj</>}
+      footer={<>Created with &lt;3 by Ayush Kumar Jha</>}
     >
       <div className="hb-seg hb-auth-switch" role="group" aria-label="Sign in or create an account">
         <button type="button" aria-pressed={!isSignUpMode} onClick={() => setIsSignUpMode(false)}>Sign in</button>
