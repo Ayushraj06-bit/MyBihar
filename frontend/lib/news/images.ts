@@ -11,7 +11,7 @@ import { isBlockedSource, sourceDomain, titleSimilarity } from './sources'
         (Anakin Search does not; see SearchResultItem)
      3. the event's own artwork
      4. the same story's image on another outlet, found through Anakin
-     5. a local Kolkata photograph for the card type
+     5. a local Bihar photograph for the card type
    Only images tied to *this story* reach 1, 2 and 4 — never a keyword match.
    ========================================================================== */
 
@@ -29,10 +29,10 @@ export type ImageDeps = {
 const NOT_A_PHOTO = /(logo|favicon|placeholder|default[-_]?(image|img|thumb|og)|sprite|blank|spacer|1x1|pixel|avatar)|\.svg(\?|$)/i
 
 /* Local photographs of the city, used only when nothing better exists: the
-   card should still look like Kolkata rather than an empty frame. */
+   card should still look like Bihar rather than an empty frame. */
 export const TRUSTED_FALLBACK_IMAGE: Record<NewsFeed, string> = {
-  CITY: '/hwh.jpg',
-  SPORTS: '/maidan.jpg',
+  CITY: '/gandhi-setu.jpg',
+  SPORTS: '/gandhi-maidan.jpg',
 }
 
 /* the related-coverage search is paid; keep it to a couple of pages */

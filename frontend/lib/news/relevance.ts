@@ -1,60 +1,71 @@
 import type { NewsFeed } from './events'
 
 /* ==========================================================================
-   Is this story about Kolkata, is it sport, and what kind of story is it?
+   Is this story about Bihar, is it sport, and what kind of story is it?
    All scores are 0–1; ranking.ts decides what they are worth.
    ========================================================================== */
 
-/* the city, its neighbourhoods, landmarks and institutions — names found
+/* the state, its cities, districts, landmarks and institutions — names found
    nowhere else */
 const LOCAL_TERMS = [
-  'kolkata', 'calcutta', 'howrah', 'bidhannagar', 'rajarhat', 'esplanade', 'dharmatala', 'sealdah',
-  'gariahat', 'ballygunge', 'behala', 'jadavpur', 'dum dum', 'kalighat', 'shyambazar', 'college street',
-  'victoria memorial', 'tollygunge', 'bowbazar', 'burrabazar', 'bagbazar', 'kumartuli', 'dakshineswar',
-  'kmc', 'nabanna', 'lalbazar', 'barasat', 'baranagar', 'bhowanipore',
+  'bihar', 'patna', 'patliputra', 'pataliputra', 'bodh gaya', 'bodhgaya', 'nalanda', 'rajgir', 'gaya',
+  'muzaffarpur', 'darbhanga', 'madhubani', 'bhagalpur', 'munger', 'purnea', 'purnia', 'kishanganj',
+  'katihar', 'saharsa', 'begusarai', 'samastipur', 'sitamarhi', 'motihari', 'bettiah', 'chhapra',
+  'siwan', 'gopalganj', 'hajipur', 'vaishali', 'sasaram', 'rohtas', 'buxar', 'arrah', 'bhojpur',
+  'jehanabad', 'nawada', 'sheikhpura', 'lakhisarai', 'jamui', 'banka', 'araria', 'madhepura', 'supaul',
+  'sheohar', 'kaimur', 'golghar', 'gandhi maidan', 'bailey road', 'boring road', 'fraser road',
+  'kankarbagh', 'rajendra nagar', 'danapur', 'patna sahib', 'mahatma gandhi setu', 'gandhi setu',
+  'jp setu', 'kesaria', 'vikramshila', 'valmiki tiger reserve', 'sonepur', 'sonpur', 'chhath',
+  'bihar museum', 'patna museum', 'khuda bakhsh', 'bsrtc', 'bihar police', 'bihar assembly',
+  'bihar vidhan', 'patna high court', 'patna municipal', 'patliputra sports complex', 'moin-ul-haq',
+  /* Chhath is the state's own festival: its four days and its ghats are Bihar words */
+  'nahay khay', 'kharna', 'sandhya arghya', 'usha arghya', 'chhathi maiya', 'thekua', 'litti chokha',
+  'collectorate ghat', 'digha ghat', 'kangan ghat', 'kali ghat patna',
 ]
-/* Kolkata places whose names also exist elsewhere — Eden Gardens is a state
-   park in Florida, Salt Lake a city in Utah. They count only when the story
-   also places itself in Bengal or India. */
+/* Bihar places whose names also exist elsewhere — Gaya is also a town in
+   Nigeria, Mithila a region of Nepal, Ganga every river town, Digha a beach
+   in West Bengal, and there is a Gandhi Ghat at Barrackpore too. They count
+   only when the story also places itself in Bihar or India. */
 const AMBIGUOUS_TERMS = [
-  'eden gardens', 'salt lake', 'new town', 'park street', 'new market', 'maidan', 'belur', 'hooghly',
-  'garia', 'sector v',
+  'mithila', 'magadh', 'champaran', 'seemanchal', 'ganga', 'ganges', 'kosi', 'gandak', 'sone',
+  'maurya lok', 'zero mile', 'digha', 'anga', 'ara', 'gandhi ghat', 'litti',
 ]
 const termPattern = (terms: string[]) => new RegExp(`\\b(${terms.map((term) => term.replace(/ /g, '\\s+')).join('|')})\\b`, 'gi')
 const LOCAL_ONLY = termPattern(LOCAL_TERMS)
 const AMBIGUOUS = termPattern(AMBIGUOUS_TERMS)
-const INDIA_CONTEXT = /\b(kolkata|calcutta|bengal|bangla|india|indian|cricket|isl|bcci)\b/i
-const BENGAL = /\b(west bengal|bengal|bangla)\b/i
+const INDIA_CONTEXT = /\b(bihar|patna|bihari|india|indian|cricket|kabaddi|pkl|bcci)\b/i
+const BIHAR = /\b(bihar|bihari|patna)\b/i
 
-/* "Kolkata" that is not the city: the Indian Navy destroyer */
-const NOT_THE_CITY = /\bins\s+kolkata\b/gi
+/* "Patna" that is not the city: the Odisha town Patnagarh */
+const NOT_THE_STATE = /\bpatnagarh\b/gi
 
 function localMatches(text: string, context: string) {
-  const clean = text.replace(NOT_THE_CITY, ' ')
+  const clean = text.replace(NOT_THE_STATE, ' ')
   const matches: string[] = [...(clean.match(LOCAL_ONLY) || [])]
-  if (INDIA_CONTEXT.test(context.replace(NOT_THE_CITY, ' '))) matches.push(...(clean.match(AMBIGUOUS) || []))
+  if (INDIA_CONTEXT.test(context.replace(NOT_THE_STATE, ' '))) matches.push(...(clean.match(AMBIGUOUS) || []))
   return matches.map((match) => match.toLowerCase().replace(/\s+/g, ' '))
 }
 
-/* headlines framed around the country rather than the city */
+/* headlines framed around the country rather than the state */
 const NATIONAL_FRAMING = /\b(india|india's|indian economy|nationwide|national|centre|union budget|sensex|nifty|rbi|gdp|lok sabha|parliament|pm modi)\b/i
 
-/* Kolkata clubs, venues and bodies: a mention is a Kolkata sports connection */
-const KOLKATA_SPORT = /\b(east\s+bengal|mohun\s+bagan|mohammedan\s+(sporting|sc)|eden\s+gardens|salt\s+lake\s+stadium|yuva\s+bharati|yuba\s+bharati|vyb?k|kishore\s+bharati|kolkata\s+knight\s+riders|kkr|cricket\s+association\s+of\s+bengal|ifa\s+shield|\bifa\b|calcutta\s+football\s+league|\bcfl\b|kolkata\s+derby|durand\s+cup|bengal\s+(cricket|team|ranji|pacer|batter|captain|coach|women|u-?\d+|football|squad)|santosh\s+trophy)\b/gi
+/* Bihar clubs, venues and bodies: a mention is a Bihar sports connection */
+const BIHAR_SPORT = /\b(patna\s+pirates|pro\s+kabaddi|pkl|moin-?ul-?haq|patliputra\s+sports\s+complex|bihar\s+cricket\s+association|bca|bihar\s+(cricket|team|ranji|pacer|batter|captain|coach|women|u-?\d+|football|squad|kabaddi)|patna\s+(cricket|football|kabaddi)|santosh\s+trophy|ishan\s+kishan|vaibhav\s+suryavanshi|bihar\s+football\s+association)\b/gi
 
-const SPORT_WORDS = /\b(football|cricket|match|matches|derby|isl|i-league|goals?|wickets?|ipl|ranji|tournament|coach|striker|midfielder|defender|goalkeeper|batter|batsman|bowler|innings|fixture|league|cup|trophy|stadium|kick-off|scored|hockey|tennis|badminton|chess|marathon|athletics|boxing|kabaddi|t20|odi)\b/gi
+const SPORT_WORDS = /\b(football|cricket|kabaddi|match|matches|derby|pkl|i-league|goals?|wickets?|ipl|ranji|tournament|coach|striker|midfielder|defender|goalkeeper|batter|batsman|bowler|innings|raider|raid|fixture|league|cup|trophy|stadium|kick-off|scored|hockey|tennis|badminton|chess|marathon|athletics|boxing|t20|odi)\b/gi
 /* words that confirm a club name is about the club, not the region */
 const SPORT_CONTEXT = /\b(players?|sign(s|ed|ing)?|transfer|club|fans|squad|season|jersey|kit|win|wins|won|beat|draw|loss|defeat|vs|versus|test)\b/i
 
 const CITY_CATEGORIES: Array<[string, RegExp]> = [
-  ['transport', /\b(metro|bus|buses|tram|ferry|airport|train|railway|flyover|traffic|e-rickshaw|taxi|bridge)\b/i],
-  ['civic', /\b(kmc|municipal|mayor|minister|government|govt|police|court|high court|nabanna|election|council|civic|water supply|power cut|cesc|hospital)\b/i],
-  ['culture', /\b(festival|puja|pujo|pandal|book fair|film|theatre|music|concert|exhibition|art|heritage|museum|literary|poet|author|dance|mela|christmas|new year)\b/i],
-  ['weather', /\b(rain|monsoon|cyclone|storm|heatwave|temperature|weather|waterlogging|flood)\b/i],
+  ['transport', /\b(metro|bus|buses|ferry|airport|train|railway|flyover|traffic|e-rickshaw|auto|taxi|bridge|setu|expressway)\b/i],
+  ['civic', /\b(pmc|municipal|mayor|minister|government|govt|police|court|high court|assembly|vidhan|election|council|civic|water supply|power cut|hospital)\b/i],
+  ['culture', /\b(festival|puja|chhath|ghat|book fair|pustak mela|film|theatre|music|concert|exhibition|art|madhubani|heritage|museum|literary|poet|author|dance|mela|holi|sankranti|bihar diwas)\b/i],
+  ['weather', /\b(rain|monsoon|storm|heatwave|temperature|weather|waterlogging|flood|kosi|ganga level)\b/i],
 ]
 const SPORTS_CATEGORIES: Array<[string, RegExp]> = [
-  ['football', /\b(football|isl|i-league|derby|east bengal|mohun bagan|mohammedan|durand|ifa|cfl|striker|midfielder|santosh)\b/i],
-  ['cricket', /\b(cricket|ipl|kkr|ranji|eden gardens|wickets?|batter|bowler|innings|t20|odi|bcci)\b/i],
+  ['kabaddi', /\b(kabaddi|pkl|patna pirates|raider|raid)\b/i],
+  ['cricket', /\b(cricket|ipl|ranji|moin-?ul-?haq|wickets?|batter|bowler|innings|t20|odi|bcci|bca)\b/i],
+  ['football', /\b(football|i-league|santosh trophy|striker|midfielder)\b/i],
 ]
 
 const IMPORTANCE = /\b(announce[sd]?|launch(es|ed)?|opens?|opened|inaugurat\w*|first|record|final|wins?|won|champions?|title|derby|major|biggest|historic|approve[sd]?|unveil\w*|begins?|breaking|signs?|appoint\w*|new)\b/gi
@@ -77,48 +88,48 @@ function distinct(text: string, pattern: RegExp) {
   return new Set((text.match(pattern) || []).map((match) => match.toLowerCase().replace(/\s+/g, ' '))).size
 }
 
-/* 0–1: how much this story is about Kolkata.
+/* 0–1: how much this story is about Bihar.
    A headline mention is the strongest signal (0.55); each body mention adds
-   0.1, up to four; a Bengal mention adds a little. A nationally framed headline
-   without the city in it loses 0.25 — "India's economy grows", with Kolkata
-   named once in passing, lands near zero.
+   0.1, up to four; a Bihar/Patna mention adds a little. A nationally framed
+   headline without the state in it loses 0.25 — "India's economy grows", with
+   Bihar named once in passing, lands near zero.
    `where` is extra location context (the article URL's path, which often
-   reads /west-bengal/calcutta/) that settles ambiguous place names. */
-export function kolkataRelevance(title: string, body = '', where = '') {
+   reads /city/patna/ or /bihar/) that settles ambiguous place names. */
+export function biharRelevance(title: string, body = '', where = '') {
   const context = `${title} ${body} ${where}`
   const inTitle = new Set(localMatches(title, context)).size
   const inBody = localMatches(body, context).length
-  let score = (inTitle ? 0.55 : 0) + Math.min(inBody, 4) * 0.1 + (BENGAL.test(context) ? 0.05 : 0)
+  let score = (inTitle ? 0.55 : 0) + Math.min(inBody, 4) * 0.1 + (BIHAR.test(context) ? 0.05 : 0)
   if (!inTitle && NATIONAL_FRAMING.test(title)) score -= 0.25
   return clamp(score)
 }
 
-/* Kolkata club/venue mentions — Eden Gardens and Salt Lake Stadium only when
-   the story is set in India, not Florida's Eden Gardens State Park */
-function kolkataSportMatches(text: string, context: string) {
-  const matches = (text.match(KOLKATA_SPORT) || []).map((match) => match.toLowerCase().replace(/\s+/g, ' '))
-  return INDIA_CONTEXT.test(context) ? matches : matches.filter((match) => !/^(eden gardens|salt lake stadium)$/.test(match))
+/* Bihar club/venue mentions — "Pro Kabaddi", "PKL" and "BCA" only when the
+   story is set in India, since a league acronym alone is not a Patna connection */
+function biharSportMatches(text: string, context: string) {
+  const matches = (text.match(BIHAR_SPORT) || []).map((match) => match.toLowerCase().replace(/\s+/g, ' '))
+  return INDIA_CONTEXT.test(context) ? matches : matches.filter((match) => !/^(pro kabaddi|pkl|bca)$/.test(match))
 }
 
 export function isSportsStory(title: string, body = '', where = '') {
   const text = `${title} ${body}`
-  const clubs = new Set(kolkataSportMatches(text, `${text} ${where}`)).size
+  const clubs = new Set(biharSportMatches(text, `${text} ${where}`)).size
   const sportWords = distinct(text, SPORT_WORDS)
   return (clubs > 0 && (sportWords > 0 || SPORT_CONTEXT.test(text))) || sportWords >= 2
 }
 
-/* 0–1: how strong the story's Kolkata sports connection is.
-   A Kolkata club, venue or Bengal side is the connection (0.6, +0.1 for each
-   further one); a Kolkata place name in a sports story is a weaker one (0.3);
+/* 0–1: how strong the story's Bihar sports connection is.
+   A Bihar club, venue or Bihar side is the connection (0.6, +0.1 for each
+   further one); a Bihar place name in a sports story is a weaker one (0.3);
    either appearing in the headline adds 0.15. */
 export function sportsRelevance(title: string, body = '', where = '') {
   const text = `${title} ${body}`
   const context = `${text} ${where}`
-  const clubs = new Set(kolkataSportMatches(text, context)).size
+  const clubs = new Set(biharSportMatches(text, context)).size
   const local = localMatches(text, context).length > 0
   let score = clubs ? 0.6 + Math.min(clubs - 1, 3) * 0.1 : 0
   if (local) score += 0.3
-  if (kolkataSportMatches(title, context).length || localMatches(title, context).length) score += 0.15
+  if (biharSportMatches(title, context).length || localMatches(title, context).length) score += 0.15
   return clamp(score)
 }
 
@@ -138,7 +149,7 @@ export function isLowValue(title: string, url = '') {
   return LOW_VALUE.test(title) || NON_ARTICLE_PATH.test(path) || /\/(live-score|scorecard|horoscope|photos?|gallery|web-?stories)\//i.test(path)
 }
 
-/* News URLs carry an id or a long slug; section fronts ("/city/kolkata") do not. */
+/* News URLs carry an id or a long slug; section fronts ("/city/patna") do not. */
 export function looksLikeArticle(url: string) {
   try {
     const { pathname } = new URL(url)
@@ -157,17 +168,17 @@ export function categorize(type: NewsFeed, title: string, body = '') {
 }
 
 /* The minimum relevance for a story to be kept at all. 0.4 means a CITY story
-   needs the city in its headline (or four body mentions), and a SPORTS story
-   needs a Kolkata club/venue, or a Kolkata place in its headline. */
-export const MIN_KOLKATA_RELEVANCE = 0.4
+   needs the state or a Bihar town in its headline (or four body mentions), and
+   a SPORTS story needs a Bihar club/venue, or a Bihar place in its headline. */
+export const MIN_BIHAR_RELEVANCE = 0.4
 export const MIN_SPORTS_RELEVANCE = 0.4
 
 export type Assessment =
   | { accepted: true; type: NewsFeed; category: string; relevance: number; importance: number }
   | { accepted: false; reason: string }
 
-/* Classify by content, not by which search found it: a derby report surfacing
-   in a city search is SPORTS; a Metro story from a sports search is CITY. */
+/* Classify by content, not by which search found it: a Pirates match report
+   surfacing in a city search is SPORTS; a Metro story from a sports search is CITY. */
 export function assessStory(
   { title, description = '', url = '' }: { title: string; description?: string | null; url?: string },
   now: Date = new Date(),
@@ -187,12 +198,12 @@ export function assessStory(
 
   if (isSportsStory(title, body, where)) {
     const relevance = sportsRelevance(title, body, where)
-    if (relevance < MIN_SPORTS_RELEVANCE) return { accepted: false, reason: `weak Kolkata sports link (${relevance.toFixed(2)})` }
+    if (relevance < MIN_SPORTS_RELEVANCE) return { accepted: false, reason: `weak Bihar sports link (${relevance.toFixed(2)})` }
     return { accepted: true, type: 'SPORTS', category: categorize('SPORTS', title, body), relevance, importance: importance(title) }
   }
 
-  const relevance = kolkataRelevance(title, body, where)
-  if (relevance < MIN_KOLKATA_RELEVANCE) return { accepted: false, reason: `not about Kolkata (${relevance.toFixed(2)})` }
+  const relevance = biharRelevance(title, body, where)
+  if (relevance < MIN_BIHAR_RELEVANCE) return { accepted: false, reason: `not about Bihar (${relevance.toFixed(2)})` }
   return { accepted: true, type: 'CITY', category: categorize('CITY', title, body), relevance, importance: importance(title) }
 }
 

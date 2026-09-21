@@ -8,7 +8,7 @@ import { safePublicUrl } from '@/lib/places/anakinImageProvider'
 export type SourceTier = 'OFFICIAL' | 'LOCAL' | 'NATIONAL' | 'OTHER'
 
 /* Source quality as a 0–1 weight; ranking.ts turns it into points. Official
-   bodies are the record itself; Kolkata/Bengal papers know the city best;
+   bodies are the record itself; the Hindi dailies of Patna know the state best;
    national outlets are reliable but less local; anything else is unvetted. */
 export const SOURCE_QUALITY: Record<SourceTier, number> = {
   OFFICIAL: 1,
@@ -17,18 +17,19 @@ export const SOURCE_QUALITY: Record<SourceTier, number> = {
   OTHER: 0.35,
 }
 
-const OFFICIAL = [/\.gov\.in$/, /\.nic\.in$/, /^bcci\.tv$/, /^indiansuperleague\.com$/, /^the-aiff\.com$/, /^kolkatabookfair\.net$/, /^kkr\.in$/]
+const OFFICIAL = [/\.gov\.in$/, /\.nic\.in$/, /^bcci\.tv$/, /^prokabaddi\.com$/, /^patnabookfair\.com$/, /^tourism\.bihar\.gov\.in$/]
 
 const PUBLICATIONS: Record<string, { name: string; tier: SourceTier }> = {
-  'anandabazar.com': { name: 'Anandabazar Patrika', tier: 'LOCAL' },
-  'telegraphindia.com': { name: 'The Telegraph', tier: 'LOCAL' },
-  'thestatesman.com': { name: 'The Statesman', tier: 'LOCAL' },
-  'millenniumpost.in': { name: 'Millennium Post', tier: 'LOCAL' },
-  'sangbadpratidin.in': { name: 'Sangbad Pratidin', tier: 'LOCAL' },
-  'bartamanpatrika.com': { name: 'Bartaman', tier: 'LOCAL' },
-  'eisamay.com': { name: 'Ei Samay', tier: 'LOCAL' },
-  'eisamay.indiatimes.com': { name: 'Ei Samay', tier: 'LOCAL' },
-  'getbengal.com': { name: 'Get Bengal', tier: 'LOCAL' },
+  'prabhatkhabar.com': { name: 'Prabhat Khabar', tier: 'LOCAL' },
+  'livehindustan.com': { name: 'Hindustan', tier: 'LOCAL' },
+  'jagran.com': { name: 'Dainik Jagran', tier: 'LOCAL' },
+  'bhaskar.com': { name: 'Dainik Bhaskar', tier: 'LOCAL' },
+  'aajtak.in': { name: 'Aaj Tak', tier: 'LOCAL' },
+  'abplive.com': { name: 'ABP Bihar', tier: 'LOCAL' },
+  'zeebiharjharkhand.com': { name: 'Zee Bihar Jharkhand', tier: 'LOCAL' },
+  'news18.com': { name: 'News18 Bihar', tier: 'LOCAL' },
+  'etvbharat.com': { name: 'ETV Bharat Bihar', tier: 'LOCAL' },
+  'patnapress.com': { name: 'Patna Press', tier: 'LOCAL' },
   'timesofindia.indiatimes.com': { name: 'The Times of India', tier: 'NATIONAL' },
   'economictimes.indiatimes.com': { name: 'The Economic Times', tier: 'NATIONAL' },
   'thehindu.com': { name: 'The Hindu', tier: 'NATIONAL' },
@@ -36,12 +37,12 @@ const PUBLICATIONS: Record<string, { name: string; tier: SourceTier }> = {
   'indianexpress.com': { name: 'The Indian Express', tier: 'NATIONAL' },
   'newindianexpress.com': { name: 'The New Indian Express', tier: 'NATIONAL' },
   'hindustantimes.com': { name: 'Hindustan Times', tier: 'NATIONAL' },
+  'telegraphindia.com': { name: 'The Telegraph', tier: 'NATIONAL' },
   'ndtv.com': { name: 'NDTV', tier: 'NATIONAL' },
   'indiatoday.in': { name: 'India Today', tier: 'NATIONAL' },
   'livemint.com': { name: 'Mint', tier: 'NATIONAL' },
   'business-standard.com': { name: 'Business Standard', tier: 'NATIONAL' },
   'deccanherald.com': { name: 'Deccan Herald', tier: 'NATIONAL' },
-  'news18.com': { name: 'News18', tier: 'NATIONAL' },
   'scroll.in': { name: 'Scroll', tier: 'NATIONAL' },
   'ptinews.com': { name: 'PTI', tier: 'NATIONAL' },
   'espncricinfo.com': { name: 'ESPNcricinfo', tier: 'NATIONAL' },
@@ -61,7 +62,7 @@ export function sourceDomain(url: string | URL) {
 
 function publicationFor(domain: string) {
   if (PUBLICATIONS[domain]) return PUBLICATIONS[domain]
-  /* bengali.news18.com → news18.com; eisamay.indiatimes.com stays specific above */
+  /* hindi.news18.com → news18.com; sportstar.thehindu.com stays specific above */
   const parent = Object.keys(PUBLICATIONS).find((known) => domain.endsWith(`.${known}`))
   return parent ? PUBLICATIONS[parent] : null
 }

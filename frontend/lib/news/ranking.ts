@@ -4,7 +4,7 @@ import { titleSimilarity } from './sources'
 /* ==========================================================================
    Ranking and rotation for the Home news cards.
 
-     score = freshness + Kolkata relevance + source quality + event relevance
+     score = freshness + Bihar relevance + source quality + event relevance
            + importance + category relevance
            - duplicate penalty - stale penalty - recently-featured penalty
 
@@ -20,7 +20,7 @@ const HOUR_MS = 3_600_000
 /* --- stored (base) score ------------------------------------------------- */
 
 /* Relevance is the heaviest static factor: a well-sourced story that is not
-   really about Kolkata should lose to a modest one that is. */
+   really about Bihar should lose to a modest one that is. */
 export const RELEVANCE_POINTS = 25
 /* A good source is worth a lot, but never more than being on-topic. */
 export const SOURCE_POINTS = 15

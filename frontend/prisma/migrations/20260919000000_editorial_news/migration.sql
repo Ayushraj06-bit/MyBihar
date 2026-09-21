@@ -31,9 +31,9 @@ CREATE INDEX "news_eventSlug_idx" ON "news"("eventSlug");
 
 -- Backfill the hand-seeded rows: the paper keeps its card, the old book-fair and
 -- derby rows become last-resort fallbacks rather than live candidates.
-UPDATE "news" SET "type" = 'NEWSPAPER', "category" = 'newspaper', "sourceName" = 'Anandabazar Patrika'
-  WHERE "title" ILIKE 'Anandabazar%';
-UPDATE "news" SET "type" = 'SPORTS', "category" = 'football', "isActive" = false
-  WHERE "title" ILIKE '%Derby%';
-UPDATE "news" SET "category" = 'culture', "eventSlug" = 'kolkata-book-fair', "isActive" = false
-  WHERE "title" ILIKE '%Book Fair%' AND "type" = 'CITY';
+UPDATE "news" SET "type" = 'NEWSPAPER', "category" = 'newspaper', "sourceName" = 'Prabhat Khabar'
+  WHERE "title" ILIKE 'Prabhat Khabar%';
+UPDATE "news" SET "type" = 'SPORTS', "category" = 'kabaddi', "isActive" = false
+  WHERE "title" ILIKE '%Pirates%';
+UPDATE "news" SET "category" = 'culture', "eventSlug" = 'patna-book-fair', "isActive" = false
+  WHERE "title" ILIKE '%Pustak Mela%' AND "type" = 'CITY';

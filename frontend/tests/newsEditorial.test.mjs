@@ -2,15 +2,15 @@
 // rotation, events, deduplication, ingestion and the failsafes.
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { activeEvents, detectEvent, kolkataDay } from '../lib/news/events.ts'
+import { activeEvents, detectEvent, biharDay } from '../lib/news/events.ts'
 import { buildNewsQueries } from '../lib/news/queries.ts'
-import { assessStory, kolkataRelevance } from '../lib/news/relevance.ts'
+import { assessStory, biharRelevance } from '../lib/news/relevance.ts'
 import { canonicalUrl, sourceTier } from '../lib/news/sources.ts'
 import {
   COOLDOWN_HOURS, rankStory, selectHomeStory, STALE_PENALTY,
 } from '../lib/news/ranking.ts'
 import { resolveStoryImage, TRUSTED_FALLBACK_IMAGE } from '../lib/news/images.ts'
-import { ingestKolkataNews, ingestionDue } from '../lib/news/ingest.ts'
+import { ingestBiharNews, ingestionDue } from '../lib/news/ingest.ts'
 import { FALLBACK_HOME_NEWS, getHomeNews, selectHomeNews } from '../lib/news/home.ts'
 
 const HOUR = 3_600_000
@@ -24,12 +24,12 @@ function story(overrides = {}) {
   return {
     id: `s${seq}`,
     type: 'CITY',
-    title: `Kolkata story ${seq}`,
+    title: `Bihar story ${seq}`,
     description: null,
     image: `https://example.com/${seq}.jpg`,
-    link: `https://www.telegraphindia.com/west-bengal/calcutta/story-number-${seq}/cid/20${seq}000`,
-    sourceName: 'The Telegraph',
-    sourceDomain: 'telegraphindia.com',
+    link: `https://www.prabhatkhabar.com/state/bihar/patna/story-number-${seq}-pk${seq}000`,
+    sourceName: 'Prabhat Khabar',
+    sourceDomain: 'prabhatkhabar.com',
     score: 50,
     publishedAt: hoursAgo(2),
     discoveredAt: hoursAgo(2),
@@ -97,21 +97,21 @@ function memoryRepository(initial = []) {
 
 const RESULTS = {
   metro: {
-    url: 'https://www.telegraphindia.com/west-bengal/calcutta/kolkata-metro-announces-new-service-on-purple-line/cid/2101234?utm_source=x',
-    title: 'Kolkata Metro announces new service on Purple Line | The Telegraph',
-    snippet: 'Metro Railway Kolkata will run extra trains from Monday, officials said.',
+    url: 'https://www.prabhatkhabar.com/state/bihar/patna/patna-metro-announces-new-service-on-blue-line-pk2101234?utm_source=x',
+    title: 'Patna Metro announces new service on Blue Line | Prabhat Khabar',
+    snippet: 'Patna Metro Rail Corporation will run extra trains from Monday, officials said.',
     date: '2 hours ago',
   },
   derby: {
-    url: 'https://timesofindia.indiatimes.com/sports/football/east-bengal-signs-new-striker-ahead-of-derby/articleshow/123456789.cms',
-    title: 'East Bengal signs new striker ahead of derby',
-    snippet: 'The Kolkata club confirmed the signing on Friday.',
+    url: 'https://timesofindia.indiatimes.com/sports/kabaddi/patna-pirates-sign-new-raider-ahead-of-pkl-opener/articleshow/123456789.cms',
+    title: 'Patna Pirates sign new raider ahead of PKL opener',
+    snippet: 'The Patna club confirmed the signing on Friday.',
     date: '5 hours ago',
   },
   economy: {
     url: 'https://www.livemint.com/economy/india-economy-grows-seven-percent-in-q1-11726712345678.html',
     title: "India's economy grows 7% in first quarter",
-    snippet: 'Growth was broad-based across Mumbai, Delhi, Kolkata and Chennai.',
+    snippet: 'Growth was broad-based across Mumbai, Delhi, Bihar and Chennai.',
     date: '3 hours ago',
   },
 }
@@ -133,22 +133,22 @@ const ogPage = (image) => `<html><head><meta property="og:image" content="${imag
 /* ---------- 1, 11, 12: CITY and SPORTS stay separate --------------------- */
 
 test('stories are classified by content into CITY or SPORTS', () => {
-  const metro = assessStory({ title: 'Kolkata Metro announces new service', url: RESULTS.metro.url })
+  const metro = assessStory({ title: 'Patna Metro announces new service', url: RESULTS.metro.url })
   assert.equal(metro.accepted && metro.type, 'CITY')
-  const signing = assessStory({ title: 'East Bengal signs new player', url: RESULTS.derby.url })
+  const signing = assessStory({ title: 'Patna Pirates sign new player', url: RESULTS.derby.url })
   assert.equal(signing.accepted && signing.type, 'SPORTS')
-  const test_ = assessStory({ title: 'India vs England at Eden Gardens', url: 'https://example.com/cricket/india-vs-england-at-eden-gardens' })
+  const test_ = assessStory({ title: 'Bihar vs Jharkhand Ranji Trophy match at Moin-ul-Haq Stadium', url: 'https://example.com/cricket/bihar-vs-jharkhand-ranji-trophy-match-at-moin-ul-haq-stadium' })
   assert.equal(test_.accepted && test_.type, 'SPORTS')
-  const puja = assessStory({ title: 'Kolkata Puja committee announces theme', url: 'https://example.com/kolkata-puja-committee-announces-theme' })
+  const puja = assessStory({ title: 'Patna ghat committee announces Chhath arrangements', url: 'https://example.com/patna-ghat-committee-announces-chhath-arrangements' })
   assert.equal(puja.accepted && puja.type, 'CITY')
 })
 
-test('a generic India story that mentions Kolkata once is rejected', () => {
+test('a generic India story that mentions Bihar once is rejected', () => {
   const verdict = assessStory({ title: RESULTS.economy.title, description: RESULTS.economy.snippet, url: RESULTS.economy.url })
   assert.equal(verdict.accepted, false)
-  assert.ok(kolkataRelevance(RESULTS.economy.title, RESULTS.economy.snippet) < 0.2)
+  assert.ok(biharRelevance(RESULTS.economy.title, RESULTS.economy.snippet) < 0.2)
   const cricket = assessStory({ title: 'India beat Australia in Perth Test', url: 'https://example.com/cricket/india-beat-australia-in-perth-test' })
-  assert.equal(cricket.accepted, false, 'sport without a Kolkata connection is not Kolkata sport')
+  assert.equal(cricket.accepted, false, 'sport without a Bihar connection is not Bihar sport')
 })
 
 test('the sports card never selects a CITY article, and the city card never a SPORTS one', () => {
@@ -161,20 +161,20 @@ test('the sports card never selects a CITY article, and the city card never a SP
 })
 
 test('Home falls back per card without borrowing across types', async () => {
-  const onlyCity = memoryRepository([story({ type: 'CITY', title: 'Kolkata Metro news' })])
+  const onlyCity = memoryRepository([story({ type: 'CITY', title: 'Patna Metro news' })])
   const news = await selectHomeNews(onlyCity, NOW)
-  assert.equal(news.city.title, 'Kolkata Metro news')
+  assert.equal(news.city.title, 'Patna Metro news')
   assert.equal(news.sports.type, 'SPORTS')
   assert.equal(news.sports.id, FALLBACK_HOME_NEWS.sports.id)
-  assert.equal(news.newspaper.title, 'Anandabazar Patrika today')
+  assert.equal(news.newspaper.title, 'Prabhat Khabar today')
 })
 
 /* ---------- 2: deduplication --------------------------------------------- */
 
 test('canonical URLs collapse tracking params, AMP and trailing slashes', () => {
-  const base = 'https://telegraphindia.com/west-bengal/calcutta/story/cid/2101234'
+  const base = 'https://prabhatkhabar.com/state/bihar/patna/story-pk2101234'
   assert.equal(canonicalUrl(`${base}?utm_source=x&utm_medium=y`), base)
-  assert.equal(canonicalUrl('https://www.telegraphindia.com/west-bengal/calcutta/story/cid/2101234/amp'), base)
+  assert.equal(canonicalUrl('https://www.prabhatkhabar.com/state/bihar/patna/story-pk2101234/amp'), base)
   assert.equal(canonicalUrl(`${base}/#comments`), base)
 })
 
@@ -185,8 +185,8 @@ test('the same article found by several searches is stored once', async () => {
     { ...RESULTS.metro, url: RESULTS.metro.url.replace('?utm_source=x', '?utm_campaign=y') },
     { ...RESULTS.metro, url: RESULTS.metro.url.replace('www.', '') },
   ]
-  await ingestKolkataNews({ repository, anakin: fakeAnakin(() => variants), fetchHtml: async () => null, now: NOW, log: silent })
-  assert.equal(repository.rows.filter((row) => row.title.includes('Purple Line')).length, 1)
+  await ingestBiharNews({ repository, anakin: fakeAnakin(() => variants), fetchHtml: async () => null, now: NOW, log: silent })
+  assert.equal(repository.rows.filter((row) => row.title.includes('Blue Line')).length, 1)
 })
 
 /* ---------- 3, 4: freshness ---------------------------------------------- */
@@ -211,17 +211,17 @@ test('stale stories lose priority and old ones drop out', () => {
 /* ---------- 5: cooldown and rotation ------------------------------------- */
 
 test('a featured story gets a cooldown and gives way the next day', async () => {
-  const first = story({ title: 'Kolkata tram heritage ride returns', score: 60, publishedAt: hoursAgo(1) })
-  const second = story({ title: 'New Town gets a new public library', score: 50, publishedAt: hoursAgo(3) })
+  const first = story({ title: 'Patna heritage walk through Patna City returns', score: 60, publishedAt: hoursAgo(1) })
+  const second = story({ title: 'Kankarbagh gets a new public library', score: 50, publishedAt: hoursAgo(3) })
   const repository = memoryRepository([first, second])
 
-  await ingestKolkataNews({ repository, anakin: null, now: NOW, log: silent })
+  await ingestBiharNews({ repository, anakin: null, now: NOW, log: silent })
   const featured = repository.rows.find((row) => row.id === first.id)
   assert.deepEqual(featured.featuredAt, NOW)
   assert.deepEqual(featured.cooldownUntil, new Date(NOW.getTime() + COOLDOWN_HOURS * HOUR))
 
   const tomorrow = new Date(NOW.getTime() + 25 * HOUR)
-  await ingestKolkataNews({ repository, anakin: null, now: tomorrow, log: silent })
+  await ingestBiharNews({ repository, anakin: null, now: tomorrow, log: silent })
   const news = await selectHomeNews(repository, tomorrow)
   assert.equal(news.city.id, second.id, 'another fresh story replaces yesterday’s')
 })
@@ -241,62 +241,63 @@ test('during its turn a featured story is only displaced by far bigger news', ()
 
 /* ---------- 6, 7: events --------------------------------------------------- */
 
-const ASHTAMI = new Date('2026-10-19T09:00:00+05:30')
+const SANDHYA_ARGHYA = new Date('2026-11-15T09:00:00+05:30')
 
-test('the Durga Puja phase follows the calendar and steers the searches', () => {
-  const puja = activeEvents(ASHTAMI).find((event) => event.slug === 'durga-puja')
-  assert.equal(puja.phase, 'ashtami')
-  assert.ok(buildNewsQueries('CITY', activeEvents(ASHTAMI)).includes('Maha Ashtami Kolkata'))
-  assert.equal(activeEvents(new Date('2026-10-11T09:00:00+05:30')).find((event) => event.slug === 'durga-puja').phase, 'mahalaya')
-  assert.equal(activeEvents(new Date('2026-10-21T09:00:00+05:30')).find((event) => event.slug === 'durga-puja').phase, 'dashami')
-  assert.equal(activeEvents(NOW).some((event) => event.slug === 'durga-puja'), false, 'not on three weeks before Mahalaya')
-  assert.ok(buildNewsQueries('SPORTS', activeEvents(ASHTAMI)).every((query) => !/ashtami/i.test(query)), 'city events stay out of sports searches')
-  assert.equal(kolkataDay(new Date('2026-10-18T20:00:00Z')).iso, '2026-10-19', 'dates are Kolkata dates')
+test('the Chhath Puja phase follows the calendar and steers the searches', () => {
+  const chhath = activeEvents(SANDHYA_ARGHYA).find((event) => event.slug === 'chhath-puja')
+  assert.equal(chhath.phase, 'sandhya-arghya')
+  assert.ok(buildNewsQueries('CITY', activeEvents(SANDHYA_ARGHYA)).includes('Sandhya Arghya Patna ghats'))
+  assert.equal(activeEvents(new Date('2026-11-13T09:00:00+05:30')).find((event) => event.slug === 'chhath-puja').phase, 'nahay-khay')
+  assert.equal(activeEvents(new Date('2026-11-16T09:00:00+05:30')).find((event) => event.slug === 'chhath-puja').phase, 'usha-arghya')
+  assert.equal(activeEvents(new Date('2026-11-01T09:00:00+05:30')).find((event) => event.slug === 'chhath-puja').phase, 'build-up')
+  assert.equal(activeEvents(NOW).some((event) => event.slug === 'chhath-puja'), false, 'not on three weeks before Nahay Khay')
+  assert.ok(buildNewsQueries('SPORTS', activeEvents(SANDHYA_ARGHYA)).every((query) => !/arghya/i.test(query)), 'city events stay out of sports searches')
+  assert.equal(biharDay(new Date('2026-11-14T20:00:00Z')).iso, '2026-11-15', 'dates are Bihar dates')
 })
 
 test('stories are tagged with their event and phase', () => {
-  assert.deepEqual(detectEvent('Sandhi Puja draws crowds at Bagbazar pandal', activeEvents(ASHTAMI)), { eventSlug: 'durga-puja', eventPhase: 'ashtami' })
-  assert.deepEqual(detectEvent('Crowds throng the Boi Mela on its opening day'), { eventSlug: 'kolkata-book-fair', eventPhase: null })
-  assert.deepEqual(detectEvent('KMC begins pothole repairs'), { eventSlug: null, eventPhase: null })
+  assert.deepEqual(detectEvent('Sandhya Arghya draws lakhs to Gandhi Ghat', activeEvents(SANDHYA_ARGHYA)), { eventSlug: 'chhath-puja', eventPhase: 'sandhya-arghya' })
+  assert.deepEqual(detectEvent('Crowds throng the Pustak Mela on its opening day'), { eventSlug: 'patna-book-fair', eventPhase: null })
+  assert.deepEqual(detectEvent('PMC begins pothole repairs'), { eventSlug: null, eventPhase: null })
 })
 
 test('multi-day event stories stay relevant while the event is on', () => {
-  const events = activeEvents(ASHTAMI)
-  const pujaStory = story({ eventSlug: 'durga-puja', eventPhase: 'saptami', publishedAt: hoursAgo(40, ASHTAMI) })
-  const ordinary = story({ publishedAt: hoursAgo(40, ASHTAMI) })
-  assert.ok(rankStory(pujaStory, { now: ASHTAMI, events }).total > rankStory(ordinary, { now: ASHTAMI, events }).total)
-  assert.equal(selectHomeStory([ordinary, pujaStory], 'CITY', { now: ASHTAMI, events }).id, pujaStory.id)
-  const phaseStory = story({ eventSlug: 'durga-puja', eventPhase: 'ashtami', publishedAt: hoursAgo(40, ASHTAMI) })
-  assert.ok(rankStory(phaseStory, { now: ASHTAMI, events }).total > rankStory(pujaStory, { now: ASHTAMI, events }).total, 'today’s phase gets a little more')
+  const events = activeEvents(SANDHYA_ARGHYA)
+  const chhathStory = story({ eventSlug: 'chhath-puja', eventPhase: 'kharna', publishedAt: hoursAgo(40, SANDHYA_ARGHYA) })
+  const ordinary = story({ publishedAt: hoursAgo(40, SANDHYA_ARGHYA) })
+  assert.ok(rankStory(chhathStory, { now: SANDHYA_ARGHYA, events }).total > rankStory(ordinary, { now: SANDHYA_ARGHYA, events }).total)
+  assert.equal(selectHomeStory([ordinary, chhathStory], 'CITY', { now: SANDHYA_ARGHYA, events }).id, chhathStory.id)
+  const phaseStory = story({ eventSlug: 'chhath-puja', eventPhase: 'sandhya-arghya', publishedAt: hoursAgo(40, SANDHYA_ARGHYA) })
+  assert.ok(rankStory(phaseStory, { now: SANDHYA_ARGHYA, events }).total > rankStory(chhathStory, { now: SANDHYA_ARGHYA, events }).total, 'today’s phase gets a little more')
 })
 
 test('event stories rotate from day to day while the event persists', async () => {
-  const saptami = new Date('2026-10-18T07:00:00+05:30')
-  const opening = story({ title: 'Kolkata pandals open to huge Saptami crowds', eventSlug: 'durga-puja', eventPhase: 'saptami', score: 60, publishedAt: hoursAgo(2, saptami) })
+  const kharna = new Date('2026-11-14T07:00:00+05:30')
+  const opening = story({ title: 'Patna ghats fill up for Kharna evening', eventSlug: 'chhath-puja', eventPhase: 'kharna', score: 60, publishedAt: hoursAgo(2, kharna) })
   const repository = memoryRepository([opening])
-  await ingestKolkataNews({ repository, anakin: null, now: saptami, log: silent })
-  assert.equal((await selectHomeNews(repository, saptami)).city.id, opening.id)
+  await ingestBiharNews({ repository, anakin: null, now: kharna, log: silent })
+  assert.equal((await selectHomeNews(repository, kharna)).city.id, opening.id)
 
-  const ashtamiStory = story({ title: 'Sandhi Puja at Bagbazar draws record queue', eventSlug: 'durga-puja', eventPhase: 'ashtami', score: 55, publishedAt: hoursAgo(2, ASHTAMI) })
-  repository.rows.push({ createdAt: new Date(), updatedAt: new Date(), ...ashtamiStory })
-  const nextDay = new Date(saptami.getTime() + 25 * HOUR)
-  await ingestKolkataNews({ repository, anakin: null, now: nextDay, log: silent })
+  const arghyaStory = story({ title: 'Sandhya Arghya at Gandhi Ghat draws record crowd', eventSlug: 'chhath-puja', eventPhase: 'sandhya-arghya', score: 55, publishedAt: hoursAgo(2, SANDHYA_ARGHYA) })
+  repository.rows.push({ createdAt: new Date(), updatedAt: new Date(), ...arghyaStory })
+  const nextDay = new Date(kharna.getTime() + 25 * HOUR)
+  await ingestBiharNews({ repository, anakin: null, now: nextDay, log: silent })
   const news = await selectHomeNews(repository, nextDay)
-  assert.equal(news.city.id, ashtamiStory.id)
+  assert.equal(news.city.id, arghyaStory.id)
 })
 
 /* ---------- 8: Anakin failure -------------------------------------------- */
 
 test('an Anakin outage leaves persisted stories on Home', async () => {
-  const kept = story({ title: 'Howrah Bridge gets new lighting', publishedAt: hoursAgo(20) })
+  const kept = story({ title: 'Mahatma Gandhi Setu gets new lighting', publishedAt: hoursAgo(20) })
   const repository = memoryRepository([kept])
   const broken = { hasApiKey: true, async search() { throw new Error('Anakin request failed (503)') } }
-  const summary = await ingestKolkataNews({ repository, anakin: broken, now: NOW, log: silent })
+  const summary = await ingestBiharNews({ repository, anakin: broken, now: NOW, log: silent })
   assert.ok(summary.searchFailures > 0)
   assert.equal(summary.created, 0)
   assert.equal(summary.selected.CITY.id, kept.id)
   const news = await getHomeNews(repository, { now: NOW, useCache: false })
-  assert.equal(news.city.title, 'Howrah Bridge gets new lighting')
+  assert.equal(news.city.title, 'Mahatma Gandhi Setu gets new lighting')
 })
 
 test('a database outage serves the seeded fallback instead of failing', async () => {
@@ -311,22 +312,22 @@ test('a database outage serves the seeded fallback instead of failing', async ()
 test('images come from the article first, then fall back without breaking', async () => {
   const fromArticle = await resolveStoryImage(
     { title: 'x', link: RESULTS.metro.url, type: 'CITY' },
-    { fetchHtml: async () => ogPage('https://img.telegraphindia.com/metro.jpg') },
+    { fetchHtml: async () => ogPage('https://img.prabhatkhabar.com/metro.jpg') },
   )
-  assert.deepEqual(fromArticle, { image: 'https://img.telegraphindia.com/metro.jpg', imageSource: 'article-og', imageSourceUrl: RESULTS.metro.url })
+  assert.deepEqual(fromArticle, { image: 'https://img.prabhatkhabar.com/metro.jpg', imageSource: 'article-og', imageSourceUrl: RESULTS.metro.url })
 
   const logoOnly = await resolveStoryImage(
     { title: 'x', link: RESULTS.metro.url, type: 'SPORTS' },
-    { fetchHtml: async () => ogPage('https://www.telegraphindia.com/static/logo.png') },
+    { fetchHtml: async () => ogPage('https://www.prabhatkhabar.com/static/logo.png') },
   )
   assert.equal(logoOnly.image, TRUSTED_FALLBACK_IMAGE.SPORTS, 'a site logo is not a story photo')
 
-  const event = await resolveStoryImage({ title: 'x', link: RESULTS.metro.url, type: 'CITY', eventSlug: 'kolkata-book-fair' }, { fetchHtml: async () => null })
+  const event = await resolveStoryImage({ title: 'x', link: RESULTS.metro.url, type: 'CITY', eventSlug: 'patna-book-fair' }, { fetchHtml: async () => null })
   assert.equal(event.imageSource, 'event')
 })
 
 test('a story without any image still renders a picture', async () => {
-  const repository = memoryRepository([story({ image: null, title: 'Salt Lake gets a new park' })])
+  const repository = memoryRepository([story({ image: null, title: 'Kankarbagh gets a new park' })])
   const news = await selectHomeNews(repository, NOW)
   assert.equal(news.city.image, TRUSTED_FALLBACK_IMAGE.CITY)
 })
@@ -336,20 +337,20 @@ test('a story without any image still renders a picture', async () => {
 test('running ingestion twice creates no duplicates and keeps the feature', async () => {
   const repository = memoryRepository()
   const fetchHtml = async (url) => ogPage(`https://cdn.example.com/${encodeURIComponent(url).length}.jpg`)
-  const first = await ingestKolkataNews({ repository, anakin: fakeAnakin(), fetchHtml, now: NOW, log: silent })
+  const first = await ingestBiharNews({ repository, anakin: fakeAnakin(), fetchHtml, now: NOW, log: silent })
   const count = repository.rows.length
   assert.equal(first.created, 2, 'metro (CITY) and the signing (SPORTS); the economy story is rejected')
   const city = repository.rows.find((row) => row.type === 'CITY')
   const sports = repository.rows.find((row) => row.type === 'SPORTS')
-  assert.equal(city.title, 'Kolkata Metro announces new service on Purple Line')
-  assert.equal(city.sourceName, 'The Telegraph')
+  assert.equal(city.title, 'Patna Metro announces new service on Blue Line')
+  assert.equal(city.sourceName, 'Prabhat Khabar')
   assert.equal(city.imageSource, 'article-og')
-  assert.equal(sports.title, 'East Bengal signs new striker ahead of derby')
-  assert.equal(sports.category, 'football')
+  assert.equal(sports.title, 'Patna Pirates sign new raider ahead of PKL opener')
+  assert.equal(sports.category, 'kabaddi')
   const featuredAt = city.featuredAt
 
   const later = new Date(NOW.getTime() + HOUR)
-  const second = await ingestKolkataNews({ repository, anakin: fakeAnakin(), fetchHtml, now: later, log: silent })
+  const second = await ingestBiharNews({ repository, anakin: fakeAnakin(), fetchHtml, now: later, log: silent })
   assert.equal(second.created, 0)
   assert.equal(repository.rows.length, count)
   assert.deepEqual(repository.rows.find((row) => row.id === city.id).featuredAt, featuredAt, 're-running does not re-feature')
@@ -360,12 +361,12 @@ test('ingestion is due daily, and every six hours during an event', () => {
   assert.equal(ingestionDue(null, [], NOW), true)
   assert.equal(ingestionDue(hoursAgo(10), [], NOW), false)
   assert.equal(ingestionDue(hoursAgo(23.9), [], NOW), true)
-  assert.equal(ingestionDue(hoursAgo(6), activeEvents(ASHTAMI), NOW), true)
+  assert.equal(ingestionDue(hoursAgo(6), activeEvents(SANDHYA_ARGHYA), NOW), true)
 })
 
 test('official and local sources outrank unknown ones', () => {
-  assert.equal(sourceTier('wb.gov.in'), 'OFFICIAL')
-  assert.equal(sourceTier('telegraphindia.com'), 'LOCAL')
+  assert.equal(sourceTier('state.bihar.gov.in'), 'OFFICIAL')
+  assert.equal(sourceTier('prabhatkhabar.com'), 'LOCAL')
   assert.equal(sourceTier('timesofindia.indiatimes.com'), 'NATIONAL')
   assert.equal(sourceTier('some-blog.example'), 'OTHER')
 })
@@ -374,23 +375,23 @@ test('official and local sources outrank unknown ones', () => {
 
 test('real junk from the first live run is rejected', () => {
   const junk = [
-    ['Eden Gardens State Park', 'https://www.floridastateparks.org/parks-and-trails/eden-gardens-state-park', 'Florida state park on Choctawhatchee Bay.'],
-    ['Eden Gardens Residential Parking Permit Zone', 'http://www.hayward-ca.gov/documents/eden-gardens-residential-parking-permit-zone', 'City of Hayward, California.'],
-    ['INS Kolkata collision: India rejects Pakistan allegations', 'https://www.indiatoday.in/india/story/ins-kolkata-collision-india-rejects-pakistan-allegations-2997722', 'The Navy said…'],
-    ['Latest T20 World Cup 2021 News, Photos, Latest News Headlines about T20 World Cup 2021-Sportstar', 'https://sportstar.thehindu.com/newstag/t20-world-cup-2021', 'Eden Gardens Kolkata cricket'],
-    ['Aizawl FC - latest team news & transfer rumours', 'https://www.goal.com/en-in/team/aizawl-fc/news/52oiz34tuvh22386o5gcgafiz', 'East Bengal'],
-    ['East Bengal 3-2 Mohun Bagan (16 Dec, 2018) Final Score - ESPN (IN)', 'https://www.espn.in/football/match/_/gameId/527726/mohun-bagan-sc-east-bengal', ''],
-    ['Mohun Bagan Super Giant clinches Indian Super League 2024', 'https://newsonair.gov.in/mohun-bagan-super-giant-clinches-indian-super-league-2024-25-title/', 'ISL football'],
-    ['This day, that year: South Africa returns to international cricket after a 21', 'https://ddnews.gov.in/en/this-day-that-year-south-africa-returns-to-international-cricket-after-a-21-year-hiatus/', 'at Eden Gardens in Kolkata'],
-    ['Who won toss today? – Sport-net', 'https://sport-net.org/who-won-toss-today-16/', 'KKR cricket match'],
+    ['Gaya State Park', 'https://www.floridastateparks.org/parks-and-trails/gaya-state-park', 'A state park in Florida.'],
+    ['Mithila Residential Parking Permit Zone', 'http://www.hayward-ca.gov/documents/mithila-residential-parking-permit-zone', 'City of Hayward, California.'],
+    ['Patnagarh road collapse: Odisha orders probe', 'https://www.indiatoday.in/india/story/patnagarh-road-collapse-odisha-orders-probe-2997722', 'The district said…'],
+    ['Latest T20 World Cup 2021 News, Photos, Latest News Headlines about T20 World Cup 2021-Sportstar', 'https://sportstar.thehindu.com/newstag/t20-world-cup-2021', 'Patna Bihar cricket'],
+    ['Aizawl FC - latest team news & transfer rumours', 'https://www.goal.com/en-in/team/aizawl-fc/news/52oiz34tuvh22386o5gcgafiz', 'Bihar football'],
+    ['Patna Pirates 32-28 Bengal Warriors (16 Dec, 2018) Final Score - ESPN (IN)', 'https://www.espn.in/kabaddi/match/_/gameId/527726/patna-pirates-bengal-warriors', ''],
+    ['Jaipur Pink Panthers clinch Pro Kabaddi League 2024', 'https://newsonair.gov.in/jaipur-pink-panthers-clinch-pro-kabaddi-league-2024-25-title/', 'PKL kabaddi'],
+    ['This day, that year: South Africa returns to international cricket after a 21', 'https://ddnews.gov.in/en/this-day-that-year-south-africa-returns-to-international-cricket-after-a-21-year-hiatus/', 'at Moin-ul-Haq in Patna'],
+    ['Who won toss today? – Sport-net', 'https://sport-net.org/who-won-toss-today-16/', 'Bihar cricket match'],
   ]
   for (const [title, url, description] of junk) {
     assert.equal(assessStory({ title, url, description }, NOW).accepted, false, title)
   }
   /* while the real thing still passes */
-  const eden = assessStory({ title: 'India vs England Test at Eden Gardens sold out', url: 'https://example.com/cricket/india-vs-england-test-at-eden-gardens-sold-out' }, NOW)
-  assert.equal(eden.accepted && eden.type, 'SPORTS')
-  const season = assessStory({ title: 'Mohun Bagan eye ISL 2026-27 title after derby win', url: 'https://example.com/football/mohun-bagan-eye-isl-title-after-derby-win' }, NOW)
+  const ranji = assessStory({ title: 'Bihar vs Mumbai Ranji Trophy match at Moin-ul-Haq Stadium sold out', url: 'https://example.com/cricket/bihar-vs-mumbai-ranji-trophy-match-at-moin-ul-haq-stadium-sold-out' }, NOW)
+  assert.equal(ranji.accepted && ranji.type, 'SPORTS')
+  const season = assessStory({ title: 'Patna Pirates eye PKL 2026-27 title after opening win', url: 'https://example.com/kabaddi/patna-pirates-eye-pkl-title-after-opening-win' }, NOW)
   assert.equal(season.accepted, true)
 })
 
@@ -411,12 +412,12 @@ test('an undated story cannot beat a dated fresh one on freshness alone', () => 
 })
 
 test('pages without og:image use the photo captioned with the headline', async () => {
-  const title = 'PM Modi to visit Kolkata today to inaugurate projects'
+  const title = 'PM Modi to visit Bihar today to inaugurate projects'
   const html = `
     <img src="/logo.png" alt="Newsonair">
     <img src="https://newsonair.gov.in/wp-content/uploads/2026/09/other.png" alt="DUSU elections: Polling concludes">
     <img src="https://newsonair.gov.in/wp-content/uploads/2026/03/modiji.png" alt="${title}">`
-  const image = await resolveStoryImage({ title, link: 'https://newsonair.gov.in/pm-modi-to-visit-kolkata-today/', type: 'CITY' }, { fetchHtml: async () => html })
+  const image = await resolveStoryImage({ title, link: 'https://newsonair.gov.in/pm-modi-to-visit-bihar-today/', type: 'CITY' }, { fetchHtml: async () => html })
   assert.equal(image.image, 'https://newsonair.gov.in/wp-content/uploads/2026/03/modiji.png')
   assert.equal(image.imageSource, 'article')
 })
@@ -464,19 +465,19 @@ test('Anakin search results without image/thumbnail still resolve from article H
 
 test('recheck upgrades a fallback image via related coverage when the own page is unreachable', async () => {
   const broken = story({
-    title: 'Chakravarthy spins KKR to IPL victory at Eden Gardens',
-    link: 'https://ddnews.gov.in/en/chakravarthy-spins-kkr-to-ipl-victory-at-eden-gardens/',
+    title: 'Patna Pirates raid their way to PKL victory at Patliputra Sports Complex',
+    link: 'https://ddnews.gov.in/en/patna-pirates-raid-their-way-to-pkl-victory-at-patliputra-sports-complex/',
     sourceDomain: 'ddnews.gov.in',
     type: 'SPORTS',
-    category: 'cricket',
-    image: '/maidan.jpg',
+    category: 'kabaddi',
+    image: '/gandhi-maidan.jpg',
     imageSource: 'fallback',
     discoveredAt: hoursAgo(5),
   })
   const repository = memoryRepository([broken])
   const related = {
-    url: 'https://www.telegraphindia.com/sports/cricket/chakravarthy-spins-kkr-to-ipl-victory-at-eden-gardens/cid/2101999',
-    title: 'Chakravarthy spins KKR to IPL victory at Eden Gardens',
+    url: 'https://www.prabhatkhabar.com/sports/kabaddi/patna-pirates-raid-their-way-to-pkl-victory-at-patliputra-sports-complex-pk2101999',
+    title: 'Patna Pirates raid their way to PKL victory at Patliputra Sports Complex',
   }
   const anakin = {
     hasApiKey: true,
@@ -485,33 +486,33 @@ test('recheck upgrades a fallback image via related coverage when the own page i
   }
   const pages = {
     [broken.link]: null,
-    [related.url]: ogPage('https://img.telegraphindia.com/chakravarthy.jpg'),
+    [related.url]: ogPage('https://img.prabhatkhabar.com/pirates.jpg'),
   }
-  await ingestKolkataNews({
+  await ingestBiharNews({
     repository,
     anakin,
     fetchHtml: async (url) => pages[url] ?? null,
     now: NOW,
     log: silent,
   })
-  assert.equal(repository.rows.find((row) => row.id === broken.id).image, 'https://img.telegraphindia.com/chakravarthy.jpg')
+  assert.equal(repository.rows.find((row) => row.id === broken.id).image, 'https://img.prabhatkhabar.com/pirates.jpg')
   assert.equal(repository.rows.find((row) => row.id === broken.id).imageSource, 'anakin-related-coverage')
 })
 
 test('ingestion re-checks stored stories: junk and old undated ones are retired, images retried', async () => {
-  const junk = story({ title: 'Eden Gardens State Park', link: 'https://www.floridastateparks.org/parks-and-trails/eden-gardens-state-park', sourceDomain: 'floridastateparks.org', discoveredAt: hoursAgo(5), publishedAt: null })
-  const old = story({ title: 'PM Modi to visit Kolkata today to inaugurate projects', link: 'https://newsonair.gov.in/pm-modi-to-visit-kolkata-today-to-inaugurate-projects/', sourceDomain: 'newsonair.gov.in', discoveredAt: hoursAgo(5), publishedAt: null })
-  const noImage = story({ title: 'Kolkata Metro extends Purple Line hours', link: 'https://www.telegraphindia.com/west-bengal/calcutta/kolkata-metro-extends-purple-line-hours/cid/2101999', image: '/hwh.jpg', imageSource: 'fallback' })
+  const junk = story({ title: 'Gaya State Park', link: 'https://www.floridastateparks.org/parks-and-trails/gaya-state-park', sourceDomain: 'floridastateparks.org', discoveredAt: hoursAgo(5), publishedAt: null })
+  const old = story({ title: 'PM Modi to visit Bihar today to inaugurate projects', link: 'https://newsonair.gov.in/pm-modi-to-visit-bihar-today-to-inaugurate-projects/', sourceDomain: 'newsonair.gov.in', discoveredAt: hoursAgo(5), publishedAt: null })
+  const noImage = story({ title: 'Patna Metro extends Blue Line hours', link: 'https://www.prabhatkhabar.com/state/bihar/patna/patna-metro-extends-blue-line-hours-pk2101999', image: '/gandhi-setu.jpg', imageSource: 'fallback' })
   const repository = memoryRepository([junk, old, noImage])
   const pages = {
     [old.link]: '<div>March 14, 2026 9:10 AM</div>',
-    [noImage.link]: ogPage('https://img.telegraphindia.com/purple.jpg'),
+    [noImage.link]: ogPage('https://img.prabhatkhabar.com/blue.jpg'),
   }
-  const summary = await ingestKolkataNews({ repository, anakin: null, fetchHtml: async (url) => pages[url] ?? null, now: NOW, log: silent })
+  const summary = await ingestBiharNews({ repository, anakin: null, fetchHtml: async (url) => pages[url] ?? null, now: NOW, log: silent })
   const byId = (id) => repository.rows.find((row) => row.id === id)
   assert.equal(summary.retired, 2)
   assert.equal(byId(junk.id).isActive, false)
   assert.equal(byId(old.id).isActive, false)
-  assert.equal(byId(noImage.id).image, 'https://img.telegraphindia.com/purple.jpg')
+  assert.equal(byId(noImage.id).image, 'https://img.prabhatkhabar.com/blue.jpg')
   assert.equal((await selectHomeNews(repository, NOW)).city.id, noImage.id)
 })

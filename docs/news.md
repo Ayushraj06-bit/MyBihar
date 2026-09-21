@@ -27,77 +27,74 @@ The three cards have different purposes:
 
 CARD 1 — NEWSPAPER
 --------------------------------
-Keep the existing Anandabazar Patrika card.
+Keep the existing Prabhat Khabar card.
 
 For now this card remains as it currently works.
 
 Do not change its UI or behavior.
 
 It represents:
-"Anandabazar Patrika today"
+"Prabhat Khabar today"
 
 
-CARD 2 — KOLKATA / CITY NEWS
+CARD 2 — PATNA / CITY NEWS
 --------------------------------
-This must become a dynamic current Kolkata news card.
+This must become a dynamic current Bihar news card.
 
-It should show the most relevant current story about Kolkata.
+It should show the most relevant current story about Bihar.
 
 Examples:
 
-- major Kolkata city news
-- Kolkata cultural events
-- Kolkata government/civic developments
-- Kolkata Metro/transport developments
-- major Kolkata announcements
-- major Kolkata festivals
-- Durga Puja developments
-- major events happening in Kolkata
+- major Bihar city news
+- Bihar cultural events
+- Bihar government/civic developments
+- Patna Metro/transport developments
+- major Bihar announcements
+- major Bihar festivals
+- Chhath Puja developments
+- major events happening in Bihar
 - important local stories
 
 Use Anakin to discover current stories.
 
 Do NOT hardcode one particular story.
 
-The story should naturally change as new important Kolkata news appears.
+The story should naturally change as new important Bihar news appears.
 
 
-CARD 3 — KOLKATA SPORTS
+CARD 3 — PATNA SPORTS
 --------------------------------
-This must become a dynamic Kolkata sports news card.
+This must become a dynamic Bihar sports news card.
 
-Search for current sports stories relevant to Kolkata.
+Search for current sports stories relevant to Bihar.
 
 Prioritize:
 
-- East Bengal
-- Mohun Bagan
-- Mohammedan Sporting
-- Kolkata football
-- ISL
-- Calcutta Football League
-- IFA
-- Kolkata cricket
-- Bengal cricket
-- Eden Gardens
-- major cricket matches/events in Kolkata
-- major sporting events happening in Kolkata
+- Patna Pirates
+- Pro Kabaddi League
+- Bihar cricket (Ranji Trophy, Vijay Hazare)
+- Moin-ul-Haq Stadium
+- Patliputra Sports Complex
+- Bihar football (Santosh Trophy)
+- Vaibhav Suryavanshi, Ishan Kishan and other Bihar cricketers
+- major cricket matches/events in Bihar
+- major sporting events happening in Bihar
 
 Do NOT hardcode:
 
-"Kolkata Derby: EB vs MB"
+"Patna Pirates at home"
 
 That is only one possible story.
 
-If the biggest current Kolkata sports story is football, show football.
+If the biggest current Bihar sports story is football, show football.
 
 If it is cricket, show cricket.
 
-If another major Kolkata sport becomes relevant, show that instead.
+If another major Bihar sport becomes relevant, show that instead.
 
 The card should represent:
 
-"Kolkata sports — what is happening right now?"
+"Bihar sports — what is happening right now?"
 
 
 ==================================================
@@ -180,23 +177,23 @@ Anakin should search for two independent feeds:
 
 CITY:
 
-"Kolkata latest news today"
-"Kolkata city news today"
-"Kolkata events today"
-"Kolkata latest events"
-"Kolkata culture news"
-"Kolkata important news"
+"Bihar latest news today"
+"Bihar city news today"
+"Bihar events today"
+"Bihar latest events"
+"Bihar culture news"
+"Bihar important news"
 
 SPORTS:
 
-"Kolkata sports news today"
-"Kolkata football today"
-"East Bengal latest"
-"Mohun Bagan latest"
-"Mohammedan Sporting latest"
-"Kolkata cricket latest"
-"Eden Gardens latest"
-"Bengal cricket latest"
+"Bihar sports news today"
+"Patna Pirates latest"
+"Pro Kabaddi Patna latest"
+"Bihar cricket latest"
+"Bihar Ranji Trophy latest"
+"Moin-ul-Haq Stadium latest"
+"Bihar football latest"
+"Patna sports latest"
 
 Queries should be generated dynamically where possible.
 
@@ -212,7 +209,7 @@ Do not blindly accept the first Anakin result.
 Prefer:
 
 1. official sources
-2. reputable Kolkata/Bengal publications
+2. reputable Bihar/Bihar publications
 3. established national publications
 4. official sports/event organizations
 5. other credible sources
@@ -225,30 +222,30 @@ sourceUrl
 
 
 ==================================================
-KOLKATA RELEVANCE
+PATNA RELEVANCE
 ==================================================
 
-A story should actually be relevant to Kolkata.
+A story should actually be relevant to Bihar.
 
-Do not select a generic India story just because the article mentions Kolkata once.
+Do not select a generic India story just because the article mentions Bihar once.
 
 Examples:
 
 GOOD:
 
-"Kolkata Metro announces new service"
+"Patna Metro announces new service"
 
-"Kolkata Puja committee announces theme"
+"Patna ghat committee announces Chhath arrangements"
 
-"East Bengal signs new player"
+"Patna Pirates sign new raider"
 
-"India vs England at Eden Gardens"
+"Bihar vs Jharkhand at Moin-ul-Haq Stadium"
 
 BAD:
 
 "India economy grows..."
 
-where Kolkata is only mentioned once.
+where Bihar is only mentioned once.
 
 Create a clear relevance score/function.
 
@@ -257,16 +254,16 @@ Create a clear relevance score/function.
 SPORTS RELEVANCE
 ==================================================
 
-Sports stories should have a meaningful Kolkata connection.
+Sports stories should have a meaningful Bihar connection.
 
 Prioritize:
 
-Kolkata clubs
-Kolkata venues
-Bengal teams
-Bengal players when the story is locally relevant
-matches/events taking place in Kolkata
-major sports developments affecting Kolkata
+Bihar clubs
+Bihar venues
+Bihar teams
+Bihar players when the story is locally relevant
+matches/events taking place in Bihar
+major sports developments affecting Bihar
 
 
 ==================================================
@@ -279,12 +276,14 @@ The system must understand that some stories belong to events lasting multiple d
 
 For example:
 
-International Kolkata Book Fair
-Durga Puja
-Christmas
-New Year
-Kolkata International Film Festival
-major sporting tournaments
+Chhath Puja (Nahay Khay to Usha Arghya, plus the build-up and the return trains)
+Sonepur Mela (Kartik Purnima, a month long)
+Patna Pustak Mela (Gandhi Maidan, December)
+Rajgir Mahotsav
+Makar Sankranti (dahi-chura, tilkut)
+Bihar Diwas (22 March)
+Holi
+Pro Kabaddi (Patna Pirates) and the Ranji Trophy season
 etc.
 
 An event can remain relevant for several days.
@@ -300,10 +299,10 @@ The STORIES rotate.
 
 Example:
 
-BOOK FAIR
+PUSTAK MELA
 
 Day 1:
-Book Fair opening
+Pustak Mela opening at Gandhi Maidan
 
 Day 2:
 Major author appearance
@@ -319,7 +318,7 @@ Special cultural event
 
 All are:
 
-eventSlug = "kolkata-book-fair"
+eventSlug = "patna-book-fair"
 
 but they are different news stories.
 
@@ -328,11 +327,11 @@ but they are different news stories.
 FESTIVAL CONTEXT
 ==================================================
 
-Durga Puja should work particularly well.
+Chhath Puja should work particularly well.
 
 The system should support phases such as:
 
-Mahalaya
+Nahay Khay
 Shashthi
 Saptami
 Ashtami
@@ -345,24 +344,24 @@ When a phase is active, Anakin searches should become more relevant to that phas
 
 For example:
 
-Mahalaya:
-- Mahalaya Kolkata
-- Durga Puja preparations Kolkata
+Nahay Khay:
+- Nahay Khay Bihar
+- Chhath Puja preparations Bihar
 
 Saptami:
-- Maha Saptami Kolkata
-- Kolkata pandal news
+- Maha Saptami Bihar
+- Bihar ghat news
 - Puja crowd updates
 
 Ashtami:
-- Maha Ashtami Kolkata
-- Sandhi Puja Kolkata
-- Ashtami pandal news
+- Maha Ashtami Bihar
+- Sandhi Puja Bihar
+- Ashtami ghat news
 
 Dashami:
-- Vijaya Dashami Kolkata
-- Durga Puja immersion Kolkata
-- Sindoor Khela Kolkata
+- Vijaya Dashami Bihar
+- Chhath Puja immersion Bihar
+- Sindoor Khela Bihar
 
 Do not put this logic inside the Home React component.
 
@@ -412,7 +411,7 @@ MULTI-DAY EVENT ROTATION
 
 Example:
 
-Durga Puja lasts several days.
+Chhath Puja lasts several days.
 
 The Home page can continue showing Puja-related news throughout the event.
 
@@ -422,7 +421,7 @@ Day 1:
 "Puja preparations begin"
 
 Day 2:
-"Major pandal opens"
+"Major ghat opens"
 
 Day 3:
 "Ashtami celebrations"
@@ -487,7 +486,7 @@ Conceptually:
 
 score =
     freshness
-  + Kolkata relevance
+  + Bihar relevance
   + source quality
   + event relevance
   + importance
@@ -557,11 +556,11 @@ The section should continue looking like:
 
 In the news
 
-Papers, fairs and fixtures the city is following.
+Papers, melas and fixtures the state is following.
 
-[ Anandabazar ]
-[ Dynamic Kolkata News ]
-[ Dynamic Kolkata Sports ]
+[ Prabhat Khabar ]
+[ Dynamic Bihar News ]
+[ Dynamic Bihar Sports ]
 
 
 ==================================================
@@ -595,11 +594,11 @@ Create a server-side ingestion function.
 
 Something conceptually like:
 
-ingestKolkataNews()
+ingestBiharNews()
 
 It should:
 
-1. Determine current Kolkata date/time.
+1. Determine current Bihar date/time.
 2. Determine active event/phase.
 3. Generate CITY queries.
 4. Generate SPORTS queries.
@@ -715,17 +714,17 @@ FINAL EXPECTED BEHAVIOUR
 Every time I open `/home`:
 
 CARD 1:
-Anandabazar Patrika remains as the newspaper card.
+Prabhat Khabar remains as the newspaper card.
 
 CARD 2:
-Shows the most relevant current Kolkata/city story from persisted news.
+Shows the most relevant current Bihar/city story from persisted news.
 
 CARD 3:
-Shows the most relevant current Kolkata sports story from persisted news.
+Shows the most relevant current Bihar sports story from persisted news.
 
 Tomorrow:
 
-CARD 2 can change to a new Kolkata story.
+CARD 2 can change to a new Bihar story.
 
 CARD 3 can change to a new sports story.
 
@@ -734,26 +733,28 @@ During a major event:
 The event can remain relevant for several days,
 but the individual stories should rotate.
 
-During Durga Puja:
+During Chhath:
 
-The system becomes increasingly Puja-aware
-and searches for the current Puja phase.
+The system becomes increasingly Chhath-aware
+and searches for the current phase — build-up, Nahay Khay,
+Kharna, Sandhya Arghya, Usha Arghya, and the week after.
 
-During Christmas:
+During Sonepur Mela:
 
-Christmas/Kolkata stories become relevant.
+Mela/Bihar stories become relevant, with Kartik Purnima
+as the opening-day phase.
 
-During New Year:
+During Makar Sankranti, Holi and Bihar Diwas:
 
-New Year/Kolkata stories become relevant.
+Festival/Bihar stories become relevant for those few days.
 
-During a major Kolkata sports event:
+During a major Bihar sports event:
 
 The sports card prioritizes that event.
 
 If nothing major happens:
 
-fresh ordinary Kolkata news fills the cards.
+fresh ordinary Bihar news fills the cards.
 
 If Anakin fails:
 

@@ -1,5 +1,5 @@
 import { safePublicUrl } from '@/lib/places/anakinImageProvider'
-import { activeEvents, detectEvent, kolkataDay, type ActiveEvent, type NewsFeed } from './events'
+import { activeEvents, detectEvent, biharDay, type ActiveEvent, type NewsFeed } from './events'
 import { resolveStoryImage } from './images'
 import { buildNewsQueries } from './queries'
 import { baseScore, featureStamp, isHoldingCard, MAX_AGE_HOURS, rankStory, selectHomeStory } from './ranking'
@@ -11,7 +11,7 @@ import {
 } from './sources'
 
 /* ==========================================================================
-   ingestKolkataNews(): Anakin → candidates → PostgreSQL, then rotate the
+   ingestBiharNews(): Anakin → candidates → PostgreSQL, then rotate the
    Home cards. Runs from the cron route only; the Home page never calls it.
    Idempotent: every story is matched to an existing row before it is written.
    ========================================================================== */
@@ -155,7 +155,7 @@ function shorten(text: string, length = DESCRIPTION_LENGTH) {
 /* an article from a year before this one is not today's news */
 function isOldArticleUrl(url: string, now: Date) {
   const year = url.match(/\/(20\d{2})\/(?:\d{1,2}\/)?/)?.[1]
-  return Boolean(year && Number(year) < kolkataDay(now).year)
+  return Boolean(year && Number(year) < biharDay(now).year)
 }
 
 /* Real browser UA: several Indian news/gov hosts (and ticket sites) soft-block
@@ -276,8 +276,8 @@ function dedupeBatch(candidates: Candidate[]) {
 
 /* ---------- the run ------------------------------------------------------- */
 
-export async function ingestKolkataNews({ repository, anakin, fetchHtml, now = new Date(), log = console.log }: IngestOptions): Promise<IngestSummary> {
-  const day = kolkataDay(now)
+export async function ingestBiharNews({ repository, anakin, fetchHtml, now = new Date(), log = console.log }: IngestOptions): Promise<IngestSummary> {
+  const day = biharDay(now)
   const events = activeEvents(now)
   const summary: IngestSummary = {
     date: day.iso,

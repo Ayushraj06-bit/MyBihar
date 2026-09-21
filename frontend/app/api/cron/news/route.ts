@@ -4,7 +4,7 @@ import { invalidate } from '@/lib/cache'
 import { AnakinImageProvider } from '@/lib/places/anakinImageProvider'
 import { activeEvents } from '@/lib/news/events'
 import { HOME_NEWS_CACHE_KEY } from '@/lib/news/home'
-import { ingestionDue, ingestKolkataNews, type NewsSearchClient } from '@/lib/news/ingest'
+import { ingestionDue, ingestBiharNews, type NewsSearchClient } from '@/lib/news/ingest'
 import { newsRepository } from '@/lib/news/server'
 
 export const dynamic = 'force-dynamic'
@@ -31,7 +31,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ skipped: true })
     }
 
-    const summary = await ingestKolkataNews({
+    const summary = await ingestBiharNews({
       repository: newsRepository,
       anakin: new AnakinImageProvider() as unknown as NewsSearchClient,
       now,
