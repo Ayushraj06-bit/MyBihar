@@ -3,10 +3,8 @@
 > **हमार बिहार**
 > A state, shot like a film.
 
-This is the design bible for My Bihar. It began life as the My Kolkata design system by Paramarsh
-Labs, and keeps that system's bones — the cinematic bands, the Regular-only Latin, the crimson
-budget — while replacing every cultural reference with Bihar's own: Chhath instead of Durga Puja,
-Madhubani instead of alpona, Devanagari instead of Bengali, the ghat instead of the pandal.
+This is the design bible for My Bihar: the cinematic bands, the Regular-only Latin, the crimson
+budget, and a cultural vocabulary that is Bihar's own — Chhath, Madhubani, Devanagari, the ghat.
 It absorbs `design/self.md`, takes cinematic structure from `design/netflix.md`, surface
 discipline from `design/spotify.md`, and its atmosphere from the moodboard photographs in `design/`.
 

@@ -7,11 +7,6 @@ gathered in one place and presented like a title sequence — cinematic bands, D
 carries the weight, one crimson mark, and a countdown to the day everyone comes home for Chhath.
 Every place, festival, photograph, emblem, icon and line of copy here is Bihar's own.
 
-The application runs on an open-source foundation: the Next.js architecture, the Regular-only
-type system and the editorial news pipeline started as
-[MyKolkata](https://github.com/paramarshlabs/MyKolkata) by Paramarsh Labs, credited here for
-that engineering groundwork.
-
 <p align="center">
   <img src="frontend/public/micon.png" alt="The Mithila sun mark on a genda disc" width="96" />
 </p>

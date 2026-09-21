@@ -51,13 +51,6 @@ export default async function AboutCreator() {
           </section>
           <section>
             <h2 className="hb-h3">Built with love by Ayush Raj</h2>
-            <p className="hb-body" style={{ marginTop: 12 }}>
-              Runs on an open-source foundation from{' '}
-              <a href="https://github.com/paramarshlabs/MyKolkata" target="_blank" rel="noreferrer">
-                My Kolkata
-              </a>{' '}
-              by Paramarsh Labs.
-            </p>
             {contributors.length > 0 ? (
               <ul style={{ listStyle: 'none', margin: '20px 0 0', padding: 0, display: 'grid', gap: 12 }}>
                 {contributors.map((person) => (
