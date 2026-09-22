@@ -1,7 +1,8 @@
 import 'server-only'
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { DEV_USER, isDevAuthBypass } from '@/lib/supabase/env'
+import { DEV_SESSION_COOKIE, DEV_USER, isDevAuthBypass } from '@/lib/supabase/env'
 
 /*
  * Who is signed in, decided next to the thing being protected. proxy.ts only
@@ -15,7 +16,9 @@ import { DEV_USER, isDevAuthBypass } from '@/lib/supabase/env'
 /* Route handlers: the caller answers 401 itself rather than redirecting a fetch. */
 export async function currentUserId(): Promise<string | null> {
   /* `next dev` without a Supabase project — see lib/supabase/env.ts */
-  if (isDevAuthBypass()) return DEV_USER.id
+  if (isDevAuthBypass()) {
+    return (await cookies()).get(DEV_SESSION_COOKIE) ? DEV_USER.id : null
+  }
   const supabase = await createClient()
   const { data, error } = await supabase.auth.getClaims()
   if (error || !data?.claims.sub) return null

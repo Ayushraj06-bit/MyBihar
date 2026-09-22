@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState, type ReactNode }
 import { useRouter } from 'next/navigation'
 import type { User } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
-import { DEV_USER, isDevAuthBypass } from '@/lib/supabase/env'
+import { DEV_SESSION_COOKIE, DEV_USER, isDevAuthBypass } from '@/lib/supabase/env'
 
 /* The account as the UI reads it — Google fills these through user_metadata. */
 export type AuthUser = {
@@ -25,6 +25,13 @@ type AuthContextValue = {
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
+
+/* the dev session, as the browser half sees it (lib/supabase/env.ts) */
+const devSession = {
+  read: () => document.cookie.split('; ').some((part) => part.startsWith(`${DEV_SESSION_COOKIE}=`)),
+  open: () => { document.cookie = `${DEV_SESSION_COOKIE}=1; path=/; max-age=86400; samesite=lax` },
+  close: () => { document.cookie = `${DEV_SESSION_COOKIE}=; path=/; max-age=0; samesite=lax` },
+}
 
 function toAuthUser(user: User | null): AuthUser | null {
   if (!user) return null
@@ -49,7 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let active = true
     /* `next dev` without a project: one fixed local account, no round trip. lib/supabase/env.ts */
     if (isDevAuthBypass()) {
-      setUser({ ...DEV_USER })
+      setUser(devSession.read() ? { ...DEV_USER } : null)
       setIsLoaded(true)
       return
     }
@@ -71,7 +78,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signInWithGoogle = async (next = '/home') => {
     if (isDevAuthBypass()) {
+      devSession.open()
+      setUser({ ...DEV_USER })
       router.push(next)
+      router.refresh()
       return
     }
     const redirectTo = new URL('/auth/callback', window.location.origin)
@@ -84,7 +94,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const logout = async () => {
-    if (!isDevAuthBypass()) await supabase.auth.signOut()
+    if (isDevAuthBypass()) {
+      devSession.close()
+      setUser(null)
+    } else {
+      await supabase.auth.signOut()
+    }
     router.push('/')
     router.refresh()
   }

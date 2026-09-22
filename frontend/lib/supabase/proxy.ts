@@ -1,6 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
-import { supabaseKey, supabaseUrl } from './env'
+import { isSupabaseConfigured, supabaseKey, supabaseUrl } from './env'
 
 /*
  * Refreshes the Supabase session cookie on the way in and hands the new one to
@@ -9,6 +9,10 @@ import { supabaseKey, supabaseUrl } from './env'
  */
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request })
+
+  /* no project to refresh against — skip the round trip to a host that is not
+     there, rather than a failed lookup on every request */
+  if (!isSupabaseConfigured()) return response
 
   const supabase = createServerClient(
     supabaseUrl(),

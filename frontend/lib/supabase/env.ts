@@ -35,6 +35,12 @@ export function isSupabaseConfigured() {
    ignored by production builds: `next build` sets NODE_ENV=production, so the
    flag cannot leak past the dev server whatever .env says.                  */
 
+/* The dev session itself: set when signing in as the developer, cleared on
+   sign-out, so the bypass behaves like a session rather than a permanent state.
+   Honoured only while isDevAuthBypass() is true, so it means nothing in
+   production however it was set. */
+export const DEV_SESSION_COOKIE = 'hb-dev-auth'
+
 export function isDevAuthBypass() {
   return process.env.NEXT_PUBLIC_AUTH_DEV_BYPASS === 'true' && process.env.NODE_ENV !== 'production'
 }
