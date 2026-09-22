@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server'
 import { currentUserId } from '@/lib/auth'
+import { databaseConfigured } from '@/lib/db/configured'
 import { prisma } from '@/lib/db/prisma'
 import { toClient } from '@/lib/serialize'
+import * as seed from '@/prisma/seed-data.mjs'
 
 const MAX_FEEDBACK_LEN = 1000
 const BASE_WEIGHT = 5
@@ -29,6 +31,18 @@ export async function POST(
   const text = typeof body?.feedbackText === 'string' ? body.feedbackText.slice(0, MAX_FEEDBACK_LEN) : null
   const direction =
     body?.swipeDirection === 'left' || body?.swipeDirection === 'right' ? body.swipeDirection : null
+
+  /* no database: the seeded profile answers, and nothing is kept */
+  if (!databaseConfigured()) {
+    const index = Number(/^seed-tinder-profiles-(\d+)$/.exec(id)?.[1]) - 1
+    const profile = seed.tinderProfiles[index]
+    if (!profile) return NextResponse.json({ message: 'Profile not found' }, { status: 404 })
+    const averageStars = (profile.baseStars * BASE_WEIGHT + stars) / (BASE_WEIGHT + 1)
+    return NextResponse.json(
+      { stars, averageStars, profile: toClient({ id, ...profile, averageStars, feedbacks: [{ swipeDirection: direction, feedbackText: text, stars }] }) },
+      { headers: { 'Cache-Control': 'no-store' } },
+    )
+  }
 
   try {
     const updated = await prisma.$transaction(async (tx) => {

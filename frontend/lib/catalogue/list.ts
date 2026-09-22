@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server'
 import { cached } from '@/lib/cache'
 import { toClient } from '@/lib/serialize'
 import * as seed from '@/prisma/seed-data.mjs'
+import { databaseConfigured } from '@/lib/db/configured'
+
+export { databaseConfigured }
 
 export const CATALOGUE_CACHE_CONTROL = 'public, s-maxage=300, stale-while-revalidate=3600'
 export const MEMORY_TTL_MS = 30_000
@@ -29,10 +32,6 @@ const SEED: Record<string, readonly Record<string, unknown>[]> = {
 }
 
 export type SeedKey = keyof typeof SEED
-
-export function databaseConfigured() {
-  return Boolean(process.env.DATABASE_URL)
-}
 
 export function catalogueSource(delegate: FindManyDelegate, key: SeedKey): FindManyDelegate {
   if (databaseConfigured()) return delegate
