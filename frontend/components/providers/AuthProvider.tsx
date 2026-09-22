@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState, type ReactNode }
 import { useRouter } from 'next/navigation'
 import type { User } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
+import { DEV_USER, isDevAuthBypass } from '@/lib/supabase/env'
 
 /* The account as the UI reads it — Google fills these through user_metadata. */
 export type AuthUser = {
@@ -46,6 +47,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let active = true
+    /* `next dev` without a project: one fixed local account, no round trip. lib/supabase/env.ts */
+    if (isDevAuthBypass()) {
+      setUser({ ...DEV_USER })
+      setIsLoaded(true)
+      return
+    }
     /* getUser() asks Supabase, rather than trusting whatever is in the cookie */
     supabase.auth.getUser().then(({ data }) => {
       if (!active) return
@@ -63,6 +70,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [supabase])
 
   const signInWithGoogle = async (next = '/home') => {
+    if (isDevAuthBypass()) {
+      router.push(next)
+      return
+    }
     const redirectTo = new URL('/auth/callback', window.location.origin)
     redirectTo.searchParams.set('next', next)
     const { error } = await supabase.auth.signInWithOAuth({
@@ -73,7 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const logout = async () => {
-    await supabase.auth.signOut()
+    if (!isDevAuthBypass()) await supabase.auth.signOut()
     router.push('/')
     router.refresh()
   }

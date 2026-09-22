@@ -53,13 +53,43 @@ cp .env.example .env.local   # fill in Supabase, and optionally Ola Maps + Anaki
 npm run dev
 ```
 
-The app runs without a database: Explore uses the file catalogue and Home shows the seeded cards.
-For the full thing:
+The app runs without a database: Explore uses the file catalogue and every catalogue page
+(regions, ghats, transport, experiences, marketplace, communities) serves `prisma/seed-data.mjs`.
+For the full thing, point `DATABASE_URL` at Postgres and:
 
 ```bash
 npm run db:push
 npm run db:seed
 ```
+
+## Signing in
+
+Accounts live in a Supabase project, and Google is the only door. Two ways in:
+
+**Just looking (no project).** Put this in `frontend/.env.local` and start `npm run dev`:
+
+```
+NEXT_PUBLIC_AUTH_DEV_BYPASS=true
+```
+
+Every visitor is one fixed local account. It only works under the dev server — `next build`
+ignores it — so it cannot leak into a deployment.
+
+**Real accounts.** Create a free project at supabase.com, then in the dashboard:
+
+1. *Authentication → Providers → Google*: enable it, paste a Google OAuth client id and secret
+   (Google Cloud Console → APIs & Services → Credentials → OAuth client, type "Web application",
+   with `https://<your-project>.supabase.co/auth/v1/callback` as the authorised redirect URI).
+2. *Authentication → URL configuration*: add `http://localhost:3000/auth/callback` to the redirect
+   URLs (and your deployed origin later).
+3. *Project settings → API*: copy the project URL and the publishable key into `.env.local`:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://<your-project>.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
+```
+
+Remove `NEXT_PUBLIC_AUTH_DEV_BYPASS`, restart, and the Google button on `/login` does the rest.
 
 For a production build:
 

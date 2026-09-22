@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/components/providers/AuthProvider'
 import { AuthLoading, AuthStage } from '@/components/auth/AuthStage'
 import { GoogleSignIn } from '@/components/auth/GoogleSignIn'
+import { NotConfigured } from '@/components/auth/NotConfigured'
+import { isSupabaseConfigured } from '@/lib/supabase/env'
 
 function Login() {
   const { isAuthenticated, isLoaded } = useAuth()
@@ -30,10 +32,14 @@ function Login() {
       </div>
 
       <div className="hb-auth-form">
-        <GoogleSignIn
-          label={isSignUpMode ? 'Create account with Google' : 'Sign in with Google'}
-          initialError={failed ? 'That sign-in did not go through. Try again.' : null}
-        />
+        {isSupabaseConfigured() ? (
+          <GoogleSignIn
+            label={isSignUpMode ? 'Create account with Google' : 'Sign in with Google'}
+            initialError={failed ? 'That sign-in did not go through. Try again.' : null}
+          />
+        ) : (
+          <NotConfigured />
+        )}
       </div>
     </AuthStage>
   )

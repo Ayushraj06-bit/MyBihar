@@ -74,3 +74,6 @@
   .hb-auth-caption { display: none; }
   .hb-auth-main { align-items: flex-start; padding-top: var(--hb-7); }
 }
+
+/* the not-configured card names env variables; keep them legible and unbroken */
+.hb-auth-card code { font-size: 0.92em; color: var(--hb-pearl); white-space: nowrap; }

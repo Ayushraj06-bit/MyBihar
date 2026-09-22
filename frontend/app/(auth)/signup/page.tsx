@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/components/providers/AuthProvider'
 import { AuthLoading, AuthStage } from '@/components/auth/AuthStage'
 import { GoogleSignIn } from '@/components/auth/GoogleSignIn'
+import { NotConfigured } from '@/components/auth/NotConfigured'
+import { isSupabaseConfigured } from '@/lib/supabase/env'
 
 export default function SignUpPage() {
   const { isAuthenticated, isLoaded } = useAuth()
@@ -20,7 +22,7 @@ export default function SignUpPage() {
   return (
     <AuthStage lede="Make an account with Google. It takes a minute.">
       <div className="hb-auth-form">
-        <GoogleSignIn label="Create account with Google" />
+        {isSupabaseConfigured() ? <GoogleSignIn label="Create account with Google" /> : <NotConfigured />}
       </div>
       <p className="hb-caption hb-auth-foot">
         <span>Already have an account?</span>

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { requireUser } from '@/lib/auth'
 import { prisma } from '@/lib/db/prisma'
-import { listCatalogue } from '@/lib/catalogue/list'
+import { catalogueSource, listCatalogue } from '@/lib/catalogue/list'
 import { getHomeNews, homeNewsCards } from '@/lib/news/home'
 import { newsRepository } from '@/lib/news/server'
 import { Card } from '@/components/brand/Card'
@@ -34,7 +34,7 @@ export default async function HomePage() {
   let failed = false
 
   try {
-    marketplace = (await listCatalogue(prisma.marketplaceItem, 'marketplace', 20)) as MarketItem[]
+    marketplace = (await listCatalogue(catalogueSource(prisma.marketplaceItem, 'marketplace'), 'marketplace', 20)) as MarketItem[]
   } catch (err) {
     console.error(err)
     failed = true
