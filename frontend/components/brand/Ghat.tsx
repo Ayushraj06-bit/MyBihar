@@ -291,6 +291,7 @@ export default function GhatStill() {
           .kp { aspect-ratio: 4 / 5; min-height: 100svh; }
         }
       `}</style>
+      <h1 className="sr-only">Sandhya Arghya at the ghat</h1>
       <figure className="kp">
         <GhatScene />
         <div className="kp-scrim" aria-hidden="true" />

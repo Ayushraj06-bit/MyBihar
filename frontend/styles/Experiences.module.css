@@ -53,3 +53,11 @@
   .intro p { display: none; }
   .cardTitle { font-size: 25px; }
 }
+
+/* the swipe, as two controls — keyboard, screen reader and anyone who would
+   rather press a button than drag. Same decision, same feedback step. */
+.actions {
+  display: flex; gap: var(--hb-3); width: min(380px, 100%);
+}
+.actions > * { flex: 1; justify-content: center; }
+.card:focus-visible { outline: 2px solid var(--hb-crimson); outline-offset: 3px; }

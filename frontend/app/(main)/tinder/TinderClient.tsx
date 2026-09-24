@@ -16,7 +16,6 @@ function Tinder() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [drag, setDrag] = useState({ x: 0, y: 0, isDragging: false, startX: 0, startY: 0 })
   const [showFeedback, setShowFeedback] = useState(false)
-  const [showFeedbackInput, setShowFeedbackInput] = useState(false)
   const [feedbackText, setFeedbackText] = useState('')
   const [pendingSwipe, setPendingSwipe] = useState(null)
   const [cardVisible, setCardVisible] = useState(true)
@@ -59,9 +58,40 @@ function Tinder() {
         }
       }, 30)
     }
-    setShowFeedbackInput(false)
     setFeedbackText('')
   }, [currentIndex])
+
+  /* One way out of a card, whatever moved it: the pointer, a key, or a button.
+     Keyboard and screen-reader users get the same decision the drag gives. */
+  const commitSwipe = (direction) => {
+    if (showFeedback || !cardVisible) return
+    if (cardRef.current) {
+      cardRef.current.style.transition = 'transform 320ms cubic-bezier(0.65, 0, 0.35, 1)'
+      cardRef.current.style.transform = `translateX(${direction * 500}px) rotate(${direction * 12}deg)`
+    }
+    setTimeout(() => {
+      setCardVisible(false)
+      setTimeout(() => {
+        setPendingSwipe({ direction })
+        setShowFeedback(true)
+        setDrag({ x: 0, y: 0, isDragging: false, startX: 0, startY: 0 })
+        if (cardRef.current) cardRef.current.style.transform = 'none'
+      }, 300)
+    }, 300)
+  }
+
+  const settleCard = () => {
+    if (cardRef.current) {
+      cardRef.current.style.transition = 'transform 320ms cubic-bezier(0.16, 1, 0.3, 1)'
+      cardRef.current.style.transform = 'none'
+    }
+    setDrag({ x: 0, y: 0, isDragging: false, startX: 0, startY: 0 })
+  }
+
+  const onCardKeyDown = (e) => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); commitSwipe(1) }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); commitSwipe(-1) }
+  }
 
   // Mouse events
   const handleMouseDown = (e) => {
@@ -80,29 +110,8 @@ function Tinder() {
   const handleMouseUp = () => {
     if (!drag.isDragging) return
     document.body.style.userSelect = ''
-    const threshold = window.innerWidth * 0.25
-    if (Math.abs(drag.x) > threshold) {
-      const direction = drag.x > 0 ? 1 : -1
-      if (cardRef.current) {
-        cardRef.current.style.transition = 'transform 320ms cubic-bezier(0.65, 0, 0.35, 1)'
-        cardRef.current.style.transform = `translateX(${direction * 500}px) rotate(${direction * 12}deg)`
-      }
-      setTimeout(() => {
-        setCardVisible(false)
-        setTimeout(() => {
-          setPendingSwipe({ direction })
-          setShowFeedback(true)
-          setDrag({ x: 0, y: 0, isDragging: false, startX: 0, startY: 0 })
-          if (cardRef.current) cardRef.current.style.transform = 'none'
-        }, 300)
-      }, 300)
-    } else {
-      if (cardRef.current) {
-        cardRef.current.style.transition = 'transform 320ms cubic-bezier(0.16, 1, 0.3, 1)'
-        cardRef.current.style.transform = 'none'
-      }
-      setDrag({ x: 0, y: 0, isDragging: false, startX: 0, startY: 0 })
-    }
+    if (Math.abs(drag.x) > window.innerWidth * 0.25) commitSwipe(drag.x > 0 ? 1 : -1)
+    else settleCard()
   }
   // Touch events
   const handleTouchStart = (e) => {
@@ -118,35 +127,13 @@ function Tinder() {
     }
   }
   const handleTouchEnd = () => {
-    const threshold = window.innerWidth * 0.25
-    if (Math.abs(drag.x) > threshold) {
-      const direction = drag.x > 0 ? 1 : -1
-      if (cardRef.current) {
-        cardRef.current.style.transition = 'transform 320ms cubic-bezier(0.65, 0, 0.35, 1)'
-        cardRef.current.style.transform = `translateX(${direction * 500}px) rotate(${direction * 12}deg)`
-      }
-      setTimeout(() => {
-        setCardVisible(false)
-        setTimeout(() => {
-          setPendingSwipe({ direction })
-          setShowFeedback(true)
-          setDrag({ x: 0, y: 0, isDragging: false, startX: 0, startY: 0 })
-          if (cardRef.current) cardRef.current.style.transform = 'none'
-        }, 100)
-      }, 300)
-    } else {
-      if (cardRef.current) {
-        cardRef.current.style.transition = 'transform 320ms cubic-bezier(0.16, 1, 0.3, 1)'
-        cardRef.current.style.transform = 'none'
-      }
-      setDrag({ x: 0, y: 0, isDragging: false, startX: 0, startY: 0 })
-    }
+    if (Math.abs(drag.x) > window.innerWidth * 0.25) commitSwipe(drag.x > 0 ? 1 : -1)
+    else settleCard()
   }
 
   // Handler to move to next card after feedback
   const handleFeedbackDone = async () => {
     setShowFeedback(false)
-    setShowFeedbackInput(false)
     setPendingSwipe(null)
     setCardVisible(true)
     if (profiles[currentIndex]) {
@@ -224,7 +211,7 @@ function Tinder() {
           <Sprig size={38} />
           <h1 className="hb-h2">Experiences</h1>
         </div>
-        <p className="hb-caption">Drag right if it&apos;s for you, left if it isn&apos;t. Then tell us how it was.</p>
+        <p className="hb-caption">Drag the card, use the buttons, or press the left and right arrow keys. Then tell us how it was.</p>
       </header>
 
       {showLeftGlow && !showFeedback && (
@@ -243,6 +230,11 @@ function Tinder() {
           ref={cardRef}
           className={styles.card}
           style={{ touchAction: 'pan-y' }}
+          role="group"
+          aria-roledescription="Experience card"
+          aria-label={`${profile.name}. Left arrow to pass, right arrow to save.`}
+          tabIndex={0}
+          onKeyDown={onCardKeyDown}
           onMouseDown={handleMouseDown}
           onMouseMove={drag.isDragging ? handleMouseMove : undefined}
           onMouseUp={handleMouseUp}
@@ -278,6 +270,22 @@ function Tinder() {
               )}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* the drag, as controls: a pointer is not the only way to decide */}
+      {!showFeedback && cardVisible && (
+        <div className={styles.actions}>
+          <button
+            type="button"
+            className="hb-btn hb-btn--secondary"
+            onClick={() => commitSwipe(-1)}
+          >Not for me</button>
+          <button
+            type="button"
+            className="hb-btn hb-btn--primary"
+            onClick={() => commitSwipe(1)}
+          >For me</button>
         </div>
       )}
 

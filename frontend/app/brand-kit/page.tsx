@@ -181,7 +181,7 @@ export default function BrandKit() {
           <a className="nn-brand" href="#top" aria-label="My Bihar — back to top">
             <span className="nn-brand-box">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/micon.png" alt="" width={28} height={28} />
+              <img src="/micon-nav.png" alt="" width={28} height={28} />
             </span>
             <span className="nn-brand-text">
               <span className="nn-brand-latin">MY BIHAR</span>
@@ -236,7 +236,7 @@ export default function BrandKit() {
             <a className="nn-brand" href="#top" aria-label="My Bihar — back to top">
               <span className="nn-brand-box">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/micon.png" alt="" width={28} height={28} />
+              <img src="/micon-nav.png" alt="" width={28} height={28} />
             </span>
               <span className="nn-brand-text">
                 <span className="nn-brand-latin">MY BIHAR</span>

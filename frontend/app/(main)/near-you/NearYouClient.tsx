@@ -819,6 +819,7 @@ export default function NearYouClient() {
 
   return (
     <main className={`${styles.root} ${view === 'map' ? styles.mapMode : styles.resultsMode}`}>
+      <h1 className="sr-only">Near you — Bihar places</h1>
       {view === 'map' ? (
         <section className={styles.mapWorkspace} aria-label="Explore Bihar places on the map">
           <NearYouMap
