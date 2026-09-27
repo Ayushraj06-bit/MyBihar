@@ -35,8 +35,10 @@ test('Ola map places use real photos or category markers, each shown on its own'
   assert.doesNotMatch(mapSource, /PLACE_RING_LAYER_ID|mybihar-place-rings/)
   assert.match(mapSource, /context\.arc\(32, 32, 29/)
   assert.doesNotMatch(mapSource, /index \+ 1/)
-  assert.doesNotMatch(mapSource, /leaflet|OpenStreetMap/i)
-  assert.doesNotMatch(pageSource, /leaflet|OpenStreetMap/i)
+  /* no Leaflet regression. OpenStreetMap itself is now a deliberate fallback —
+     keyless tiles when Ola refuses, keyless search via Photon — and is credited. */
+  assert.doesNotMatch(mapSource, /leaflet/i)
+  assert.doesNotMatch(pageSource, /leaflet/i)
 })
 
 test('selected map photos use a restrained highlight ring — the one crimson on the map', () => {

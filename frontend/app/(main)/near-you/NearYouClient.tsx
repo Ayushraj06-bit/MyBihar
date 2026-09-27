@@ -769,7 +769,12 @@ export default function NearYouClient() {
   }, [origin, requestKey, result.status, searchText, settled])
 
   const areaAnchor = searchText && settled ? result.meta?.area : null
-  const dataCredit = result.meta?.provider === 'ola' || result.meta?.source === 'ola' ? 'Place data from Ola Maps.' : null
+  /* credit whoever actually supplied what is on screen — OSM's licence requires it */
+  const sources = new Set(visiblePlaces.map((place) => place.provider))
+  const dataCredit = [
+    sources.has('ola') && 'Place data from Ola Maps.',
+    sources.has('osm') && 'Place data from OpenStreetMap contributors.',
+  ].filter(Boolean).join(' ') || null
   const noun = visiblePlaces.length === 1 ? 'place' : (CATEGORY_NOUNS[category] ?? 'places')
   const summary = searchText ? `for “${searchText}”` : originPhrase(origin)
 

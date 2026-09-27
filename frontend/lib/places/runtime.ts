@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { prisma } from '@/lib/db/prisma'
 import { OlaPlacesProvider } from './olaPlacesProvider'
+import { FallbackPlacesProvider, PhotonPlacesProvider } from './photonPlacesProvider'
 import { createPlaceSearchService } from './placeSearchService'
 import { FallbackPlaceRepository, FilePlaceRepository } from './filePlaceRepository'
 import { PrismaPlaceRepository } from './prismaPlaceRepository'
@@ -15,5 +16,6 @@ export const placeRepository = new FallbackPlaceRepository(
 
 export const placeSearchService = createPlaceSearchService({
   repository: placeRepository,
-  provider: new OlaPlacesProvider(),
+  /* Ola when its key works, OpenStreetMap otherwise — search never collapses to the seed */
+  provider: new FallbackPlacesProvider(new OlaPlacesProvider(), new PhotonPlacesProvider()),
 })

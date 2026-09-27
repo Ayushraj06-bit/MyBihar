@@ -48,7 +48,7 @@ const TAXONOMY = [
    when nothing more specific is present. */
 const TYPE_CATEGORY = new Map([
   ['cafe', 'cafes'], ['bakery', 'cafes'], ['coffee_shop', 'cafes'],
-  ['restaurant', 'food'], ['bar', 'food'], ['meal_takeaway', 'food'], ['meal_delivery', 'food'], ['food', 'food'],
+  ['restaurant', 'food'], ['fast_food', 'food'], ['bar', 'food'], ['meal_takeaway', 'food'], ['meal_delivery', 'food'], ['food', 'food'],
   ['museum', 'culture'], ['art_gallery', 'culture'], ['library', 'culture'], ['place_of_worship', 'culture'],
   ['hindu_temple', 'culture'], ['church', 'culture'], ['mosque', 'culture'], ['synagogue', 'culture'],
   ['shopping_mall', 'shopping'], ['clothing_store', 'shopping'], ['book_store', 'shopping'],
