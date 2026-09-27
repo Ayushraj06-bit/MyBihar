@@ -17,6 +17,7 @@ import { AnakinImageProvider, extractPageImage, safePublicUrl } from '../lib/pla
 import { imageCandidateFromWikimedia } from '../lib/places/imageCandidate.ts'
 import { presentLivePlace } from '../lib/livePlaces.ts'
 import { FallbackPlaceRepository } from '../lib/places/filePlaceRepository.ts'
+import { CuratedCatalogue, SeedPlaceRepository } from '../lib/places/seedPlaceRepository.js'
 import {
   RequestValidationError,
   createPlacesRouteHandler,
@@ -155,6 +156,13 @@ test('entity matching merges the same real place across providers', () => {
   const filled = mergeUniquePlaces([place({ phone: null })], [place({ provider: 'ola', providerPlaceId: 'x', phone: '+91 33 2229 7664' })])
   assert.equal(filled[0].provider, 'mybihar')
   assert.equal(filled[0].phone, '+91 33 2229 7664')
+
+  /* ~170 m apart: one park seen from two gates, but two temples */
+  const at = (overrides) => place({ provider: 'osm', providerPlaceId: String(Math.random()), latitude: 25.6019, ...overrides })
+  const park = { name: 'Eco Park', category: 'Outdoors', categorySlug: 'outdoors' }
+  assert.equal(mergeUniquePlaces([at({ ...park, longitude: 85.1150 })], [at({ ...park, longitude: 85.1167 })]).length, 1)
+  const temple = { name: 'Hanuman Mandir', category: 'Culture', categorySlug: 'culture' }
+  assert.equal(mergeUniquePlaces([at({ ...temple, longitude: 85.1150 })], [at({ ...temple, longitude: 85.1167 })]).length, 2)
 })
 
 test('Ola adapter remains disabled without a private server key', async () => {
@@ -298,7 +306,7 @@ test('the map endpoint falls back to live places inside the viewport when the ca
 
 test('search turns a neighbourhood into an anchor and keeps loose text matches out', async () => {
   const service = createPlaceSearchService({
-    repository: { search: async () => [] },
+    repository: { search: async () => [], nearby: async () => [] },
     provider: {
       name: 'ola',
       configured: true,
@@ -312,6 +320,34 @@ test('search turns a neighbourhood into an anchor and keeps loose text matches o
   const result = await service.search({ query: 'Boring Road', lat: 25.5941, lng: 85.1376, limit: 20 })
   assert.equal(result.meta.area.name, 'Boring Road Area')
   assert.deepEqual(result.places.map((entry) => entry.providerPlaceId), ['social'])
+})
+
+test('naming part of a hospital finds it before places that only mention it in their address', async () => {
+  const service = createPlaceSearchService({
+    repository: {
+      search: async () => [
+        place({ providerPlaceId: 'cafe', name: 'Barista Kankarbagh', address: 'Opposite Medanta Hospital, Kankarbagh' }),
+        place({ providerPlaceId: 'hospital', name: 'Jay Prabha Medanta Super Specialty Hospital', tags: ['hospital'] }),
+      ],
+    },
+  })
+  const result = await service.search({ query: 'medanta', limit: 20 })
+  assert.deepEqual(result.places.map((entry) => entry.providerPlaceId), ['hospital', 'cafe'])
+})
+
+test('searching a mohalla shows what is there, not what carries its name', async () => {
+  const service = createPlaceSearchService({ repository: new CuratedCatalogue(new SeedPlaceRepository(), new FilePlaceRepository()) })
+  const kankarbagh = await service.search({ query: 'Kankarbagh, Patna', lat: 25.5941, lng: 85.1376, limit: 40 })
+  assert.equal(kankarbagh.meta.area.name, 'Kankarbagh')
+  const names = kankarbagh.places.map((place) => place.name)
+  for (const known of ['Jay Prabha Medanta Super Specialty Hospital', 'Barista Kankarbagh', 'Shivaji Park']) {
+    assert.ok(names.includes(known), `${known} is in Kankarbagh`)
+  }
+  assert.ok(new Set(kankarbagh.places.map((place) => place.categorySlug)).size >= 6, 'every kind of place, not one street of shops')
+  /* generic words stay searches */
+  for (const query of ['hotel', 'station', 'medanta']) {
+    assert.equal((await service.search({ query, lat: 25.5941, lng: 85.1376 })).meta.area, null, query)
+  }
 })
 
 test('text results must mention every word of the query somewhere', () => {

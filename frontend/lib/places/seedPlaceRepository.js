@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { haversineDistanceKm } from './geo'
 import { findCategory, normalizeText } from './taxonomy'
+import { mergeUniquePlaces } from './normalizePlace'
 import { places as SEED_PLACES, placeCategoryByType } from '@/prisma/seed-data.mjs'
 
 /* ==========================================================================
@@ -61,6 +62,9 @@ const RECORDS = SEED_PLACES.map((place, index) => {
 
 const LOCATABLE = RECORDS.filter((place) => place.latitude !== null && place.longitude !== null)
 
+/* "GolGhar", "Golghar - Patna" and "Golghar" are one landmark */
+const landmarkKey = (name) => normalizeText(name).replace(/[\s,–-]+(patna|bihar)$/, '')
+
 function matches(place, { bounds, category, query }) {
   if (bounds) {
     if (place.longitude === null || place.latitude === null) return false
@@ -82,6 +86,7 @@ function matches(place, { bounds, category, query }) {
 export class SeedPlaceRepository {
   constructor() {
     this.available = RECORDS.length > 0
+    this.landmarks = new Set(RECORDS.map((place) => landmarkKey(place.name)))
   }
 
   async withinBounds({ bounds, category, query, limit = 250, cursor = 0 }) {
@@ -123,5 +128,47 @@ export class SeedPlaceRepository {
       .filter((place) => place.distanceKm <= radiusKm)
       .sort((left, right) => left.distanceKm - right.distanceKm || right.sourceConfidence - left.sourceConfidence)
       .slice(0, limit)
+  }
+}
+
+/* The curated places (photographs, descriptions, the landmarks outside Patna) on
+   top of the imported catalogue, never behind it: curated first, the catalogue
+   fills in, same-place duplicates merged. Pagination walks the catalogue; the
+   curated rows ride on the first page. The catalogue's own copies of a curated
+   landmark go: its GolGhar sits 1.4 km from Golghar. */
+export class CuratedCatalogue {
+  constructor(curated, catalogue) {
+    this.curated = curated
+    this.catalogue = catalogue
+    this.uncurated = (places) => places.filter((place) => !curated.landmarks.has(landmarkKey(place.name)))
+  }
+
+  async search(params) {
+    const [top, rest] = await Promise.all([this.curated.search(params), this.catalogue.search(params)])
+    return mergeUniquePlaces(top, this.uncurated(rest)).slice(0, params.limit ?? 20)
+  }
+
+  async nearby(params) {
+    const [top, rest] = await Promise.all([this.curated.nearby(params), this.catalogue.nearby(params)])
+    return mergeUniquePlaces(top, this.uncurated(rest))
+      .slice(0, params.limit ?? 20)
+      .sort((a, b) => (a.distanceKm ?? 0) - (b.distanceKm ?? 0))
+  }
+
+  async areaFor(query) {
+    return this.catalogue.areaFor(query)
+  }
+
+  async withinBounds(params) {
+    const firstPage = !Number(params.cursor)
+    const [top, rest] = await Promise.all([
+      firstPage ? this.curated.withinBounds(params) : { places: [], total: 0 },
+      this.catalogue.withinBounds(params),
+    ])
+    return {
+      places: mergeUniquePlaces(top.places, this.uncurated(rest.places)).slice(0, params.limit ?? 250),
+      nextCursor: rest.nextCursor,
+      total: top.total + rest.total,
+    }
   }
 }

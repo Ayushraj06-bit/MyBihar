@@ -11,7 +11,7 @@ const EXCLUDED_PRIMARY_TYPES = [
 ]
 
 const CATEGORY_RULES = [
-  ['cafes', ['cafe', 'coffee', 'tea room', 'tea house', 'bakery', 'dessert', 'ice cream']],
+  ['cafes', ['cafe', 'coffee', 'barista', 'tea room', 'tea house', 'bakery', 'dessert', 'ice cream']],
   ['food', ['restaurant', 'fast food', 'street food', 'bar', 'pub', 'brewery', 'caterer']],
   ['culture', ['museum', 'gallery', 'theatre', 'theater', 'cultural', 'heritage', 'library', 'bookstore', 'arts center', 'temple', 'mosque', 'church', 'cathedral', 'synagogue']],
   ['outdoors', ['park', 'garden', 'nature', 'outdoor', 'beach', 'playground', 'lake', 'trail', 'zoo']],
@@ -31,6 +31,7 @@ const tileSize = Number(args.get('tile-size') || 0.025)
 
 if (!input || !existsSync(input)) {
   console.error('Usage: node scripts/import-overture-places.mjs --input <geojsonl> [--output data/explore/catalog]')
+  console.error('Fetch the GeoJSONL first: python scripts/fetch-overture-places.py 84.95 25.52 85.30 25.68 patna-places.geojsonl')
   process.exit(1)
 }
 
@@ -38,14 +39,30 @@ function normalized(value = '') {
   return String(value).normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
 }
 
-function categoryFor(properties) {
-  const primary = normalized(properties.categories?.primary || properties.basic_category || '')
-  if (!primary || EXCLUDED_PRIMARY_TYPES.some((needle) => primary.includes(needle))) return null
-  const words = new Set(primary.split(' '))
+function ruleCategory(text) {
+  const words = new Set(text.split(' '))
   for (const [category, needles] of CATEGORY_RULES) {
-    if (needles.some((needle) => needle.includes(' ') ? primary.includes(needle) : words.has(needle))) return category
+    if (needles.some((needle) => needle.includes(' ') ? text.includes(needle) : words.has(needle))) return category
   }
   return null
+}
+
+/* The hospitals people name as landmarks (Medanta, AIIMS, IGIMS). In Patna, 95%+
+   confidence and "hospital" in the name keeps ~70 of ~900 — the rest are clinic,
+   lab and single-doctor listings ("Dr. X | Hospital"). */
+function landmarkHospital(properties) {
+  const name = properties.names?.primary || ''
+  return Number(properties.confidence) >= 0.95 && /\bhospital\b/i.test(name) && !/^\s*dr\.?\s/i.test(name)
+}
+
+function categoryFor(properties) {
+  const primary = normalized(properties.categories?.primary || properties.basic_category || '')
+  if (primary === 'hospital') return landmarkHospital(properties) ? 'places' : null
+  /* ~4% of places carry no category at all ("Barista Kankarbagh", "V99 Mall"):
+     judge those by their name, with the same rules */
+  if (!primary) return ruleCategory(normalized(properties.names?.primary || ''))
+  if (EXCLUDED_PRIMARY_TYPES.some((needle) => primary.includes(needle))) return null
+  return ruleCategory(primary)
 }
 
 function addressFor(properties) {
@@ -68,6 +85,12 @@ function tileKey(longitude, latitude) {
   return `${Math.floor(longitude / tileSize)}_${Math.floor(latitude / tileSize)}`
 }
 
+/* where a geocoder pins a place it only knows as "Patna" (the city centroid, and
+   Explore's default centre): Eco Park and a row of shops sat on it, ~15 m apart */
+const CITY_CENTROIDS = [[25.594074, 85.137562]]
+const onCityCentroid = (latitude, longitude) => CITY_CENTROIDS.some(([lat, lng]) =>
+  Math.abs(lat - latitude) < 0.00015 && Math.abs(lng - longitude) < 0.00015)
+
 const tiles = new Map()
 const identities = new Set()
 const categoryCounts = {}
@@ -82,10 +105,12 @@ for await (const line of lines) {
   let feature
   try { feature = JSON.parse(line) } catch { skippedCount += 1; continue }
   const properties = feature.properties || {}
-  const name = properties.names?.primary?.trim()
+  /* listings often carry an SEO tail: "Jay Prabha Medanta Hospital | Best Hospital in Patna" */
+  const name = properties.names?.primary?.split(' | ')[0].trim()
   const [longitude, latitude] = feature.geometry?.coordinates || []
   const confidence = Number(properties.confidence || 0)
-  if (!name || !Number.isFinite(latitude) || !Number.isFinite(longitude) || confidence < minimumConfidence) {
+  if (!name || !Number.isFinite(latitude) || !Number.isFinite(longitude) || confidence < minimumConfidence
+    || onCityCentroid(latitude, longitude)) {
     skippedCount += 1
     continue
   }

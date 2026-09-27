@@ -4,10 +4,10 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { FallbackPlacesProvider, PhotonPlacesProvider } from '../lib/places/photonPlacesProvider.js'
 
-const feature = (name, osm_value, lat, lng, id) => ({
+const feature = (name, osm_value, lat, lng, id, state = 'Bihar') => ({
   type: 'Feature',
   geometry: { type: 'Point', coordinates: [lng, lat] },
-  properties: { name, osm_value, osm_key: 'amenity', osm_type: 'N', osm_id: id, city: 'Patna', state: 'Bihar' },
+  properties: { name, osm_value, osm_key: 'amenity', osm_type: 'N', osm_id: id, city: 'Patna', state },
 })
 
 test('Ola answers when it works; OSM answers when Ola throws or has no key', async () => {
@@ -30,6 +30,7 @@ test('OSM results stay in Bihar, drop unnamed features and collapse same-name ne
       feature("Domino's", 'fast_food', 25.5500, 85.0900, 3), // a different branch, km away — kept
       feature('hospital', 'hospital', 25.6000, 85.1300, 4), // unnamed feature
       feature("Domino's", 'fast_food', 12.9716, 77.5946, 5), // Bangalore
+      feature("Domino's", 'fast_food', 26.7606, 83.3732, 6, 'Uttar Pradesh'), // Gorakhpur: inside the box, not Bihar
     ] }),
   })
   try {

@@ -106,6 +106,25 @@ export const placeCategoryByType = {
   Beach: 'outdoors',
 }
 
+/* Patna's mohallas, spelt the ways addresses spell them. No map has them as places
+   (OpenStreetMap and Overture have no Kankarbagh), so Explore centres each one on the
+   places whose addresses name it. Each was checked against the catalogue: named by
+   five or more addresses, within about 2 km of each other. */
+export const mohallas = [
+  'Kankarbagh', 'Kankarbagh Colony', 'PC Colony', 'Boring Road', 'Boring Canal Road', 'Rajendra Nagar',
+  'Patliputra', 'Patliputra Colony', 'Bailey Road', 'Fraser Road', 'Frazer Road', 'Exhibition Road',
+  'Dak Bungalow', 'Gandhi Maidan', 'Ashok Rajpath', 'Anisabad', 'Kidwaipuri', 'Saguna More', 'Kurji',
+  'Digha', 'Danapur', 'Phulwari', 'Phulwari Sharif', 'Raja Bazar', 'Hanuman Nagar', 'Lohia Nagar',
+  'Bhootnath', 'Patna City', 'Rajiv Nagar', 'Punaichak', 'Shastri Nagar', 'Bahadurpur', 'Kadamkuan',
+  'Kadam Kuan', 'Mithapur', 'Chiraiyatand', 'Gardanibagh', 'Beur', 'Jakkanpur', 'Sipara', 'Rukanpura',
+  'Ashiana Nagar', 'Kumhrar', 'Agamkuan', 'Agam Kuan', 'Gulzarbagh', 'Mahendru', 'Sultanganj', 'Bankipur',
+  'Bankipore', 'Machhua Toli', 'Sri Krishna Puri', 'S K Puri', 'Budh Marg', 'Buddha Marg', 'Station Road',
+  'Ashok Nagar', 'Keshri Nagar', 'Indrapuri', 'Jagdeo Path', 'Lohanipur', 'Ramkrishna Nagar', 'Mahesh Nagar',
+  'Nala Road', 'Chitkohra', 'Anandpuri', 'Nehru Nagar', 'Gola Road', 'Khajpura', 'Rupaspur', 'Sampatchak',
+  'Mauryalok', 'Hathwa Market', 'Jaganpura', 'Jakariyapur', 'Bhikhna Pahari', 'Rajapur', 'Salimpur',
+  'Buddha Colony', 'Postal Park', 'Vijay Nagar', 'Shivpuri', 'Bajrangpuri', 'Gaighat', 'Alamganj',
+]
+
 /* Chhath ghats: distances from Gandhi Maidan */
 export const ghats = [
   { name: 'Gandhi Ghat', location: 'Patna', description: 'The main Patna ghat, under the NIT. The biggest Sandhya Arghya crowd in the state.', image: '/ganga-ghat.jpg', distance: '1.4 km', rating: 4.8 },

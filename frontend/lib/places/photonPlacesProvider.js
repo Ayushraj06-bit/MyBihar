@@ -25,8 +25,10 @@ const CATEGORY_QUERY = {
   shopping: 'mall', experiences: 'cinema', outdoors: 'park',
 }
 
-function inBihar([lng, lat]) {
-  return lat > BIHAR.south && lat < BIHAR.north && lng > BIHAR.west && lng < BIHAR.east
+/* the box also takes in Gorakhpur and the Terai, so the state Photon names decides */
+function inBihar({ properties, geometry: { coordinates: [lng, lat] } }) {
+  return (!properties.state || properties.state === 'Bihar')
+    && lat > BIHAR.south && lat < BIHAR.north && lng > BIHAR.west && lng < BIHAR.east
 }
 
 function toPlace({ properties: p, geometry }) {
@@ -67,7 +69,7 @@ export class PhotonPlacesProvider {
       /* OSM often maps one station as a node, a way and a stop: keep the first of
          any same-name results within 300 m of each other */
       const kept = []
-      for (const place of features.filter((f) => named(f.properties) && inBihar(f.geometry.coordinates)).map(toPlace)) {
+      for (const place of features.filter((f) => named(f.properties) && inBihar(f)).map(toPlace)) {
         const here = { lat: place.latitude, lng: place.longitude }
         const twin = kept.some((k) => normalizeText(k.name) === normalizeText(place.name)
           && haversineDistanceKm(here, { lat: k.latitude, lng: k.longitude }) < 0.3)

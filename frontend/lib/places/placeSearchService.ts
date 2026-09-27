@@ -15,6 +15,8 @@ const UTILITY_TYPES = new Set([
 ])
 /* how far a category word looks around the searcher, e.g. "coffee" */
 const CATEGORY_INTENT_RADIUS_KM = 4
+/* how far a searched mohalla reaches: as far as "Explore around" it does */
+const AREA_RADIUS_KM = 1.5
 const STOP_WORDS = new Set(['in', 'at', 'near', 'around', 'the', 'of', 'and', 'best', 'top', 'good', 'bihar', 'patna'])
 
 const tagsOf = (place) => (place.tags ?? []).map((tag) => normalizeText(tag).replaceAll('_', ' '))
@@ -50,7 +52,8 @@ function searchScore(place, query) {
   score += Math.min(place.ratingCount ?? 0, 1000) / 100
   score += (place.rating ?? 0) * 2
   score += (place.sourceConfidence ?? 0) * 5
-  if (isUtility(place) && name !== normalizedQuery) score -= 25
+  /* naming part of one is naming it: "medanta" is after Jay Prabha Medanta Hospital */
+  if (isUtility(place) && !name.includes(normalizedQuery)) score -= 25
   if (Number.isFinite(place.distanceKm)) score -= Math.min(place.distanceKm, 30) / 2
   return score
 }
@@ -174,13 +177,22 @@ export function createPlaceSearchService({ repository, provider, minimumLocalRes
 
       const categorySlug = category ? findCategory(category)?.slug : null
       const candidates = withDistances(mergeUniquePlaces(localPlaces, external.places, categoryNearby.places), origin)
-      const area = cursor === 0 ? findAreaAnchor(query, candidates) : null
-      const places = candidates
+      const area = cursor === 0
+        ? findAreaAnchor(query, candidates) ?? await repository.areaFor?.(query).catch(() => null) ?? null
+        : null
+      /* a mohalla answers with what is there, its hospital, cafés and parks, rather than
+         whatever carries its name (Kankarbagh Vastralaya); a place named exactly
+         that, like the Dak Bungalow, still leads */
+      const around = area
+        ? (await localResults('nearby', { lat: area.latitude, lng: area.longitude, radiusKm: AREA_RADIUS_KM, category, limit })).places
+        : []
+      const matching = candidates
         .filter((place) => !isArea(place))
         .filter((place) => place.matchedBy !== 'text' || matchesEveryWord(place, query))
         .filter((place) => !categorySlug || place.categorySlug === categorySlug)
-        .sort((a, b) => searchScore(b, query) - searchScore(a, query))
-        .slice(0, limit)
+      const places = around.length
+        ? mergeUniquePlaces(matching.filter((place) => normalizeText(place.name) === normalizeText(query)), withDistances(around, origin)).slice(0, limit)
+        : matching.sort((a, b) => searchScore(b, query) - searchScore(a, query)).slice(0, limit)
 
       const providerStatus = [external.providerStatus, categoryNearby.providerStatus].includes('ok')
         ? 'ok'
@@ -195,7 +207,7 @@ export function createPlaceSearchService({ repository, provider, minimumLocalRes
           providerStatus,
           area,
           categoryIntent: intent ? { slug: intent.slug, name: intent.name } : null,
-          nextCursor: external.places.length ? null : (localPlaces.length === limit ? String(cursor + localPlaces.length) : null),
+          nextCursor: external.places.length || around.length ? null : (localPlaces.length === limit ? String(cursor + localPlaces.length) : null),
         },
       }
     },

@@ -5,13 +5,13 @@ import { FallbackPlacesProvider, PhotonPlacesProvider } from './photonPlacesProv
 import { createPlaceSearchService } from './placeSearchService'
 import { FallbackPlaceRepository, FilePlaceRepository } from './filePlaceRepository'
 import { PrismaPlaceRepository } from './prismaPlaceRepository'
-import { SeedPlaceRepository } from './seedPlaceRepository'
+import { CuratedCatalogue, SeedPlaceRepository } from './seedPlaceRepository'
 
-/* Postgres, then a catalogue export on disk, then the seeded Bihar places —
-   so Explore still has something to show on a copy with neither. */
+/* Postgres; without it, the curated Bihar places on top of the Overture
+   catalogue on disk (scripts/import-overture-places.mjs). */
 export const placeRepository = new FallbackPlaceRepository(
   new PrismaPlaceRepository(prisma),
-  new FallbackPlaceRepository(new FilePlaceRepository(), new SeedPlaceRepository()),
+  new CuratedCatalogue(new SeedPlaceRepository(), new FilePlaceRepository()),
 )
 
 export const placeSearchService = createPlaceSearchService({

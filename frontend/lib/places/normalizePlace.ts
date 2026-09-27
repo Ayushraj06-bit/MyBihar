@@ -127,10 +127,12 @@ export function placeIdentityKey(place) {
 
 function sameCoordinates(left, right) {
   if (![left.latitude, left.longitude, right.latitude, right.longitude].every(Number.isFinite)) return false
+  /* a park is mapped wherever its gates are: Eco Park's copies sit up to ~700 m apart */
+  const reachKm = left.categorySlug === 'outdoors' && right.categorySlug === 'outdoors' ? 0.7 : 0.12
   return haversineDistanceKm(
     { lat: left.latitude, lng: left.longitude },
     { lat: right.latitude, lng: right.longitude }
-  ) <= 0.12
+  ) <= reachKm
 }
 
 function sameContact(left, right) {

@@ -4,6 +4,9 @@ import { readFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { haversineDistanceKm } from './geo'
 import { findCategory, normalizeText } from './taxonomy'
+import { mohallas } from '@/prisma/seed-data.mjs'
+
+const MOHALLAS = new Map(mohallas.map((name) => [normalizeText(name), name]))
 
 const CATEGORY_NAMES = {
   cafes: 'Cafés',
@@ -152,15 +155,19 @@ export class FilePlaceRepository {
     if (!this.available) return []
     const records = (await Promise.all([...this.tileKeys].map((key) => this.loadTile(key)))).flat()
     const needle = normalizeText(query)
+    /* where the query matched: the name beats the address, so "medanta" finds the
+       hospital before the cafés "opposite Medanta hospital" */
+    const nameScore = (place) => {
+      const name = normalizeText(place.name)
+      if (name === needle) return 3
+      if (name.startsWith(needle)) return 2
+      if (` ${name}`.includes(` ${needle}`)) return 1.5
+      return name.includes(needle) ? 1 : 0
+    }
     return records
       .filter((place) => matches(place, { category, query }))
-      .sort((left, right) => {
-        const leftName = normalizeText(left.name)
-        const rightName = normalizeText(right.name)
-        const leftScore = (leftName === needle ? 3 : leftName.startsWith(needle) ? 2 : 1) + left.confidence
-        const rightScore = (rightName === needle ? 3 : rightName.startsWith(needle) ? 2 : 1) + right.confidence
-        return rightScore - leftScore || left.name.localeCompare(right.name)
-      })
+      .sort((left, right) => (nameScore(right) + right.confidence) - (nameScore(left) + left.confidence)
+        || left.name.localeCompare(right.name))
       .slice(Math.max(0, Number(cursor) || 0), Math.max(0, Number(cursor) || 0) + limit)
       .map(mapPlace)
   }
@@ -174,17 +181,35 @@ export class FilePlaceRepository {
       south: lat - latitudeDelta,
       north: lat + latitudeDelta,
     }
-    const records = await this.recordsInBounds(bounds)
-    return records
+    const around = (await this.recordsInBounds(bounds))
       .filter((place) => matches(place, { bounds, category }))
-      .map(mapPlace)
-      .map((place) => ({
-        ...place,
-        distanceKm: haversineDistanceKm({ lat, lng }, { lat: place.latitude, lng: place.longitude }),
-      }))
+      .map((place) => ({ ...place, distanceKm: haversineDistanceKm({ lat, lng }, { lat: place.latitude, lng: place.longitude }) }))
       .filter((place) => place.distanceKm <= radiusKm)
-      .sort((left, right) => left.distanceKm - right.distanceKm || right.sourceConfidence - left.sourceConfidence)
+    /* 1,100 places sit within 1.5 km of Kankarbagh, so the nearest 120 are one street
+       of shops: take the best-attested of each kind instead, nearest first among equals */
+    const tier = (place) => (place.confidence >= 0.9 ? 0 : place.confidence >= 0.7 ? 1 : 2)
+    return interleaveCategories(around.sort((left, right) => tier(left) - tier(right) || left.distanceKm - right.distanceKm))
       .slice(0, limit)
+      .sort((left, right) => left.distanceKm - right.distanceKm)
+      .map((place) => ({ ...mapPlace(place), distanceKm: place.distanceKm }))
+  }
+
+  /* A mohalla ("Kankarbagh", "Kankarbagh, Patna") centred on the places whose
+     addresses name it: the median, so a stray mis-geocoded address can't drag it */
+  async areaFor(query) {
+    const needle = normalizeText(query || '').replace(/[,.]/g, ' ').replace(/\b(patna|bihar)\b/g, '').replace(/\s+/g, ' ').trim()
+    const name = MOHALLAS.get(needle)
+    if (!this.available || !name) return null
+    const records = (await Promise.all([...this.tileKeys].map((key) => this.loadTile(key)))).flat()
+    const inArea = records.filter((place) => normalizeText(place.address || '').includes(needle))
+    if (inArea.length < 5) return null
+    const median = (values) => values.sort((a, b) => a - b)[Math.floor(values.length / 2)]
+    return {
+      name,
+      address: null,
+      latitude: median(inArea.map((place) => place.latitude)),
+      longitude: median(inArea.map((place) => place.longitude)),
+    }
   }
 }
 
@@ -218,5 +243,9 @@ export class FallbackPlaceRepository {
 
   async withinBounds(params) {
     return this.run('withinBounds', params, { places: [], nextCursor: null, total: 0 })
+  }
+
+  async areaFor(query) {
+    return this.run('areaFor', query, null)
   }
 }
