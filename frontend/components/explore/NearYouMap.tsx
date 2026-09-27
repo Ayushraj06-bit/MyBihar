@@ -7,6 +7,8 @@ import { clientOlaStyleUrl, proxiedOlaMapsUrl } from '@/lib/places/olaMapsProxy'
 import styles from '@/styles/NearYou.module.css'
 
 const PATNA_CENTER = [85.1376, 25.5941]
+/* free, keyless, commercial use allowed — https://openfreemap.org */
+const FALLBACK_STYLE_URL = 'https://tiles.openfreemap.org/styles/dark'
 /* Dark is the primary experience. Style loads via our proxy so phone/LAN
    origins are not blocked by Ola's browser-domain allowlist. */
 const SOURCE_ID = 'mybihar-places'
@@ -284,13 +286,16 @@ export default function NearYouMap({ places, selectedPlaceId, onSelect, userPosi
         if (cancelled || !elementRef.current) return
 
         /* probe first so a missing server key shows the setup hint, not a blank map */
-        const styleUrl = clientOlaStyleUrl()
-        const styleResponse = await fetch(styleUrl)
+        const olaStyleUrl = clientOlaStyleUrl()
+        const styleResponse = await fetch(olaStyleUrl)
         if (cancelled) return
-        if (!styleResponse.ok) {
-          setStatus(styleResponse.status === 503 ? 'missing-key' : 'error')
+        if (styleResponse.status === 503) {
+          setStatus('missing-key')
           return
         }
+        /* Ola configured but refusing the key (or down): draw a keyless basemap
+           instead of nothing — pins, list and search work the same on either. */
+        const styleUrl = styleResponse.ok ? olaStyleUrl : FALLBACK_STYLE_URL
 
         const olaMaps = new OlaMaps({ apiKey })
         olaMapsRef.current = olaMaps
