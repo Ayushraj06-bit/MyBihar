@@ -454,11 +454,16 @@ function PlaceResultsSkeleton({ layout }) {
   )
 }
 
-function EmptyResults({ searchText, category, origin, onClearSearch, onShowAllCategories, className, compact }) {
+function EmptyResults({ searchText, category, origin, onClearSearch, onShowAllCategories, className, compact, liveSearchOffline }) {
   let title
   let body
   let action = null
-  if (searchText) {
+  if (searchText && liveSearchOffline) {
+    /* the provider is down, not the place: say so instead of implying it doesn't exist */
+    title = `Live search is offline, so “${searchText}” can’t be looked up right now.`
+    body = 'Only featured places are searchable until the map provider is back.'
+    action = <button type="button" className="hb-btn hb-btn--secondary hb-btn--sm" onClick={onClearSearch}>Clear search</button>
+  } else if (searchText) {
     title = `Nothing in Bihar matches “${searchText}”.`
     body = 'Check the spelling, or search a mohalla, a street or a landmark.'
     action = <button type="button" className="hb-btn hb-btn--secondary hb-btn--sm" onClick={onClearSearch}>Clear search</button>
@@ -894,6 +899,7 @@ export default function NearYouClient() {
               origin={origin}
               onClearSearch={clearSearch}
               onShowAllCategories={() => changeCategory('All')}
+              liveSearchOffline={result.meta?.providerStatus === 'unavailable'}
             />
           ) : visiblePlaces.length > 0 && (
             <ul ref={railRef} className={`${styles.resultsRail} ${settled ? '' : styles.resultsRailStale}`} aria-label="Places on the map">
@@ -995,6 +1001,7 @@ export default function NearYouClient() {
                 origin={origin}
                 onClearSearch={clearSearch}
                 onShowAllCategories={() => changeCategory('All')}
+                liveSearchOffline={result.meta?.providerStatus === 'unavailable'}
               />
             )}
           </section>
